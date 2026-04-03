@@ -1,0 +1,47 @@
+.banner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--sp-4) var(--sp-5);
+    background: var(--bg-surface);
+    border-radius: var(--r-md);
+    border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.stat {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-2);
+}
+
+.iconWrap {
+    width: 32px;
+    height: 32px;
+    border-radius: var(--r-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.value {
+    display: block;
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 1;
+    margin-bottom: 2px;
+}
+
+.label {
+    display: block;
+    font-size: 10px;
+    color: var(--text-tertiary);
+    font-weight: 500;
+}
+
+.divider {
+    width: 1px;
+    height: 32px;
+    background: rgba(255, 255, 255, 0.06);
+}

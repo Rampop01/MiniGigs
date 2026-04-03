@@ -1,0 +1,111 @@
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.9);
+    backdrop-filter: blur(12px);
+    z-index: 200;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    animation: fade-in 0.3s ease;
+}
+
+.modal {
+    width: 100%;
+    max-width: 480px;
+    max-height: 94dvh;
+    overflow-y: auto;
+    padding: var(--sp-8);
+    border-radius: var(--r-xl) var(--r-xl) 0 0;
+    position: relative;
+    background: var(--bg-surface);
+    border-top: 2px solid var(--primary);
+    animation: slide-up 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.modalHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--sp-6);
+}
+
+.modalTitle {
+    font-size: 24px;
+    font-weight: 900;
+    color: #fff;
+    letter-spacing: -1px;
+}
+
+.closeBtn {
+    background: var(--bg-surface-elevated);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #fff;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-5);
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-2);
+    flex: 1;
+}
+
+.label {
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.row {
+    display: flex;
+    gap: var(--sp-4);
+}
+
+.submitBtn {
+    width: 100%;
+    padding: 18px;
+    border: none;
+    border-radius: var(--r-full);
+    background: var(--shiny-gradient);
+    color: #000;
+    font-size: 16px;
+    font-weight: 900;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--sp-3);
+    margin-top: var(--sp-4);
+    box-shadow: 0 10px 40px var(--primary-glow);
+    transition: all 0.3s;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.submitBtn:hover {
+    transform: translateY(-4px);
+}
+
+.submitBtn:active {
+    transform: scale(0.97);
+}
+
+select.input {
+    appearance: none;
+    cursor: pointer;
+}

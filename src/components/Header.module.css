@@ -1,0 +1,108 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--sp-6) 0;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-3);
+}
+
+.logoMark {
+    width: 44px;
+    height: 44px;
+    border-radius: var(--r-md);
+    background: var(--shiny-gradient);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 20px var(--primary-glow);
+    position: relative;
+    overflow: hidden;
+}
+
+.logoMark::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transform: rotate(45deg);
+    animation: shine 3s infinite;
+}
+
+@keyframes shine {
+    0% {
+        left: -100%;
+        top: -100%;
+    }
+
+    100% {
+        left: 100%;
+        top: 100%;
+    }
+}
+
+.logoIcon {
+    font-size: 24px;
+    filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.5));
+}
+
+.title {
+    font-size: 22px;
+    font-weight: 900;
+    line-height: 1;
+    margin-bottom: 4px;
+    letter-spacing: -0.5px;
+    color: #fff;
+    text-shadow: 0 0 10px var(--primary-glow);
+}
+
+.tagline {
+    font-size: 11px;
+    color: var(--primary);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.walletBtn {
+    background: var(--bg-surface-elevated);
+    color: #fff;
+    font-weight: 700;
+    font-size: 13px;
+    padding: 10px 20px;
+    border-radius: var(--r-full);
+    border: 1px solid var(--primary);
+    cursor: pointer;
+    box-shadow: 0 0 15px rgba(0, 162, 255, 0.2);
+    transition: all 0.3s;
+}
+
+.walletBtn:hover {
+    background: var(--primary);
+    color: #000;
+    box-shadow: 0 0 25px var(--primary-glow);
+}
+
+.walletConnected {
+    composes: walletBtn;
+    background: var(--bg-surface-elevated);
+    border-color: rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    gap: var(--sp-2);
+}
+
+.walletDot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent-green);
+    box-shadow: 0 0 8px var(--accent-green);
+}

@@ -1,36 +1,80 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ⚡ MiniGigs — Micro-tasks, Macro-impact on Celo
 
-## Getting Started
+MiniGigs is a mobile-first micro-task marketplace built for the Celo ecosystem. It connects posters with global workers to complete lightning-fast tasks like translations, data collection, and surveys, rewarded instantly in **cUSD** stablecoins via **MiniPay**.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 🚀 Vision
+Despite the rise of the gig economy, global workers are often limited by high transaction fees and slow cross-border payments. MiniGigs leverages Celo's ultra-low fees and second-fast finality to enable a "pennies-for-minutes" economy that works anywhere in the world.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Features
+- **MiniPay Optimized**: Native mobile-first design with smooth wallet integration.
+- **Instant Payouts**: Escrow-based smart contracts trigger instant settlement in stablecoins.
+- **Identity Verification**: Integrated with **World ID** and **Self Protocol** to prevent sybil attacks.
+- **On-Chain Reputation**: Build a verifiable work history and earn high-tier badges.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🛠️ Technology Stack
+- **Framework**: [Next.js](https://nextjs.org/) (App Router)
+- **Blockchain**: [Celo Mainnet](https://celo.org/)
+- **Payments**: cUSD (Celo Dollar)
+- **Web3 Tools**: [Wagmi](https://wagmi.sh/), [Viem](https://viem.sh/), [RainbowKit](https://www.rainbowkit.com/)
+- **Security**: WorldID Verification / Self Protocol
+- **Styling**: Vanilla CSS with a custom-engineered "Premium Dark" design system.
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 📱 How it Works
+1. **Explore**: Browse available micro-gigs categorized by task type and bounty.
+2. **Accept**: Securely accept a gig and lock the escrow.
+3. **Submit**: Complete the task and submit proof-of-work.
+4. **Earn**: Get paid directly to your MiniPay wallet as soon as work is verified.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 📜 Smart Contract
+The platform is powered by a robust escrow contract supporting cUSD payments.
+- **Source**: `contracts/MiniGigs.sol`
+- **ABI**: Found in `src/lib/abi.ts`
 
-## Deploy on Vercel
+### Deployment
+1. Add your private key to `.env`:
+   ```bash
+   PRIVATE_KEY=your_key
+   ```
+2. Deploy to Alfajores Testnet:
+   ```bash
+   npx hardhat run scripts/deploy.js --network alfajores
+   ```
+3. Deploy to Celo Mainnet:
+   ```bash
+   npx hardhat run scripts/deploy.js --network celo
+   ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🚦 Getting Started
+1. Install dependencies:
+   ```bash
+   npm install
+   ```
+2. Set up environment variables:
+   ```bash
+   # .env.local
+   NEXT_PUBLIC_WC_PROJECT_ID=your_id
+   ```
+3. Run the development server:
+   ```bash
+   npm run dev
+   ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## 🏆 Proof of Ship Status
+- [x] Integrate MiniPay / Web3 Wallet
+- [x] UI/UX optimized for mobile screens
+- [x] cUSD stablecoin integration
+- [x] Category-based task discovery
+- [x] Identity verification hooks
+- [ ] Production escrow contract deployment (Upcoming)
+
+Built with ⚡ and 💚 by the MiniGigs team.
