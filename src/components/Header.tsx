@@ -22,7 +22,7 @@ export default function Header() {
                     <span className={styles.logoText}>iniGigs</span>
                 </div>
                 {!isMiniPay && <p className={styles.tagline}>Micro-tasks on Celo</p>}
-                {isMiniPay && <p className={styles.tagline}>⚡ MiniPay Active</p>}
+                {isMiniPay && <p className={styles.tagline}>MiniPay Active</p>}
             </div>
             <ConnectButton.Custom>
                 {({ account, chain, openConnectModal, openAccountModal, mounted }) => {

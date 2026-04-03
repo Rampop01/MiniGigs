@@ -11,10 +11,9 @@
     margin-bottom: var(--sp-3);
 }
 
-.catEmoji {
-    font-size: 20px;
-    width: 36px;
-    height: 36px;
+.iconBox {
+    width: 38px;
+    height: 38px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -22,6 +21,7 @@
     border-radius: var(--r-md);
     flex-shrink: 0;
     box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .meta {

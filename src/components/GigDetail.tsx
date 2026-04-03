@@ -2,7 +2,7 @@
 
 import type { Gig } from '@/lib/constants';
 import { getCategoryInfo, formatCUSD, timeAgo, shortenAddress } from '@/lib/utils';
-import { X, Clock, Shield, Globe, User, ExternalLink, CheckCircle } from 'lucide-react';
+import { X, Clock, ShieldCheck, Globe, User, ExternalLink, CheckCircle } from 'lucide-react';
 import { useAccount } from 'wagmi';
 import toast from 'react-hot-toast';
 import styles from './GigDetail.module.css';
@@ -56,7 +56,10 @@ export default function GigDetail({ gig, onClose, onAccept }: GigDetailProps) {
 
                 {/* Header */}
                 <div className={styles.header}>
-                    <span className={styles.catBadge}>{cat.emoji} {cat.label}</span>
+                    <span className={styles.catBadge}>
+                        <cat.Icon size={14} />
+                        {cat.label}
+                    </span>
                     <span className={styles.bountyBig}>{formatCUSD(gig.bounty)}</span>
                 </div>
 
@@ -93,7 +96,7 @@ export default function GigDetail({ gig, onClose, onAccept }: GigDetailProps) {
                     <>
                         <div className={styles.divider} />
                         <div className={styles.verifyBanner}>
-                            {gig.verification === 'worldid' ? <Globe size={18} /> : <Shield size={18} />}
+                            {gig.verification === 'worldid' ? <Globe size={18} /> : <ShieldCheck size={18} />}
                             <div>
                                 <strong>Identity Verification Required</strong>
                                 <p>A {gig.verification === 'worldid' ? 'World ID' : 'Self Protocol'} check is required for this market.</p>

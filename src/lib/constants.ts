@@ -11,13 +11,13 @@ export const CELO_CHAIN_ID = 42220;
 
 // Task / Gig categories
 export const GIG_CATEGORIES = [
-    { id: 'translation', label: 'Translation', emoji: '🌍' },
-    { id: 'data', label: 'Data Collection', emoji: '📊' },
-    { id: 'survey', label: 'Survey', emoji: '📋' },
-    { id: 'testing', label: 'Testing', emoji: '🧪' },
-    { id: 'content', label: 'Content', emoji: '✍️' },
-    { id: 'design', label: 'Design', emoji: '🎨' },
-    { id: 'other', label: 'Other', emoji: '💡' },
+    { id: 'translation', label: 'Translation' },
+    { id: 'data', label: 'Data Collection' },
+    { id: 'survey', label: 'Survey' },
+    { id: 'testing', label: 'Testing' },
+    { id: 'content', label: 'Content' },
+    { id: 'design', label: 'Design' },
+    { id: 'other', label: 'Other' },
 ] as const;
 
 // Time estimate options
@@ -27,9 +27,9 @@ export const TIME_ESTIMATES = [
 
 // Verification methods
 export const VERIFICATION_METHODS = [
-    { id: 'none', label: 'No verification', icon: '🔓' },
-    { id: 'worldid', label: 'World ID', icon: '🌐' },
-    { id: 'self', label: 'Self Protocol', icon: '🪪' },
+    { id: 'none', label: 'No verification' },
+    { id: 'worldid', label: 'World ID' },
+    { id: 'self', label: 'Self Protocol' },
 ] as const;
 
 export type GigStatus = 'open' | 'in_progress' | 'submitted' | 'completed' | 'disputed' | 'cancelled';

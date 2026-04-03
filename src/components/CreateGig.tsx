@@ -141,7 +141,7 @@ export default function CreateGig({ onClose, onCreated }: CreateGigProps) {
                             >
                                 <option value="">Select</option>
                                 {GIG_CATEGORIES.map(c => (
-                                    <option key={c.id} value={c.id}>{c.emoji} {c.label}</option>
+                                    <option key={c.id} value={c.id}>{c.label}</option>
                                 ))}
                             </select>
                         </div>
@@ -184,7 +184,7 @@ export default function CreateGig({ onClose, onCreated }: CreateGigProps) {
                                 disabled={isPosting}
                             >
                                 {VERIFICATION_METHODS.map(v => (
-                                    <option key={v.id} value={v.id}>{v.icon} {v.label}</option>
+                                    <option key={v.id} value={v.id}>{v.label}</option>
                                 ))}
                             </select>
                         </div>

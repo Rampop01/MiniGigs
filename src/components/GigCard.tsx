@@ -2,7 +2,7 @@
 
 import type { Gig } from '@/lib/constants';
 import { getCategoryInfo, formatCUSD, timeAgo } from '@/lib/utils';
-import { Clock, Shield, Globe } from 'lucide-react';
+import { Clock, ShieldCheck, Globe } from 'lucide-react';
 import styles from './GigCard.module.css';
 
 interface GigCardProps {
@@ -12,7 +12,7 @@ interface GigCardProps {
 
 function VerificationIcon({ method }: { method: string }) {
     if (method === 'worldid') return <Globe size={12} />;
-    if (method === 'self') return <Shield size={12} />;
+    if (method === 'self') return <ShieldCheck size={12} />;
     return null;
 }
 
@@ -22,7 +22,9 @@ export default function GigCard({ gig, onClick }: GigCardProps) {
     return (
         <article className={`card ${styles.card} anim-fade-up`} onClick={onClick}>
             <div className={styles.top}>
-                <span className={styles.catEmoji}>{cat.emoji}</span>
+                <div className={styles.iconBox}>
+                    <cat.Icon size={16} color="var(--primary)" />
+                </div>
                 <div className={styles.meta}>
                     <span className={styles.catLabel}>{cat.label}</span>
                     <span className={styles.dot}>·</span>
@@ -34,7 +36,7 @@ export default function GigCard({ gig, onClick }: GigCardProps) {
             <p className={styles.desc}>{gig.description}</p>
             <div className={styles.tags}>
                 <span className={`badge badge-surface`}>
-                    <Clock size={12} /> {gig.timeEstimate}
+                    <Clock size={12} /> {gig.timeEstimate || '3h'}
                 </span>
                 {gig.verification !== 'none' && (
                     <span className={`badge badge-amber`}>
@@ -42,8 +44,8 @@ export default function GigCard({ gig, onClick }: GigCardProps) {
                         {gig.verification === 'worldid' ? 'World ID' : 'Self Protocol'}
                     </span>
                 )}
-                <span className={`badge badge-green`}>
-                    {gig.status === 'open' ? 'Open' : gig.status}
+                <span className={`badge ${gig.status === 'open' ? 'badge-blue' : 'badge-surface'}`}>
+                    {gig.status === 'open' ? 'Open' : gig.status.charAt(0).toUpperCase() + gig.status.slice(1).replace('_', ' ')}
                 </span>
             </div>
         </article>

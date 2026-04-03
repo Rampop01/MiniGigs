@@ -1,6 +1,21 @@
+import {
+    Globe,
+    Database,
+    ClipboardCheck,
+    TestTube,
+    PenTool,
+    Palette,
+    Layers,
+    ShieldCheck,
+    Zap,
+    Lock
+} from 'lucide-react';
+import { GIG_CATEGORIES } from './constants';
+
 /** Shorten an Ethereum-style address for display */
 export function shortenAddress(addr: string, chars = 4): string {
     if (!addr) return '';
+    if (addr.length < chars * 2 + 2) return addr;
     return `${addr.slice(0, chars + 2)}…${addr.slice(-chars)}`;
 }
 
@@ -16,14 +31,30 @@ export function timeAgo(timestamp: number): string {
     return `${days}d ago`;
 }
 
-/** Get the category emoji + label from a category id */
-import { GIG_CATEGORIES } from './constants';
-
+/** Get the category label and icon component from a category id */
 export function getCategoryInfo(categoryId: string) {
-    return GIG_CATEGORIES.find(c => c.id === categoryId) ?? { id: categoryId, label: categoryId, emoji: '💡' };
+    const category = GIG_CATEGORIES.find(c => c.id === categoryId);
+
+    let Icon = Layers;
+    switch (categoryId) {
+        case 'translation': Icon = Globe; break;
+        case 'data': Icon = Database; break;
+        case 'survey': Icon = ClipboardCheck; break;
+        case 'testing': Icon = TestTube; break;
+        case 'content': Icon = PenTool; break;
+        case 'design': Icon = Palette; break;
+        default: Icon = Layers;
+    }
+
+    return {
+        id: categoryId,
+        label: category?.label ?? categoryId.charAt(0).toUpperCase() + categoryId.slice(1),
+        Icon
+    };
 }
 
 /** Format cUSD amount */
 export function formatCUSD(amount: number): string {
+    if (typeof amount !== 'number') return '0 cUSD';
     return `${amount.toFixed(amount % 1 === 0 ? 0 : 2)} cUSD`;
 }

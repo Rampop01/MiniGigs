@@ -7,14 +7,14 @@
   --bg-surface-elevated: #141414;
   --bg-card-hover: #1A1A1A;
 
-  /* Electric / Shiny Blue */
-  --primary: #00A2FF;
-  --primary-hover: #00CCFF;
-  --primary-glow: rgba(0, 162, 255, 0.5);
-  --primary-subtle: rgba(0, 162, 255, 0.15);
+  /* SaaS / Azure Blue */
+  --primary: #3B82F6;
+  --primary-hover: #2563EB;
+  --primary-glow: rgba(59, 130, 246, 0.4);
+  --primary-subtle: rgba(59, 130, 246, 0.12);
 
-  --secondary-blue: #3A7BD5;
-  --accent-cyan: #00F2FE;
+  --secondary-blue: #1E40AF;
+  --accent-cyan: #60A5FA;
 
   /* Accents */
   --accent-green: #00FF9D;

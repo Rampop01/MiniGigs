@@ -12,7 +12,7 @@ import { MOCK_GIGS, Gig, MINIGIGS_CONTRACT_ADDRESS, CUSD_ADDRESS } from '@/lib/c
 import { useAccount, useBalance, useReadContract, useWriteContract } from 'wagmi';
 import { MINI_GIGS_ABI } from '@/lib/abi';
 import { useGigs } from '@/hooks/useGigs';
-import { Info, Plus, ChevronRight, Award, History, Settings, CheckCircle, Clock, Loader2 } from 'lucide-react';
+import { Info, Plus, ChevronRight, Award, History, Settings, CheckCircle, Clock, Loader2, ClipboardCheck } from 'lucide-react';
 import toast from 'react-hot-toast';
 import styles from './page.module.css';
 
@@ -73,7 +73,9 @@ export default function Home() {
         </div>
       ) : (
         <div className={styles.emptyState}>
-          <div className={styles.emptyIcon}>📋</div>
+          <div className={styles.emptyIcon}>
+            <ClipboardCheck size={48} color="var(--text-tertiary)" />
+          </div>
           <h3>No active tasks</h3>
           <p>Complete your tasks to unlock new micro-gigs.</p>
           <button className="btn-primary" style={{ marginTop: 'var(--sp-4)' }} onClick={() => setActiveTab('explore')}>
@@ -109,14 +111,14 @@ export default function Home() {
         <div className={styles.listSection}>
           <h3 className={styles.listTitle}>Payout History</h3>
           <div className={styles.listItem}>
-            <div className={styles.listIcon} style={{ background: 'var(--accent-green-bg)' }}>
-              <CheckCircle size={16} color="var(--accent-green)" />
+            <div className={styles.listIcon} style={{ background: 'var(--primary-subtle)' }}>
+              <CheckCircle size={16} color="var(--primary)" />
             </div>
             <div className={styles.listInfo}>
               <strong>Market Reward</strong>
               <span>Swahili Localization · 3h ago</span>
             </div>
-            <div className={styles.listAmount} style={{ color: 'var(--accent-green)' }}>+8.00</div>
+            <div className={styles.listAmount} style={{ color: 'var(--primary)' }}>+8.00</div>
           </div>
         </div>
       </div>
