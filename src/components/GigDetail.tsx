@@ -33,16 +33,16 @@ export default function GigDetail({ gig, onClose, onAccept }: GigDetailProps) {
     let actionLabel = 'Accept Gig';
     let showAction = true;
 
-    if (gig.status === 'Open') {
+    if (gig.status === 'open') {
         actionLabel = isPoster ? 'Waiting for Workers' : `Accept Gig — ${formatCUSD(gig.bounty)}`;
         if (isPoster) showAction = false;
-    } else if (gig.status === 'InProgress') {
+    } else if (gig.status === 'in_progress') {
         actionLabel = isWorker ? 'Submit Proof of Work' : 'In Progress';
         if (!isWorker) showAction = false;
-    } else if (gig.status === 'Submitted') {
+    } else if (gig.status === 'submitted') {
         actionLabel = isPoster ? 'Release Funds' : 'Pending Review';
         if (!isPoster) showAction = false;
-    } else if (gig.status === 'Completed') {
+    } else if (gig.status === 'completed') {
         actionLabel = 'Job Completed';
         showAction = false;
     }
@@ -79,7 +79,7 @@ export default function GigDetail({ gig, onClose, onAccept }: GigDetailProps) {
                 <h4 className={styles.sectionLabel}>Description</h4>
                 <p className={styles.description}>{gig.description}</p>
 
-                {gig.status === 'Submitted' && gig.deliverables && (
+                {gig.status === 'submitted' && gig.deliverables && (
                     <>
                         <div className={styles.divider} />
                         <h4 className={styles.sectionLabel}>Deliverables</h4>
@@ -89,14 +89,14 @@ export default function GigDetail({ gig, onClose, onAccept }: GigDetailProps) {
                     </>
                 )}
 
-                {gig.requiresVerification && (
+                {gig.verification !== 'none' && (
                     <>
                         <div className={styles.divider} />
                         <div className={styles.verifyBanner}>
-                            {gig.verificationLevel === 'high' ? <Globe size={18} /> : <Shield size={18} />}
+                            {gig.verification === 'worldid' ? <Globe size={18} /> : <Shield size={18} />}
                             <div>
                                 <strong>Identity Verification Required</strong>
-                                <p>A {gig.verificationLevel === 'high' ? 'World ID' : 'Self Protocol'} check is required for this market.</p>
+                                <p>A {gig.verification === 'worldid' ? 'World ID' : 'Self Protocol'} check is required for this market.</p>
                             </div>
                         </div>
                     </>

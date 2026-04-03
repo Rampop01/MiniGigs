@@ -1,10 +1,10 @@
-# ⚡ MiniGigs — Micro-tasks, Macro-impact on Celo
+# MiniGigs — Micro-tasks, Macro-impact on Celo
 
 MiniGigs is a mobile-first micro-task marketplace built for the Celo ecosystem. It connects posters with global workers to complete lightning-fast tasks like translations, data collection, and surveys, rewarded instantly in **cUSD** stablecoins via **MiniPay**.
 
 ---
 
-## 🚀 Vision
+##  Vision
 Despite the rise of the gig economy, global workers are often limited by high transaction fees and slow cross-border payments. MiniGigs leverages Celo's ultra-low fees and second-fast finality to enable a "pennies-for-minutes" economy that works anywhere in the world.
 
 ### Features
@@ -15,7 +15,7 @@ Despite the rise of the gig economy, global workers are often limited by high tr
 
 ---
 
-## 🛠️ Technology Stack
+##  Technology Stack
 - **Framework**: [Next.js](https://nextjs.org/) (App Router)
 - **Blockchain**: [Celo Mainnet](https://celo.org/)
 - **Payments**: cUSD (Celo Dollar)
@@ -25,7 +25,7 @@ Despite the rise of the gig economy, global workers are often limited by high tr
 
 ---
 
-## 📱 How it Works
+##  How it Works
 1. **Explore**: Browse available micro-gigs categorized by task type and bounty.
 2. **Accept**: Securely accept a gig and lock the escrow.
 3. **Submit**: Complete the task and submit proof-of-work.
@@ -33,7 +33,7 @@ Despite the rise of the gig economy, global workers are often limited by high tr
 
 ---
 
-## 📜 Smart Contract
+##  Smart Contract
 The platform is powered by a robust escrow contract supporting cUSD payments.
 - **Source**: `contracts/MiniGigs.sol`
 - **ABI**: Found in `src/lib/abi.ts`
@@ -52,7 +52,7 @@ The platform is powered by a robust escrow contract supporting cUSD payments.
    npx hardhat run scripts/deploy.js --network celo
    ```
 
-## 🚦 Getting Started
+##  Getting Started
 1. Install dependencies:
    ```bash
    npm install
@@ -69,7 +69,7 @@ The platform is powered by a robust escrow contract supporting cUSD payments.
 
 ---
 
-## 🏆 Proof of Ship Status
+##  Proof of Ship Status
 - [x] Integrate MiniPay / Web3 Wallet
 - [x] UI/UX optimized for mobile screens
 - [x] cUSD stablecoin integration
@@ -77,4 +77,4 @@ The platform is powered by a robust escrow contract supporting cUSD payments.
 - [x] Identity verification hooks
 - [ ] Production escrow contract deployment (Upcoming)
 
-Built with ⚡ and 💚 by the MiniGigs team.
+

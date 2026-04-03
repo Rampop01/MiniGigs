@@ -32,7 +32,7 @@ export const VERIFICATION_METHODS = [
     { id: 'self', label: 'Self Protocol', icon: '🪪' },
 ] as const;
 
-export type GigStatus = 'open' | 'in_progress' | 'submitted' | 'completed' | 'disputed';
+export type GigStatus = 'open' | 'in_progress' | 'submitted' | 'completed' | 'disputed' | 'cancelled';
 
 export interface Gig {
     id: string;

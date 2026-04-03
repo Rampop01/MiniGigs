@@ -58,7 +58,7 @@ export default function Home() {
   // ── Tab: My Tasks (For Workers) ──
   const myTasks = useMemo(() => {
     if (!address) return [];
-    return liveGigs.filter(g => g.worker?.toLowerCase() === address.toLowerCase() && g.status !== 'Completed' && g.status !== 'Cancelled');
+    return liveGigs.filter(g => g.worker?.toLowerCase() === address.toLowerCase() && g.status !== 'completed' && g.status !== 'cancelled');
   }, [liveGigs, address]);
 
   const MyTasksView = () => (
@@ -194,7 +194,7 @@ export default function Home() {
             }
 
             try {
-              if (gig.status === 'Open') {
+              if (gig.status === 'open') {
                 toast.loading('Accepting gig...', { id: 'gig-action' });
                 await writeContractAsync({
                   address: MINIGIGS_CONTRACT_ADDRESS,
@@ -203,7 +203,7 @@ export default function Home() {
                   args: [BigInt(gig.id)],
                 });
                 toast.success('Gig accepted! Go to My Tasks.', { id: 'gig-action' });
-              } else if (gig.status === 'InProgress' && gig.worker?.toLowerCase() === address.toLowerCase()) {
+              } else if (gig.status === 'in_progress' && gig.worker?.toLowerCase() === address.toLowerCase()) {
                 toast.loading('Submitting work...', { id: 'gig-action' });
                 await writeContractAsync({
                   address: MINIGIGS_CONTRACT_ADDRESS,
@@ -212,7 +212,7 @@ export default function Home() {
                   args: [BigInt(gig.id), "Proof of work: Job completed successfully."],
                 });
                 toast.success('Work submitted for review!', { id: 'gig-action' });
-              } else if (gig.status === 'Submitted' && gig.poster?.toLowerCase() === address.toLowerCase()) {
+              } else if (gig.status === 'submitted' && gig.poster?.toLowerCase() === address.toLowerCase()) {
                 toast.loading('Releasing funds...', { id: 'gig-action' });
                 await writeContractAsync({
                   address: MINIGIGS_CONTRACT_ADDRESS,

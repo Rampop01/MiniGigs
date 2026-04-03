@@ -44,20 +44,18 @@ export function useGigs() {
                     if (res.status === 'success' && res.result) {
                         const data = res.result;
                         // Map status uint8 to string
-                        const statusMap = ['Open', 'InProgress', 'Submitted', 'Completed', 'Disputed', 'Cancelled'];
+                        const statusMap: any[] = ['open', 'in_progress', 'submitted', 'completed', 'disputed', 'cancelled'];
 
                         fetchedGigs.push({
                             id: Number(data[0]).toString(),
                             poster: data[1],
                             worker: data[2],
-                            bounty: formatEther(data[3]),
+                            bounty: Number(formatEther(data[3])),
                             title: data[4],
                             description: data[5],
-                            category: 'Other', // Real categories could be parsed from desc or metadata
-                            tags: [],
-                            status: statusMap[data[6]] || 'Open',
-                            requiresVerification: true,
-                            verificationLevel: 'medium',
+                            category: 'other',
+                            status: statusMap[data[6]] || 'open',
+                            verification: 'none',
                             timeEstimate: '3h',
                             createdAt: Number(data[8]),
                         });
