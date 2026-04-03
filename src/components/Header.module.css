@@ -7,68 +7,67 @@
 
 .brand {
     display: flex;
-    align-items: center;
-    gap: var(--sp-3);
+    flex-direction: column;
+    gap: 2px;
 }
 
-.logoMark {
-    width: 44px;
-    height: 44px;
-    border-radius: var(--r-md);
-    background: var(--shiny-gradient);
+.crazyLogo {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 0 20px var(--primary-glow);
+    align-items: baseline;
+    cursor: default;
+    user-select: none;
     position: relative;
-    overflow: hidden;
+    filter: drop-shadow(0 0 15px var(--primary-glow));
 }
 
-.logoMark::after {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-    transform: rotate(45deg);
-    animation: shine 3s infinite;
-}
-
-@keyframes shine {
-    0% {
-        left: -100%;
-        top: -100%;
-    }
-
-    100% {
-        left: 100%;
-        top: 100%;
-    }
-}
-
-.logoIcon {
-    font-size: 24px;
-    filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.5));
-}
-
-.title {
-    font-size: 22px;
+.logoM {
+    font-family: var(--font-heading);
+    font-size: 38px;
     font-weight: 900;
-    line-height: 1;
-    margin-bottom: 4px;
-    letter-spacing: -0.5px;
+    line-height: normal;
+    background: var(--shiny-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transform: skewX(-15deg) scale(1.1);
+    margin-right: -4px;
+    text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.5);
+    display: inline-block;
+    animation: logo-bounce 2s infinite ease-in-out;
+}
+
+.logoText {
+    font-family: var(--font-heading);
+    font-size: 26px;
+    font-weight: 900;
+    letter-spacing: -2px;
     color: #fff;
-    text-shadow: 0 0 10px var(--primary-glow);
+    transform: skewX(-15deg);
+    text-transform: uppercase;
+    background: linear-gradient(180deg, #fff 40%, #00A2FF 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+@keyframes logo-bounce {
+
+    0%,
+    100% {
+        transform: skewX(-15deg) scale(1.1) translateY(0);
+    }
+
+    50% {
+        transform: skewX(-15deg) scale(1.1) translateY(-3px);
+    }
 }
 
 .tagline {
     font-size: 11px;
-    color: var(--primary);
-    font-weight: 700;
+    color: var(--text-tertiary);
+    font-weight: 800;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 2px;
+    margin-top: -4px;
+    padding-left: 2px;
 }
 
 .walletBtn {

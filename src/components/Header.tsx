@@ -1,19 +1,28 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import styles from './Header.module.css';
 
 export default function Header() {
+    const [isMiniPay, setIsMiniPay] = useState(false);
+
+    useEffect(() => {
+        // @ts-ignore - MiniPay specific property
+        if (typeof window !== 'undefined' && window.ethereum?.isMiniPay) {
+            setIsMiniPay(true);
+        }
+    }, []);
+
     return (
         <header className={styles.header}>
             <div className={styles.brand}>
-                <div className={styles.logoMark}>
-                    <span className={styles.logoIcon}>⚡</span>
+                <div className={styles.crazyLogo}>
+                    <span className={styles.logoM}>M</span>
+                    <span className={styles.logoText}>iniGigs</span>
                 </div>
-                <div>
-                    <h1 className={styles.title}>MiniGigs</h1>
-                    <p className={styles.tagline}>Micro-tasks on Celo</p>
-                </div>
+                {!isMiniPay && <p className={styles.tagline}>Micro-tasks on Celo</p>}
+                {isMiniPay && <p className={styles.tagline}>⚡ MiniPay Active</p>}
             </div>
             <ConnectButton.Custom>
                 {({ account, chain, openConnectModal, openAccountModal, mounted }) => {
