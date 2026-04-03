@@ -25,6 +25,9 @@ export const metadata: Metadata = {
     description: 'Complete micro-tasks and earn cUSD instantly via MiniPay.',
     type: 'website',
   },
+  other: {
+    'talentapp:project_verification': '437df7736e73d864ff0e69dd8a8c358abfee7c87c67709b8637925b46f94eadfbb09022826ccf0624fa6510657b3c117080b6ed377c7b000c65cfef30f73a24d',
+  },
 };
 
 export const viewport: Viewport = {
