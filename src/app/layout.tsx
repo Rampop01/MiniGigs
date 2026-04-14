@@ -2,6 +2,9 @@ import type { Metadata, Viewport } from 'next';
 import { Inter, Outfit } from 'next/font/google';
 import './globals.css';
 import Providers from './providers';
+import { headers } from 'next/headers';
+import { cookieToInitialState } from 'wagmi';
+import { wagmiConfig } from '@/lib/web3';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -37,15 +40,20 @@ export const viewport: Viewport = {
   themeColor: '#0D0C12',
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const initialState = cookieToInitialState(
+    wagmiConfig,
+    (await headers()).get('cookie')
+  );
+
   return (
     <html lang="en" className={`${inter.variable} ${outfit.variable}`}>
       <body>
-        <Providers>{children}</Providers>
+        <Providers initialState={initialState}>{children}</Providers>
       </body>
     </html>
   );

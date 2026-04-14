@@ -28,32 +28,36 @@ export default function Home() {
 
   // ── Tab: Explore (The Marketplace) ──
   const filteredGigs = useMemo(() => {
-    // Combine live and mock data for demo, or just live
-    const allGigs = [...liveGigs, ...MOCK_GIGS];
-    if (selectedCategory === 'all') return allGigs;
-    return allGigs.filter(g => g.category === selectedCategory);
+    // Only use live data at the contract
+    if (selectedCategory === 'all') return liveGigs;
+    return liveGigs.filter(g => g.category === selectedCategory);
   }, [selectedCategory, liveGigs]);
 
-  const ExploreView = () => (
-    <div className={`${styles.tabContent} anim-slide-up`}>
-      <StatsBanner />
+  const ExploreView = () => {
+    const openGigs = liveGigs.filter(g => g.status === 'open').length;
+    const totalBounty = liveGigs.reduce((acc, g) => acc + (g.status === 'open' ? g.bounty : 0), 0);
 
-      <div className={styles.sectionHeader}>
-        <h2 className={styles.sectionTitle}>Marketplace {isGigsLoading && <Loader2 className="animate-spin inline-block ml-2" size={16} />}</h2>
-        <button className={styles.addBtn} onClick={() => setShowCreateModal(true)}>
-          <Plus size={18} /> Post Gig
-        </button>
+    return (
+      <div className={`${styles.tabContent} anim-slide-up`}>
+        <StatsBanner openGigs={openGigs} totalBounty={totalBounty} />
+
+        <div className={styles.sectionHeader}>
+          <h2 className={styles.sectionTitle}>Marketplace {isGigsLoading && <Loader2 className="animate-spin inline-block ml-2" size={16} />}</h2>
+          <button className={styles.addBtn} onClick={() => setShowCreateModal(true)}>
+            <Plus size={18} /> Post Gig
+          </button>
+        </div>
+
+        <CategoryFilter selected={selectedCategory} onChange={setSelectedCategory} />
+
+        <div className={styles.gigGrid}>
+          {filteredGigs.map(gig => (
+            <GigCard key={gig.id} gig={gig} onClick={() => setSelectedGig(gig)} />
+          ))}
+        </div>
       </div>
-
-      <CategoryFilter selected={selectedCategory} onChange={setSelectedCategory} />
-
-      <div className={styles.gigGrid}>
-        {filteredGigs.map(gig => (
-          <GigCard key={gig.id} gig={gig} onClick={() => setSelectedGig(gig)} />
-        ))}
-      </div>
-    </div>
-  );
+    );
+  };
 
   // ── Tab: My Tasks (For Workers) ──
   const myTasks = useMemo(() => {
@@ -110,16 +114,24 @@ export default function Home() {
 
         <div className={styles.listSection}>
           <h3 className={styles.listTitle}>Payout History</h3>
-          <div className={styles.listItem}>
-            <div className={styles.listIcon} style={{ background: 'var(--primary-subtle)' }}>
-              <CheckCircle size={16} color="var(--primary)" />
-            </div>
-            <div className={styles.listInfo}>
-              <strong>Market Reward</strong>
-              <span>Swahili Localization · 3h ago</span>
-            </div>
-            <div className={styles.listAmount} style={{ color: 'var(--primary)' }}>+8.00</div>
-          </div>
+          {liveGigs.filter(g => g.status === 'completed' && (g.worker?.toLowerCase() === address?.toLowerCase() || g.poster?.toLowerCase() === address?.toLowerCase())).length > 0 ? (
+            liveGigs.filter(g => g.status === 'completed' && (g.worker?.toLowerCase() === address?.toLowerCase() || g.poster?.toLowerCase() === address?.toLowerCase())).map(gig => (
+              <div key={gig.id} className={styles.listItem}>
+                <div className={styles.listIcon} style={{ background: 'var(--primary-subtle)' }}>
+                  <CheckCircle size={16} color="var(--primary)" />
+                </div>
+                <div className={styles.listInfo}>
+                  <strong>{gig.title}</strong>
+                  <span>{gig.worker?.toLowerCase() === address?.toLowerCase() ? 'Earned' : 'Paid'} · {new Date(gig.createdAt * 1000).toLocaleDateString()}</span>
+                </div>
+                <div className={styles.listAmount} style={{ color: gig.worker?.toLowerCase() === address?.toLowerCase() ? 'var(--accent-green)' : 'var(--accent-rose)' }}>
+                  {gig.worker?.toLowerCase() === address?.toLowerCase() ? '+' : '-'}{gig.bounty.toFixed(2)}
+                </div>
+              </div>
+            ))
+          ) : (
+            <div className={styles.emptyListItem}>No recent payouts</div>
+          )}
         </div>
       </div>
     );
@@ -142,11 +154,11 @@ export default function Home() {
 
       <div className={styles.statsGrid}>
         <div className={styles.statBox}>
-          <span className={styles.statVal}>24</span>
+          <span className={styles.statVal}>{liveGigs.filter(g => g.worker?.toLowerCase() === address?.toLowerCase() && g.status === 'completed').length}</span>
           <span className={styles.statLab}>Finished</span>
         </div>
         <div className={styles.statBox}>
-          <span className={styles.statVal}>$312</span>
+          <span className={styles.statVal}>${liveGigs.filter(g => g.worker?.toLowerCase() === address?.toLowerCase() && g.status === 'completed').reduce((acc, g) => acc + g.bounty, 0).toFixed(0)}</span>
           <span className={styles.statLab}>Earned</span>
         </div>
         <div className={styles.statBox}>
@@ -203,6 +215,8 @@ export default function Home() {
                   abi: MINI_GIGS_ABI,
                   functionName: 'acceptGig',
                   args: [BigInt(gig.id)],
+                  // @ts-ignore - feeCurrency is supported on Celo
+                  feeCurrency: CUSD_ADDRESS as `0x${string}`,
                 });
                 toast.success('Gig accepted! Go to My Tasks.', { id: 'gig-action' });
               } else if (gig.status === 'in_progress' && gig.worker?.toLowerCase() === address.toLowerCase()) {
@@ -212,6 +226,8 @@ export default function Home() {
                   abi: MINI_GIGS_ABI,
                   functionName: 'submitWork',
                   args: [BigInt(gig.id), "Proof of work: Job completed successfully."],
+                  // @ts-ignore - feeCurrency is supported on Celo
+                  feeCurrency: CUSD_ADDRESS as `0x${string}`,
                 });
                 toast.success('Work submitted for review!', { id: 'gig-action' });
               } else if (gig.status === 'submitted' && gig.poster?.toLowerCase() === address.toLowerCase()) {
@@ -221,6 +237,8 @@ export default function Home() {
                   abi: MINI_GIGS_ABI,
                   functionName: 'completeGig',
                   args: [BigInt(gig.id)],
+                  // @ts-ignore - feeCurrency is supported on Celo
+                  feeCurrency: CUSD_ADDRESS as `0x${string}`,
                 });
                 toast.success('Funds released to worker!', { id: 'gig-action' });
               }

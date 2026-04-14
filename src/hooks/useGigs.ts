@@ -46,17 +46,35 @@ export function useGigs() {
                         // Map status uint8 to string
                         const statusMap: any[] = ['open', 'in_progress', 'submitted', 'completed', 'disputed', 'cancelled'];
 
+                        // Try to unpack metadata
+                        let finalDesc = data[5];
+                        let finalCat = 'other';
+                        let finalVer = 'none';
+                        let finalTime = '3h';
+
+                        try {
+                            if (data[5] && typeof data[5] === 'string' && data[5].startsWith('{')) {
+                                const meta = JSON.parse(data[5]);
+                                finalDesc = meta.desc || data[5];
+                                finalCat = meta.cat || 'other';
+                                finalVer = meta.ver || 'none';
+                                finalTime = meta.time || '3h';
+                            }
+                        } catch (e) {
+                            // Fallback to raw data if not JSON
+                        }
+
                         fetchedGigs.push({
                             id: Number(data[0]).toString(),
                             poster: data[1],
                             worker: data[2],
                             bounty: Number(formatEther(data[3])),
                             title: data[4],
-                            description: data[5],
-                            category: 'other',
+                            description: finalDesc,
+                            category: finalCat,
                             status: statusMap[data[6]] || 'open',
-                            verification: 'none',
-                            timeEstimate: '3h',
+                            verification: finalVer,
+                            timeEstimate: finalTime,
                             createdAt: Number(data[8]),
                         });
                     }

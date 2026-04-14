@@ -1,18 +1,25 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { ConnectButton } from '@rainbow-me/rainbowkit';
+import { ConnectButton, useConnectModal } from '@rainbow-me/rainbowkit';
+import { useAccount } from 'wagmi';
 import styles from './Header.module.css';
 
 export default function Header() {
     const [isMiniPay, setIsMiniPay] = useState(false);
+    const { isConnected } = useAccount();
+    const { openConnectModal } = useConnectModal();
 
     useEffect(() => {
         // @ts-ignore - MiniPay specific property
         if (typeof window !== 'undefined' && window.ethereum?.isMiniPay) {
             setIsMiniPay(true);
+            // Auto-trigger connect modal if in MiniPay and not connected
+            if (!isConnected && openConnectModal) {
+                openConnectModal();
+            }
         }
-    }, []);
+    }, [isConnected, openConnectModal]);
 
     return (
         <header className={styles.header}>
