@@ -2,12 +2,15 @@
 
 // Deployed MiniGigs contract address on Celo Mainnet
 export const MINIGIGS_CONTRACT_ADDRESS = '0x2eADE8A2C7F2561136180451545F0a4d938Ba694' as const;
+export const MINIGIGS_CONTRACT_ADDRESS_ALFAJORES = '0x...' as const; // Add your testnet address here
 
-// cUSD Stablecoin on Celo Mainnet
-export const CUSD_ADDRESS = '0x765DE816845861e75A25fCA122bb6898B8B1282a' as const;
+// cUSD Stablecoin 
+export const CUSD_ADDRESS = '0x765DE816845861e75A25fCA122bb6898B8B1282a' as const; // Mainnet
+export const CUSD_ADDRESS_ALFAJORES = '0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1' as const; // Alfajores
 
 // Chain IDs
 export const CELO_CHAIN_ID = 42220;
+export const CELO_ALFAJORES_CHAIN_ID = 44787;
 
 // Task / Gig categories
 export const GIG_CATEGORIES = [

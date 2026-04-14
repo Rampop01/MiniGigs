@@ -1,13 +1,22 @@
-import { http } from 'wagmi';
-import { celo } from 'wagmi/chains';
-import { getDefaultConfig } from '@rainbow-me/rainbowkit';
+import { http, createConfig, createStorage, cookieStorage } from 'wagmi';
+import { celo, celoAlfajores } from 'wagmi/chains';
+import { injected, walletConnect, coinbaseWallet } from 'wagmi/connectors';
 
-export const wagmiConfig = getDefaultConfig({
-    appName: 'MiniGigs',
-    projectId: process.env.NEXT_PUBLIC_WC_PROJECT_ID || 'demo_project_id',
-    chains: [celo],
-    transports: {
-        [celo.id]: http('https://forno.celo.org'),
-    },
+const projectId = process.env.NEXT_PUBLIC_WC_PROJECT_ID || 'demo_project_id';
+
+export const wagmiConfig = createConfig({
+    chains: [celo, celoAlfajores],
+    connectors: [
+        injected(),
+        walletConnect({ projectId }),
+        coinbaseWallet({ appName: 'MiniGigs' }),
+    ],
+    storage: createStorage({
+        storage: cookieStorage,
+    }),
     ssr: true,
+    transports: {
+        [celo.id]: http(),
+        [celoAlfajores.id]: http(),
+    },
 });
