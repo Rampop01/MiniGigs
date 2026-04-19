@@ -17,10 +17,15 @@ import toast from 'react-hot-toast';
 import styles from './page.module.css';
 
 export default function Home() {
+  const [mounted, setMounted] = useState(false);
   const [activeTab, setActiveTab] = useState<TabId>('explore');
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [selectedGig, setSelectedGig] = useState<Gig | null>(null);
   const [showCreateModal, setShowCreateModal] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const { address, isConnected } = useAccount();
   const { writeContractAsync } = useWriteContract();
@@ -181,6 +186,9 @@ export default function Home() {
       </div>
     </div>
   );
+
+  // Prevent hydration mismatch
+  if (!mounted) return null;
 
   return (
     <div className="layout-mobile">
