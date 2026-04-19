@@ -76,6 +76,17 @@
     gap: var(--sp-4);
 }
 
+@media (max-width: 480px) {
+    .row {
+        flex-direction: column;
+        gap: var(--sp-3);
+    }
+
+    .modal {
+        padding: var(--sp-5);
+    }
+}
+
 .submitBtn {
     width: 100%;
     padding: 18px;
