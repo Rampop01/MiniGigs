@@ -31,6 +31,18 @@ export default function Home() {
   const { writeContractAsync } = useWriteContract();
   const { gigs: liveGigs, isLoading: isGigsLoading } = useGigs();
 
+  // Admin Hooks
+  const { data: ownerAddress } = useReadContract({
+    address: MINIGIGS_CONTRACT_ADDRESS,
+    abi: MINI_GIGS_ABI,
+    functionName: 'owner',
+  });
+
+  const { data: contractBalance } = useBalance({
+    address: MINIGIGS_CONTRACT_ADDRESS,
+    token: CUSD_ADDRESS as `0x${string}`,
+  });
+
   // ── Tab: Explore (The Marketplace) ──
   const filteredGigs = useMemo(() => {
     // Only use live data at the contract
@@ -184,6 +196,45 @@ export default function Home() {
           <ChevronRight size={16} />
         </div>
       </div>
+
+      {/* ── Admin Dashboard (Only visible to Deployer) ── */}
+      {address && ownerAddress && address.toLowerCase() === (ownerAddress as string).toLowerCase() && (
+        <div className={styles.listSection} style={{ marginTop: 'var(--sp-6)' }}>
+          <h3 className={styles.listTitle} style={{ color: 'var(--accent-amber)' }}>Admin Controls</h3>
+          <div className={styles.balanceCard} style={{ background: 'var(--bg-surface-elevated)' }}>
+            <span className={styles.balanceLabel}>Accumulated Platform Fees</span>
+            <div className={styles.balanceValue}>
+              {contractBalance ? Number(contractBalance.formatted).toFixed(2) : '0.00'} <span>cUSD</span>
+            </div>
+            <div className={styles.balanceActions}>
+              <button
+                className="btn-primary"
+                style={{ width: '100%', background: 'var(--accent-amber-bg)', color: 'var(--accent-amber)', borderColor: 'var(--accent-amber)' }}
+                onClick={async () => {
+                  if (!contractBalance || contractBalance.value === BigInt(0)) {
+                    toast.error("No fees to withdraw yet!");
+                    return;
+                  }
+                  try {
+                    toast.loading("Withdrawing fees...", { id: 'admin' });
+                    await writeContractAsync({
+                      address: MINIGIGS_CONTRACT_ADDRESS,
+                      abi: MINI_GIGS_ABI,
+                      functionName: 'withdrawFees',
+                      args: [contractBalance.value],
+                    });
+                    toast.success("Fees withdrawn successfully!", { id: 'admin' });
+                  } catch (e: any) {
+                    toast.error(e.shortMessage || "Withdrawal failed", { id: 'admin' });
+                  }
+                }}
+              >
+                Withdraw Profits To Personal Wallet
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 
