@@ -50,17 +50,10 @@ export default function Home() {
     return liveGigs.filter(g => g.category === selectedCategory);
   }, [selectedCategory, liveGigs]);
 
-<<<<<<< Updated upstream
-  const ExploreView = () => {
-    const activeStatuses = ['open', 'in_progress', 'submitted'];
-    const openGigs = liveGigs.filter(g => activeStatuses.includes(g.status)).length;
-    const totalBounty = liveGigs.reduce((acc, g) => acc + (activeStatuses.includes(g.status) ? g.bounty : 0), 0);
-=======
     const ExploreView = () => {
         const activeStatuses = ['open', 'in_progress', 'submitted'];
         const openGigs = liveGigs.filter(g => activeStatuses.includes(g.status)).length;
         const totalBounty = liveGigs.reduce((acc, g) => acc + (activeStatuses.includes(g.status) ? g.bounty : 0), 0);
->>>>>>> Stashed changes
 
     return (
       <div className={`${styles.tabContent} anim-slide-up`}>
