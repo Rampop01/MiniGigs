@@ -211,7 +211,7 @@ export default function Home() {
               if (gig.status === 'open') {
                 toast.loading('Accepting gig...', { id: 'gig-action' });
                 await writeContractAsync({
-                  address: MINIGIGS_CONTRACT_ADDRESS,
+                  address: MINIGIGS_CONTRACT_ADDRESS as `0x${string}`,
                   abi: MINI_GIGS_ABI,
                   functionName: 'acceptGig',
                   args: [BigInt(gig.id)],
