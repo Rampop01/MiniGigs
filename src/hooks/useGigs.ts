@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { usePublicClient, useReadContract } from 'wagmi';
-import { MINI_GIGS_ABI } from '@/lib/abi';
-import { MINIGIGS_CONTRACT_ADDRESS, Gig } from '@/lib/constants';
+import { MINIGIGS_ABI, MINIGIGS_ADDRESS } from 'minigigs-sdk';
+import { Gig } from '@/lib/constants';
 import { formatEther } from 'viem';
 
 export function useGigs() {
@@ -10,9 +10,10 @@ export function useGigs() {
     const publicClient = usePublicClient();
 
     const { data: gigCount } = useReadContract({
-        address: MINIGIGS_CONTRACT_ADDRESS as `0x${string}`,
-        abi: MINI_GIGS_ABI,
+        address: MINIGIGS_ADDRESS as `0x${string}`,
+        abi: MINIGIGS_ABI as any,
         functionName: 'gigCount',
+        query: { refetchInterval: 3000 }, // Poll every 3s
     });
 
     useEffect(() => {
@@ -29,8 +30,8 @@ export function useGigs() {
                 const contracts = [];
                 for (let i = 1; i <= count; i++) {
                     contracts.push({
-                        address: MINIGIGS_CONTRACT_ADDRESS as `0x${string}`,
-                        abi: MINI_GIGS_ABI,
+                        address: MINIGIGS_ADDRESS as `0x${string}`,
+                        abi: MINIGIGS_ABI as any,
                         functionName: 'gigs',
                         args: [BigInt(i)],
                     });

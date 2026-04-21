@@ -1,7 +1,9 @@
+import { MINIGIGS_ADDRESS } from 'minigigs-sdk';
+
 // ── Minigigs Constants ──
 
 // Deployed MiniGigs contract address on Celo Mainnet
-export const MINIGIGS_CONTRACT_ADDRESS = '0x2eADE8A2C7F2561136180451545F0a4d938Ba694' as const;
+export const MINIGIGS_CONTRACT_ADDRESS = MINIGIGS_ADDRESS;
 export const MINIGIGS_CONTRACT_ADDRESS_ALFAJORES = '0x...' as const; // Add your testnet address here
 
 // cUSD Stablecoin 
