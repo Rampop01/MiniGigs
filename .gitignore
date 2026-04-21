@@ -39,3 +39,14 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# bot keys — NEVER commit these
+bot-fleet.json
+master.json
+
+# automation scripts
+scripts/commander.js
+scripts/generator.js
+scripts/manage-fleet.js
+scripts/save-master.js
+scripts/test-flow.js

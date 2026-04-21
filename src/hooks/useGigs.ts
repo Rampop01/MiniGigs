@@ -75,7 +75,7 @@ export function useGigs() {
                             status: statusMap[data[6]] || 'open',
                             verification: finalVer,
                             timeEstimate: finalTime,
-                            createdAt: Number(data[8]),
+                            createdAt: Number(data[8]) * 1000, // Convert seconds → milliseconds
                         });
                     }
                 });

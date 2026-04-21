@@ -51,8 +51,9 @@ export default function Home() {
   }, [selectedCategory, liveGigs]);
 
   const ExploreView = () => {
-    const openGigs = liveGigs.filter(g => g.status === 'open').length;
-    const totalBounty = liveGigs.reduce((acc, g) => acc + (g.status === 'open' ? g.bounty : 0), 0);
+    const activeStatuses = ['open', 'in_progress', 'submitted'];
+    const openGigs = liveGigs.filter(g => activeStatuses.includes(g.status)).length;
+    const totalBounty = liveGigs.reduce((acc, g) => acc + (activeStatuses.includes(g.status) ? g.bounty : 0), 0);
 
     return (
       <div className={`${styles.tabContent} anim-slide-up`}>
@@ -139,7 +140,7 @@ export default function Home() {
                 </div>
                 <div className={styles.listInfo}>
                   <strong>{gig.title}</strong>
-                  <span>{gig.worker?.toLowerCase() === address?.toLowerCase() ? 'Earned' : 'Paid'} · {new Date(gig.createdAt * 1000).toLocaleDateString()}</span>
+                  <span>{gig.worker?.toLowerCase() === address?.toLowerCase() ? 'Earned' : 'Paid'} · {new Date(gig.createdAt).toLocaleDateString()}</span>
                 </div>
                 <div className={styles.listAmount} style={{ color: gig.worker?.toLowerCase() === address?.toLowerCase() ? 'var(--accent-green)' : 'var(--accent-rose)' }}>
                   {gig.worker?.toLowerCase() === address?.toLowerCase() ? '+' : '-'}{gig.bounty.toFixed(2)}
