@@ -50,10 +50,17 @@ export default function Home() {
     return liveGigs.filter(g => g.category === selectedCategory);
   }, [selectedCategory, liveGigs]);
 
+<<<<<<< Updated upstream
   const ExploreView = () => {
     const activeStatuses = ['open', 'in_progress', 'submitted'];
     const openGigs = liveGigs.filter(g => activeStatuses.includes(g.status)).length;
     const totalBounty = liveGigs.reduce((acc, g) => acc + (activeStatuses.includes(g.status) ? g.bounty : 0), 0);
+=======
+    const ExploreView = () => {
+        const activeStatuses = ['open', 'in_progress', 'submitted'];
+        const openGigs = liveGigs.filter(g => activeStatuses.includes(g.status)).length;
+        const totalBounty = liveGigs.reduce((acc, g) => acc + (activeStatuses.includes(g.status) ? g.bounty : 0), 0);
+>>>>>>> Stashed changes
 
     return (
       <div className={`${styles.tabContent} anim-slide-up`}>
@@ -261,7 +268,7 @@ export default function Home() {
         <GigDetail
           gig={selectedGig}
           onClose={() => setSelectedGig(null)}
-          onAccept={async (gig) => {
+          onAccept={async (gig, deliverables) => {
             if (!isConnected || !address) {
               toast.error('Connect your wallet first');
               return;
@@ -285,7 +292,7 @@ export default function Home() {
                   address: MINIGIGS_CONTRACT_ADDRESS,
                   abi: MINI_GIGS_ABI,
                   functionName: 'submitWork',
-                  args: [BigInt(gig.id), "Proof of work: Job completed successfully."],
+                  args: [BigInt(gig.id), deliverables || "No proof provided"],
                   // @ts-ignore - feeCurrency is supported on Celo
                   feeCurrency: CUSD_ADDRESS as `0x${string}`,
                 });

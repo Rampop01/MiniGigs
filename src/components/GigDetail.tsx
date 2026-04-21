@@ -1,4 +1,5 @@
 'use client';
+import { useState } from 'react';
 
 import type { Gig } from '@/lib/constants';
 import { getCategoryInfo, formatCUSD, timeAgo, shortenAddress } from '@/lib/utils';
@@ -10,10 +11,11 @@ import styles from './GigDetail.module.css';
 interface GigDetailProps {
     gig: Gig;
     onClose: () => void;
-    onAccept?: (gig: Gig) => void;
+    onAccept?: (gig: Gig, deliverables?: string) => void;
 }
 
 export default function GigDetail({ gig, onClose, onAccept }: GigDetailProps) {
+    const [proof, setProof] = useState('');
     const { address, isConnected } = useAccount();
     const cat = getCategoryInfo(gig.category);
 
@@ -25,8 +27,14 @@ export default function GigDetail({ gig, onClose, onAccept }: GigDetailProps) {
             toast.error('Please connect your wallet first');
             return;
         }
+        
+        if (gig.status === 'in_progress' && isWorker && !proof.trim()) {
+            toast.error('Please enter a link to your deliverables or proof of work.');
+            return;
+        }
+
         // All actions (Accept, Submit, Complete) are passed back to the orchestrator
-        onAccept?.(gig);
+        onAccept?.(gig, proof);
     };
 
     // Determine button text and visibility
@@ -102,6 +110,20 @@ export default function GigDetail({ gig, onClose, onAccept }: GigDetailProps) {
                                 <p>A {gig.verification === 'worldid' ? 'World ID' : 'Self Protocol'} check is required for this market.</p>
                             </div>
                         </div>
+                    </>
+                )}
+
+                {gig.status === 'in_progress' && isWorker && (
+                    <>
+                        <div className={styles.divider} />
+                        <h4 className={styles.sectionLabel}>Submit Your Work</h4>
+                        <textarea
+                            className="input"
+                            style={{ minHeight: '100px', width: '100%', resize: 'vertical' }}
+                            placeholder="Paste a link to your Google Doc, Figma file, or GitHub repo..."
+                            value={proof}
+                            onChange={(e) => setProof(e.target.value)}
+                        />
                     </>
                 )}
 
