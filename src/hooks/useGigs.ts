@@ -1,100 +1,149 @@
 import { useState, useEffect } from 'react';
-import { usePublicClient, useReadContract } from 'wagmi';
-import { MINIGIGS_ABI, MINIGIGS_ADDRESS } from 'minigigs-sdk';
-import { Gig } from '@/lib/constants';
-import { formatEther } from 'viem';
+import { MINI_GIGS_ABI } from '@/lib/abi';
+import { MINIGIGS_CONTRACT_ADDRESS, Gig, GigStatus } from '@/lib/constants';
+import { formatEther, decodeFunctionResult } from 'viem';
+
+// Verified correct keccak256 selectors:
+// gigCount()    => 0x3689e916
+// gigs(uint256) => 0x5e3fbdc8
+const GIGS_COUNT_SELECTOR = '0x3689e916';
+const GIGS_SELECTOR = '0x5e3fbdc8';
+const RPC_URLS = [
+    'https://forno.celo.org',
+    'https://rpc.ankr.com/celo',
+];
+
+async function rpcCall(data: string, rpcUrl: string) {
+    const res = await fetch(rpcUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            jsonrpc: '2.0',
+            id: Date.now(),
+            method: 'eth_call',
+            params: [{ to: MINIGIGS_CONTRACT_ADDRESS, data }, 'latest']
+        })
+    });
+    const json = await res.json();
+    if (json.error) throw new Error(json.error.message);
+    return json.result;
+}
+
+async function rpcCallWithFallback(data: string): Promise<string | null> {
+    for (const url of RPC_URLS) {
+        try {
+            const result = await rpcCall(data, url);
+            if (result && result !== '0x') return result;
+        } catch (e) {
+            console.warn(`RPC ${url} failed, trying next...`);
+        }
+    }
+    return null;
+}
 
 export function useGigs() {
     const [gigs, setGigs] = useState<Gig[]>([]);
     const [isLoading, setIsLoading] = useState(true);
-    const publicClient = usePublicClient();
+    const [gigCount, setGigCount] = useState<number>(0);
 
-    const { data: gigCount } = useReadContract({
-        address: MINIGIGS_ADDRESS as `0x${string}`,
-        abi: MINIGIGS_ABI as any,
-        functionName: 'gigCount',
-        query: { refetchInterval: 3000 }, // Poll every 3s
-    });
-
+    // Step 1: Fetch gig count
     useEffect(() => {
-        async function fetchGigs() {
-            if (!gigCount || !publicClient) return;
-
+        async function fetchCount() {
             try {
-                setIsLoading(true);
-                const count = Number(gigCount);
-                const fetchedGigs: Gig[] = [];
-
-                // Fetch gigs from 1 to gigCount
-                // In a real app with many gigs, use an indexer or pagination
-                const contracts = [];
-                for (let i = 1; i <= count; i++) {
-                    contracts.push({
-                        address: MINIGIGS_ADDRESS as `0x${string}`,
-                        abi: MINIGIGS_ABI as any,
-                        functionName: 'gigs',
-                        args: [BigInt(i)],
-                    });
+                const result = await rpcCallWithFallback(GIGS_COUNT_SELECTOR);
+                if (result) {
+                    const count = parseInt(result, 16);
+                    console.log('✅ Gig count:', count);
+                    setGigCount(count);
                 }
-
-                const results = await publicClient.multicall({
-                    contracts: contracts as any,
-                });
-
-                results.forEach((res: any, index) => {
-                    if (res.status === 'success' && res.result) {
-                        const data = res.result;
-                        // Map status uint8 to string
-                        const statusMap: any[] = ['open', 'in_progress', 'submitted', 'completed', 'disputed', 'cancelled'];
-
-                        // Try to unpack metadata
-                        let finalDesc = data[5];
-                        let finalCat = 'other';
-                        let finalVer = 'none';
-                        let finalTime = '3h';
-
-                        try {
-                            if (data[5] && typeof data[5] === 'string' && data[5].startsWith('{')) {
-                                const meta = JSON.parse(data[5]);
-                                finalDesc = meta.desc || data[5];
-                                finalCat = meta.cat || 'other';
-                                finalVer = meta.ver || 'none';
-                                finalTime = meta.time || '3h';
-                            }
-                        } catch (e) {
-                            // Fallback to raw data if not JSON
-                        }
-
-                        fetchedGigs.push({
-                            id: Number(data[0]).toString(),
-                            poster: data[1],
-                            worker: data[2],
-                            bounty: Number(formatEther(data[3])),
-                            title: data[4],
-                            description: finalDesc,
-                            category: finalCat,
-                            status: statusMap[data[6]] || 'open',
-                            verification: finalVer,
-                            timeEstimate: finalTime,
-                            createdAt: Number(data[8]),
-                        });
-                    }
-                });
-
-                setGigs(fetchedGigs.reverse()); // Show newest first
-            } catch (error) {
-                console.error('Failed to fetch gigs', error);
-            } finally {
-                setIsLoading(false);
+            } catch (e) {
+                console.error('Failed to fetch gig count:', e);
             }
         }
+        fetchCount();
+        const interval = setInterval(fetchCount, 10000);
+        return () => clearInterval(interval);
+    }, []);
 
-        if (gigCount) {
-            fetchGigs();
-        } else {
+    // Step 2: Fetch gig details whenever count changes
+    useEffect(() => {
+        if (gigCount === 0) {
+            setIsLoading(false);
+            return;
+        }
+
+        async function fetchGigs() {
+            setIsLoading(true);
+            const fetchedGigs: Gig[] = [];
+
+            // Fetch the last 20 gigs (newest first)
+            const limit = Math.min(gigCount, 20);
+            const start = gigCount - limit + 1;
+
+            console.log(`📡 Fetching gigs ${start} to ${gigCount}...`);
+
+            for (let i = gigCount; i >= start; i--) {
+                try {
+                    const calldata = `${GIGS_SELECTOR}${BigInt(i).toString(16).padStart(64, '0')}`;
+                    const result = await rpcCallWithFallback(calldata);
+
+                    if (!result || result === '0x') continue;
+
+                    const data: any = decodeFunctionResult({
+                        abi: MINI_GIGS_ABI,
+                        functionName: 'gigs',
+                        data: result as `0x${string}`
+                    });
+
+                    if (!data) continue;
+
+                    const statusMap: GigStatus[] = ['open', 'in_progress', 'submitted', 'completed', 'disputed', 'cancelled'];
+
+                    // viem returns named properties for named tuple fields
+                    const rawDesc = (data.description ?? data[5] ?? '') as string;
+                    let finalDesc = rawDesc;
+                    let finalCat = 'other';
+                    let finalVer = 'none';
+                    let finalTime = '3h';
+
+                    try {
+                        if (rawDesc.startsWith('{')) {
+                            const meta = JSON.parse(rawDesc);
+                            finalDesc = meta.desc || rawDesc;
+                            finalCat = meta.cat || 'other';
+                            finalVer = meta.ver || 'none';
+                            finalTime = meta.time || '3h';
+                        }
+                    } catch (_) {}
+
+                    const statusIdx = Number(data.status ?? data[6] ?? 0);
+                    const workerAddr = (data.worker ?? data[2] ?? '') as string;
+
+                    fetchedGigs.push({
+                        id: i.toString(),
+                        poster: (data.poster ?? data[1] ?? '') as string,
+                        worker: workerAddr === '0x0000000000000000000000000000000000000000' ? null : workerAddr,
+                        bounty: Number(formatEther((data.bounty ?? data[3] ?? 0n) as bigint)),
+                        title: (data.title ?? data[4] ?? `Gig #${i}`) as string,
+                        description: finalDesc,
+                        category: finalCat,
+                        status: statusMap[statusIdx] ?? 'open',
+                        verification: finalVer,
+                        timeEstimate: finalTime,
+                        createdAt: Number(data.createdAt ?? data[8] ?? 0) * 1000,
+                    });
+                } catch (e) {
+                    console.error(`Failed to fetch gig #${i}:`, e);
+                }
+            }
+
+            console.log(`✅ Loaded ${fetchedGigs.length} gigs`);
+            setGigs(fetchedGigs);
             setIsLoading(false);
         }
-    }, [gigCount, publicClient]);
+
+        fetchGigs();
+    }, [gigCount]);
 
     return { gigs, isLoading, gigCount };
 }

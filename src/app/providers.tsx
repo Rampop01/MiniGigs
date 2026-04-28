@@ -1,24 +1,18 @@
 'use client';
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { WagmiProvider, type State } from 'wagmi';
+import { WagmiProvider } from 'wagmi';
 import { RainbowKitProvider, darkTheme } from '@rainbow-me/rainbowkit';
 import '@rainbow-me/rainbowkit/styles.css';
 import { wagmiConfig } from '@/lib/web3';
 import { useState, type ReactNode } from 'react';
 import { Toaster } from 'react-hot-toast';
 
-export default function Providers({
-    children,
-    initialState
-}: {
-    children: ReactNode;
-    initialState?: State;
-}) {
+export default function Providers({ children }: { children: ReactNode }) {
     const [queryClient] = useState(() => new QueryClient());
 
     return (
-        <WagmiProvider config={wagmiConfig} initialState={initialState}>
+        <WagmiProvider config={wagmiConfig}>
             <QueryClientProvider client={queryClient}>
                 <RainbowKitProvider
                     theme={darkTheme({

@@ -1,10 +1,10 @@
 import type { Metadata, Viewport } from 'next';
 import { Inter, Outfit } from 'next/font/google';
 import './globals.css';
-import Providers from './providers';
-import { headers } from 'next/headers';
-import { cookieToInitialState } from 'wagmi';
-import { wagmiConfig } from '@/lib/web3';
+import dynamic from 'next/dynamic';
+
+// Load wallet providers client-side ONLY — prevents localStorage SSR crash from WalletConnect
+const Providers = dynamic(() => import('./providers'), { ssr: false });
 
 const inter = Inter({
   subsets: ['latin'],
@@ -40,20 +40,15 @@ export const viewport: Viewport = {
   themeColor: '#0D0C12',
 };
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const initialState = cookieToInitialState(
-    wagmiConfig,
-    (await headers()).get('cookie')
-  );
-
   return (
     <html lang="en" className={`${inter.variable} ${outfit.variable}`}>
       <body>
-        <Providers initialState={initialState}>{children}</Providers>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );
