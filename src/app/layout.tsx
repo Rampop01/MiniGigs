@@ -1,10 +1,9 @@
 import type { Metadata, Viewport } from 'next';
 import { Inter, Outfit } from 'next/font/google';
 import './globals.css';
-import dynamic from 'next/dynamic';
+import DynamicProviders from "./DynamicProviders";
 
 // Load wallet providers client-side ONLY — prevents localStorage SSR crash from WalletConnect
-const Providers = dynamic(() => import('./providers'), { ssr: false });
 
 const inter = Inter({
   subsets: ['latin'],
@@ -48,7 +47,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${outfit.variable}`}>
       <body>
-        <Providers>{children}</Providers>
+        <DynamicProviders>{children}</DynamicProviders>
       </body>
     </html>
   );
