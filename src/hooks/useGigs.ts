@@ -123,7 +123,7 @@ export function useGigs() {
                         id: i.toString(),
                         poster: (data.poster ?? data[1] ?? '') as string,
                         worker: workerAddr === '0x0000000000000000000000000000000000000000' ? null : workerAddr,
-                        bounty: Number(formatEther((data.bounty ?? data[3] ?? 0n) as bigint)),
+                        bounty: Number(formatEther((data.bounty ?? data[3] ?? BigInt(0)) as bigint)),
                         title: (data.title ?? data[4] ?? `Gig #${i}`) as string,
                         description: finalDesc,
                         category: finalCat,
