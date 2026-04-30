@@ -14,6 +14,7 @@ import { MINI_GIGS_ABI } from '@/lib/abi';
 import { useGigs } from '@/hooks/useGigs';
 import { Info, Plus, ChevronRight, Award, History, Settings, CheckCircle, Clock, Loader2, ClipboardCheck } from 'lucide-react';
 import toast from 'react-hot-toast';
+import confetti from 'canvas-confetti';
 import styles from './page.module.css';
 
 export default function Home() {
@@ -150,6 +151,15 @@ export default function Home() {
         <span className={styles.reputationBadge}>
           <Award size={14} /> MiniGigs Pro Worker
         </span>
+        <div className="w-full mt-4 space-y-1 px-8">
+           <div className="flex justify-between text-[10px] font-bold text-white/40 uppercase tracking-widest">
+              <span>LVL 12</span>
+              <span>85% to Next</span>
+           </div>
+           <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden">
+              <div className="h-full bg-primary" style={{ width: '85%' }} />
+           </div>
+        </div>
       </div>
 
       <div className={styles.statsGrid}>
@@ -241,6 +251,12 @@ export default function Home() {
                   feeCurrency: CUSD_ADDRESS as `0x${string}`,
                 });
                 toast.success('Funds released to worker!', { id: 'gig-action' });
+                confetti({
+                  particleCount: 150,
+                  spread: 70,
+                  origin: { y: 0.6 },
+                  colors: ['#35D07F', '#FBCC5C', '#616161']
+                });
               }
               setSelectedGig(null);
             } catch (error: any) {
