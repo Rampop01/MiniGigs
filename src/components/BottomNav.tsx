@@ -1,18 +1,19 @@
 'use client';
 
 import styles from './BottomNav.module.css';
-import { Search, ClipboardList, Wallet, User } from 'lucide-react';
+import { Search, ClipboardList, Shield, Wallet, User } from 'lucide-react';
 
-export type TabId = 'explore' | 'my-tasks' | 'wallet' | 'profile';
+export type TabId = 'explore' | 'my-tasks' | 'agents' | 'wallet' | 'profile';
 
 interface BottomNavProps {
     active: TabId;
     onNavigate: (tab: TabId) => void;
 }
 
-const tabs: { id: TabId; label: string; Icon: typeof Search }[] = [
+const tabs: { id: TabId; label: string; Icon: any }[] = [
     { id: 'explore', label: 'Explore', Icon: Search },
     { id: 'my-tasks', label: 'My Tasks', Icon: ClipboardList },
+    { id: 'agents', label: 'Agents', Icon: Shield },
     { id: 'wallet', label: 'Wallet', Icon: Wallet },
     { id: 'profile', label: 'Profile', Icon: User },
 ];

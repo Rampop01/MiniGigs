@@ -8,6 +8,7 @@ import StatsBanner from '@/components/StatsBanner';
 import GigCard from '@/components/GigCard';
 import GigDetail from '@/components/GigDetail';
 import CreateGig from '@/components/CreateGig';
+import AgentHub from '@/components/AgentHub';
 import { MOCK_GIGS, Gig, MINIGIGS_CONTRACT_ADDRESS, CUSD_ADDRESS } from '@/lib/constants';
 import { useAccount, useBalance, useReadContract, useWriteContract } from 'wagmi';
 import { MINI_GIGS_ABI } from '@/lib/abi';
@@ -200,6 +201,7 @@ export default function Home() {
         <main className={styles.main}>
           {activeTab === 'explore' && <ExploreView />}
           {activeTab === 'my-tasks' && <MyTasksView />}
+          {activeTab === 'agents' && <AgentHub />}
           {activeTab === 'wallet' && <WalletView />}
           {activeTab === 'profile' && <ProfileView />}
         </main>
