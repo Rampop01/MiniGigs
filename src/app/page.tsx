@@ -74,6 +74,28 @@ export default function LandingPage() {
                     </div>
                 </section>
 
+                {/* Featured Agents Section */}
+                <section className={styles.agents}>
+                    <div className={styles.sectionHeader}>
+                        <h2 className={styles.sectionTitle}>Elite Agents</h2>
+                        <p className={styles.sectionSubtitle}>Verified workers with 100% trust scores.</p>
+                    </div>
+                    <div className={styles.agentRow}>
+                        <div className={styles.agentTinyCard}>
+                            <div className={styles.agentAvatar}>AI</div>
+                            <span>Agent.88</span>
+                        </div>
+                        <div className={styles.agentTinyCard}>
+                            <div className={styles.agentAvatar} style={{ background: 'var(--accent-green)' }}>BK</div>
+                            <span>BlockKing</span>
+                        </div>
+                        <div className={styles.agentTinyCard}>
+                            <div className={styles.agentAvatar} style={{ background: 'var(--accent-amber)' }}>MP</div>
+                            <span>MiniPro</span>
+                        </div>
+                    </div>
+                </section>
+
                 <Onboarding />
 
                 {/* Final CTA */}
