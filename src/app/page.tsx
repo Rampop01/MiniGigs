@@ -9,6 +9,8 @@ import GigCard from '@/components/GigCard';
 import GigDetail from '@/components/GigDetail';
 import CreateGig from '@/components/CreateGig';
 import AgentHub from '@/components/AgentHub';
+import SelfClawBadge from '@/components/SelfClawBadge';
+import AdminPanel from '@/components/AdminPanel';
 import { MOCK_GIGS, Gig, MINIGIGS_CONTRACT_ADDRESS, CUSD_ADDRESS } from '@/lib/constants';
 import { useAccount, useBalance, useReadContract, useWriteContract } from 'wagmi';
 import { MINI_GIGS_ABI } from '@/lib/abi';
@@ -149,9 +151,12 @@ export default function Home() {
         <h2 className={styles.profileName}>
           {isConnected ? (address ? `${address.slice(0, 6)}...${address.slice(-4)}` : 'Connected') : 'Guest User'}
         </h2>
-        <span className={styles.reputationBadge}>
-          <Award size={14} /> MiniGigs Pro Worker
-        </span>
+        <div className="flex flex-col items-center gap-2">
+            <span className={styles.reputationBadge}>
+                <Award size={14} /> MiniGigs Pro Worker
+            </span>
+            <SelfClawBadge />
+        </div>
         <div className="w-full mt-4 space-y-1 px-8">
            <div className="flex justify-between text-[10px] font-bold text-white/40 uppercase tracking-widest">
               <span>LVL 12</span>
@@ -190,6 +195,8 @@ export default function Home() {
           <ChevronRight size={16} />
         </div>
       </div>
+
+      <AdminPanel />
     </div>
   );
 

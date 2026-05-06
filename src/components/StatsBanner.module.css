@@ -45,3 +45,14 @@
     height: 32px;
     background: rgba(255, 255, 255, 0.06);
 }
+
+@keyframes pulse {
+    0% { opacity: 0.6; }
+    50% { opacity: 1; }
+    100% { opacity: 0.6; }
+}
+
+.stat:last-child .value {
+    color: var(--primary);
+    animation: pulse 2s infinite ease-in-out;
+}
