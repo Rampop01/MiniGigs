@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { ConnectButton, useConnectModal } from '@rainbow-me/rainbowkit';
 import { useAccount } from 'wagmi';
+import { CheckCircle } from 'lucide-react';
 import styles from './Header.module.css';
 
 export default function Header() {
@@ -44,6 +45,7 @@ export default function Header() {
                                 <>
                                     <span className={styles.walletDot} />
                                     {account.displayName}
+                                    <CheckCircle size={10} style={{ marginLeft: '4px', color: 'var(--accent-green)' }} />
                                 </>
                             ) : (
                                 'Connect'

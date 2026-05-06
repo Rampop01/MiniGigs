@@ -11,6 +11,8 @@ import CreateGig from '@/components/CreateGig';
 import AgentHub from '@/components/AgentHub';
 import SelfClawBadge from '@/components/SelfClawBadge';
 import AdminPanel from '@/components/AdminPanel';
+import Hero from '@/components/Hero';
+import Onboarding from '@/components/Onboarding';
 import { MOCK_GIGS, Gig, MINIGIGS_CONTRACT_ADDRESS, CUSD_ADDRESS } from '@/lib/constants';
 import { useAccount, useBalance, useReadContract, useWriteContract } from 'wagmi';
 import { MINI_GIGS_ABI } from '@/lib/abi';
@@ -43,7 +45,9 @@ export default function Home() {
 
     return (
       <div className={`${styles.tabContent} anim-slide-up`}>
+        <Hero />
         <StatsBanner openGigs={openGigs} totalBounty={totalBounty} />
+        <Onboarding />
 
         <div className={styles.sectionHeader}>
           <h2 className={styles.sectionTitle}>Marketplace {isGigsLoading && <Loader2 className="animate-spin inline-block ml-2" size={16} />}</h2>
