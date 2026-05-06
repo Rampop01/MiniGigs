@@ -11,7 +11,6 @@ import CreateGig from '@/components/CreateGig';
 import AgentHub from '@/components/AgentHub';
 import SelfClawBadge from '@/components/SelfClawBadge';
 import AdminPanel from '@/components/AdminPanel';
-import AdminPanel from '@/components/AdminPanel';
 import { MOCK_GIGS, Gig, MINIGIGS_CONTRACT_ADDRESS, CUSD_ADDRESS } from '@/lib/constants';
 import { useAccount, useBalance, useReadContract, useWriteContract } from 'wagmi';
 import { MINI_GIGS_ABI } from '@/lib/abi';
