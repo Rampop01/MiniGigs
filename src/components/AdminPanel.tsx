@@ -39,7 +39,7 @@ export default function AdminPanel() {
             return;
         }
 
-        if (!contractBalance || contractBalance.value === BigUint64Array.from([0n])[0]) {
+        if (!contractBalance || contractBalance.value === BigInt(0)) {
             toast.error("No fees available for withdrawal");
             return;
         }
@@ -90,7 +90,7 @@ export default function AdminPanel() {
                 <button 
                     className={styles.withdrawBtn} 
                     onClick={handleWithdraw}
-                    disabled={isWithdrawing || !contractBalance || contractBalance.value === 0n}
+                    disabled={isWithdrawing || !contractBalance || contractBalance.value === BigInt(0)}
                 >
                     {isWithdrawing ? <RefreshCcw size={16} className="animate-spin" /> : <Download size={16} />}
                     Withdraw
