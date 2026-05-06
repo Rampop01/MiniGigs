@@ -43,16 +43,16 @@ export default function LandingPage() {
                         </div>
 
                         <div className={styles.featureCard}>
-                            <div className={styles.iconBox} style={{ background: 'rgba(0, 255, 157, 0.1)' }}>
-                                <ShieldCheck color="var(--accent-green)" />
+                            <div className={styles.iconBox} style={{ background: 'var(--primary-subtle)' }}>
+                                <ShieldCheck color="var(--primary)" />
                             </div>
                             <h3>Self-Protocol</h3>
                             <p>Your reputation is on-chain. Build trust with every gig you complete.</p>
                         </div>
 
                         <div className={styles.featureCard}>
-                            <div className={styles.iconBox} style={{ background: 'rgba(255, 215, 0, 0.1)' }}>
-                                <Globe color="var(--accent-amber)" />
+                            <div className={styles.iconBox} style={{ background: 'var(--primary-subtle)' }}>
+                                <Globe color="var(--primary)" />
                             </div>
                             <h3>Global Access</h3>
                             <p>Open to anyone, anywhere. All you need is a Celo-compatible wallet.</p>
@@ -86,11 +86,11 @@ export default function LandingPage() {
                             <span>Agent.88</span>
                         </div>
                         <div className={styles.agentTinyCard}>
-                            <div className={styles.agentAvatar} style={{ background: 'var(--accent-green)' }}>BK</div>
+                            <div className={styles.agentAvatar} style={{ background: 'var(--primary-subtle)', color: 'var(--primary)' }}>BK</div>
                             <span>BlockKing</span>
                         </div>
                         <div className={styles.agentTinyCard}>
-                            <div className={styles.agentAvatar} style={{ background: 'var(--accent-amber)' }}>MP</div>
+                            <div className={styles.agentAvatar} style={{ background: 'var(--primary-subtle)', color: 'var(--primary)' }}>MP</div>
                             <span>MiniPro</span>
                         </div>
                     </div>

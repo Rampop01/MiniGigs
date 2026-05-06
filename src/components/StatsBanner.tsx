@@ -22,8 +22,8 @@ export default function StatsBanner({ openGigs, totalBounty }: StatsBannerProps)
             </div>
             <div className={styles.divider} />
             <div className={styles.stat}>
-                <div className={styles.iconWrap} style={{ background: 'var(--accent-green-bg)' }}>
-                    <TrendingUp size={16} color="var(--accent-green)" />
+                <div className={styles.iconWrap} style={{ background: 'var(--primary-subtle)' }}>
+                    <TrendingUp size={16} color="var(--primary)" />
                 </div>
                 <div>
                     <span className={styles.value}>${totalBounty.toFixed(0)}</span>

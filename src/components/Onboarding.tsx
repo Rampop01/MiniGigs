@@ -15,15 +15,15 @@ export default function Onboarding() {
                     <p>Find tasks that match your skills.</p>
                 </div>
                 <div className={styles.step}>
-                    <div className={styles.iconBox} style={{ background: 'rgba(0, 255, 157, 0.1)' }}>
-                        <CheckCircle size={20} color="var(--accent-green)" />
+                    <div className={styles.iconBox} style={{ background: 'var(--primary-subtle)' }}>
+                        <CheckCircle size={20} color="var(--primary)" />
                     </div>
                     <h4>Complete</h4>
                     <p>Finish the task and submit proof.</p>
                 </div>
                 <div className={styles.step}>
-                    <div className={styles.iconBox} style={{ background: 'rgba(255, 215, 0, 0.1)' }}>
-                        <Wallet size={20} color="var(--accent-amber)" />
+                    <div className={styles.iconBox} style={{ background: 'var(--primary-subtle)' }}>
+                        <Wallet size={20} color="var(--primary)" />
                     </div>
                     <h4>Earn</h4>
                     <p>Get paid instantly in cUSD.</p>
