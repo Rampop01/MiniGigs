@@ -10,7 +10,8 @@ import styles from './landing.module.css';
 
 export default function LandingPage() {
     return (
-        <div className={styles.container}>
+        <div className="layout-mobile">
+            <div className={styles.container}>
             <Header />
             
             <main className={styles.main}>
@@ -99,5 +100,6 @@ export default function LandingPage() {
                 </div>
             </footer>
         </div>
+      </div>
     );
 }

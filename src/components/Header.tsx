@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { ConnectButton, useConnectModal } from '@rainbow-me/rainbowkit';
+import Link from 'next/link';
 import { useAccount } from 'wagmi';
 import { CheckCircle } from 'lucide-react';
 import styles from './Header.module.css';
@@ -25,10 +26,10 @@ export default function Header() {
     return (
         <header className={styles.header}>
             <div className={styles.brand}>
-                <div className={styles.crazyLogo}>
+                <Link href="/" className={styles.crazyLogo}>
                     <span className={styles.logoM}>M</span>
                     <span className={styles.logoText}>iniGigs</span>
-                </div>
+                </Link>
                 {!isMiniPay && <p className={styles.tagline}>Micro-tasks on Celo</p>}
                 {isMiniPay && <p className={styles.tagline}>MiniPay Active</p>}
             </div>
