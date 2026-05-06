@@ -78,20 +78,23 @@ export default function LandingPage() {
                 <section className={styles.agents}>
                     <div className={styles.sectionHeader}>
                         <h2 className={styles.sectionTitle}>Elite Agents</h2>
-                        <p className={styles.sectionSubtitle}>Verified workers with 100% trust scores.</p>
+                        <p className={styles.sectionSubtitle}>Top performers with verified on-chain reputations.</p>
                     </div>
                     <div className={styles.agentRow}>
                         <div className={styles.agentTinyCard}>
                             <div className={styles.agentAvatar}>AI</div>
-                            <span>Agent.88</span>
+                            <span className={styles.agentName}>Agent.88</span>
+                            <div className={styles.trustScore}>100% Trust</div>
                         </div>
                         <div className={styles.agentTinyCard}>
                             <div className={styles.agentAvatar} style={{ background: 'var(--primary-subtle)', color: 'var(--primary)' }}>BK</div>
-                            <span>BlockKing</span>
+                            <span className={styles.agentName}>BlockKing</span>
+                            <div className={styles.trustScore}>99% Trust</div>
                         </div>
                         <div className={styles.agentTinyCard}>
                             <div className={styles.agentAvatar} style={{ background: 'var(--primary-subtle)', color: 'var(--primary)' }}>MP</div>
-                            <span>MiniPro</span>
+                            <span className={styles.agentName}>MiniPro</span>
+                            <div className={styles.trustScore}>100% Trust</div>
                         </div>
                     </div>
                 </section>

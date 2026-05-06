@@ -6,10 +6,6 @@ export default function Hero() {
     return (
         <section className={styles.hero}>
             <div className={styles.content}>
-                <div className={styles.badge}>
-                    <Sparkles size={12} className={styles.sparkle} />
-                    <span>The Future of Micro-work on Celo</span>
-                </div>
                 <h1 className={styles.title}>
                     Earn <span className="shiny-text">cUSD</span> for <br />
                     Lightning Tasks
