@@ -55,7 +55,11 @@ contract MiniGigs is Ownable, ReentrancyGuard {
     // ─── External Functions ───
 
     /**
-     * @dev Posters create a gig by depositing cUSD into escrow.
+     * @notice Post a new micro-gig to the marketplace
+     * @param _title Brief title of the task
+     * @param _description Detailed task requirements and metadata
+     * @param _bounty Amount of cUSD to escrow for the worker
+     * @param _durationDays Number of days before the gig expires
      */
     function postGig(
         string memory _title,
@@ -84,7 +88,8 @@ contract MiniGigs is Ownable, ReentrancyGuard {
     }
 
     /**
-     * @dev Workers accept an open gig.
+     * @notice Accept an open gig to begin working
+     * @param _id The ID of the gig to accept
      */
     function acceptGig(uint256 _id) external {
         Gig storage gig = gigs[_id];
@@ -98,7 +103,9 @@ contract MiniGigs is Ownable, ReentrancyGuard {
     }
 
     /**
-     * @dev Workers submit proof of work.
+     * @notice Submit proof of work for a gig
+     * @param _id The ID of the gig
+     * @param _deliverables IPFS hash or link to proof of work
      */
     function submitWork(uint256 _id, string calldata _deliverables) external {
         Gig storage gig = gigs[_id];
@@ -112,7 +119,8 @@ contract MiniGigs is Ownable, ReentrancyGuard {
     }
 
     /**
-     * @dev Posters release funds upon satisfactory work.
+     * @notice Complete a gig and release escrowed funds to the worker
+     * @param _id The ID of the gig
      */
     function completeGig(uint256 _id) external nonReentrant {
         Gig storage gig = gigs[_id];
@@ -131,7 +139,8 @@ contract MiniGigs is Ownable, ReentrancyGuard {
     }
 
     /**
-     * @dev Posters can cancel open gigs to get their refund.
+     * @notice Cancel an open gig and refund the poster
+     * @param _id The ID of the gig
      */
     function cancelGig(uint256 _id) external nonReentrant {
         Gig storage gig = gigs[_id];
@@ -145,14 +154,16 @@ contract MiniGigs is Ownable, ReentrancyGuard {
     }
 
     /**
-     * @dev Platform owner withdraws accumulated fees.
+     * @notice Withdraw accumulated platform fees (Owner only)
+     * @param _amount Amount of cUSD to withdraw
      */
     function withdrawFees(uint256 _amount) external onlyOwner {
         require(stablecoin.transfer(owner(), _amount), "Withdrawal failed");
     }
 
     /**
-     * @dev Update platform fee.
+     * @notice Update platform fee basis points (Owner only)
+     * @param _bps Basis points (e.g. 200 = 2%)
      */
     function setPlatformFee(uint256 _bps) external onlyOwner {
         require(_bps <= 1000, "Fee too high"); // max 10%
