@@ -40,9 +40,9 @@ contract MiniGigs is Ownable, ReentrancyGuard {
     // ─── Events ───
 
     event GigPosted(uint256 indexed id, address indexed poster, uint256 bounty, string title);
-    event GigAccepted(uint256 indexed id, address indexed worker);
-    event GigSubmitted(uint256 indexed id, string deliverables);
-    event GigCompleted(uint256 indexed id, address indexed worker, uint256 payout);
+    event GigAccepted(uint256 indexed id, address indexed worker, address indexed poster);
+    event GigSubmitted(uint256 indexed id, address indexed worker, string deliverables);
+    event GigCompleted(uint256 indexed id, address indexed worker, address indexed poster, uint256 payout);
     event GigCancelled(uint256 indexed id);
     event GigDisputed(uint256 indexed id);
 
@@ -94,7 +94,7 @@ contract MiniGigs is Ownable, ReentrancyGuard {
         gig.worker = msg.sender;
         gig.status = GigStatus.InProgress;
 
-        emit GigAccepted(_id, msg.sender);
+        emit GigAccepted(_id, msg.sender, gig.poster);
     }
 
     /**
@@ -108,7 +108,7 @@ contract MiniGigs is Ownable, ReentrancyGuard {
         gig.deliverables = _deliverables;
         gig.status = GigStatus.Submitted;
 
-        emit GigSubmitted(_id, _deliverables);
+        emit GigSubmitted(_id, msg.sender, _deliverables);
     }
 
     /**
@@ -127,7 +127,7 @@ contract MiniGigs is Ownable, ReentrancyGuard {
         require(stablecoin.transfer(gig.worker, payout), "Payout failed");
         // Fee remains in contract; could be withdrawn by owner
 
-        emit GigCompleted(_id, gig.worker, payout);
+        emit GigCompleted(_id, gig.worker, msg.sender, payout);
     }
 
     /**

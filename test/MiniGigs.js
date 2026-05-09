@@ -43,17 +43,17 @@ describe('MiniGigs', function () {
 
     // Accept
     await expect(miniGigs.connect(worker).acceptGig(1))
-      .to.emit(miniGigs, 'GigAccepted')
-      .withArgs(1, worker.address);
+      .to.emit(miniGigs, "GigAccepted")
+      .withArgs(1, worker.address, poster.address);
 
     let gig = await miniGigs.gigs(1);
     expect(gig.worker).to.equal(worker.address);
     expect(gig.status).to.equal(1); // InProgress
 
     // Submit
-    await expect(miniGigs.connect(worker).submitWork(1, 'ipfs://proof'))
-      .to.emit(miniGigs, 'GigSubmitted')
-      .withArgs(1, 'ipfs://proof');
+    await expect(miniGigs.connect(worker).submitWork(1, "ipfs://proof"))
+      .to.emit(miniGigs, "GigSubmitted")
+      .withArgs(1, worker.address, "ipfs://proof");
 
     gig = await miniGigs.gigs(1);
     expect(gig.status).to.equal(2); // Submitted
@@ -113,12 +113,12 @@ describe('MiniGigs', function () {
     expect(gig.status).to.equal(5); // Cancelled
   });
 
-  it("Should allow the owner to withdraw fees", async function () {
-    const bounty = ethers.parseEther("10");
+  it('Should allow the owner to withdraw fees', async function () {
+    const bounty = ethers.parseEther('10');
     await token.connect(poster).approve(await miniGigs.getAddress(), bounty);
-    await miniGigs.connect(poster).postGig("Task", "Desc", bounty, 7);
+    await miniGigs.connect(poster).postGig('Task', 'Desc', bounty, 7);
     await miniGigs.connect(worker).acceptGig(1);
-    await miniGigs.connect(worker).submitWork(1, "proof");
+    await miniGigs.connect(worker).submitWork(1, 'proof');
     await miniGigs.connect(poster).completeGig(1);
 
     const fee = (bounty * 200n) / 10000n; // 2%
