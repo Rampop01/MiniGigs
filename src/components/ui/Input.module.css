@@ -1,0 +1,45 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  font-family: var(--font-heading);
+}
+
+.input, .textarea {
+  background: #0f0f0f;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--r-md);
+  padding: 14px 18px;
+  color: #fff;
+  font-family: var(--font-body);
+  outline: none;
+  transition: all 0.2s;
+  width: 100%;
+}
+
+.textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.input:focus, .textarea:focus {
+  border-color: var(--celo-prosperity);
+  box-shadow: 0 0 0 1px var(--celo-prosperity);
+}
+
+.inputError {
+  border-color: var(--accent-rose) !important;
+}
+
+.errorText {
+  font-size: 11px;
+  color: var(--accent-rose);
+  font-weight: 500;
+}
