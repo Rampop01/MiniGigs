@@ -8,12 +8,7 @@ interface CardProps {
   variant?: 'base' | 'elevated' | 'glass';
 }
 
-export const Card = ({
-  children,
-  className = '',
-  onClick,
-  variant = 'base',
-}: CardProps) => {
+export const Card = ({ children, className = '', onClick, variant = 'base' }: CardProps) => {
   const variantClass = styles[variant] || styles.base;
 
   return (

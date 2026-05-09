@@ -12,7 +12,8 @@
   font-family: var(--font-heading);
 }
 
-.input, .textarea {
+.input,
+.textarea {
   background: #0f0f0f;
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: var(--r-md);
@@ -29,7 +30,8 @@
   resize: vertical;
 }
 
-.input:focus, .textarea:focus {
+.input:focus,
+.textarea:focus {
   border-color: var(--celo-prosperity);
   box-shadow: 0 0 0 1px var(--celo-prosperity);
 }

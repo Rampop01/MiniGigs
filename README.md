@@ -75,6 +75,7 @@ The platform is powered by a robust escrow contract supporting cUSD payments.
    npm run dev
    ```
 4. Format and Lint:
+
    ```bash
    # Run project-wide formatting
    npm run format

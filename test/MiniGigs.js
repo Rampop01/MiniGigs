@@ -43,7 +43,7 @@ describe('MiniGigs', function () {
 
     // Accept
     await expect(miniGigs.connect(worker).acceptGig(1))
-      .to.emit(miniGigs, "GigAccepted")
+      .to.emit(miniGigs, 'GigAccepted')
       .withArgs(1, worker.address, poster.address);
 
     let gig = await miniGigs.gigs(1);
@@ -51,9 +51,9 @@ describe('MiniGigs', function () {
     expect(gig.status).to.equal(1); // InProgress
 
     // Submit
-    await expect(miniGigs.connect(worker).submitWork(1, "ipfs://proof"))
-      .to.emit(miniGigs, "GigSubmitted")
-      .withArgs(1, worker.address, "ipfs://proof");
+    await expect(miniGigs.connect(worker).submitWork(1, 'ipfs://proof'))
+      .to.emit(miniGigs, 'GigSubmitted')
+      .withArgs(1, worker.address, 'ipfs://proof');
 
     gig = await miniGigs.gigs(1);
     expect(gig.status).to.equal(2); // Submitted

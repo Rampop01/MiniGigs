@@ -10,7 +10,10 @@ export const Input = ({ label, error, className = '', ...props }: InputProps) =>
   return (
     <div className={styles.container}>
       {label && <label className={styles.label}>{label}</label>}
-      <input className={`${styles.input} ${error ? styles.inputError : ''} ${className}`} {...props} />
+      <input
+        className={`${styles.input} ${error ? styles.inputError : ''} ${className}`}
+        {...props}
+      />
       {error && <span className={styles.errorText}>{error}</span>}
     </div>
   );
@@ -25,7 +28,10 @@ export const Textarea = ({ label, error, className = '', ...props }: TextareaPro
   return (
     <div className={styles.container}>
       {label && <label className={styles.label}>{label}</label>}
-      <textarea className={`${styles.textarea} ${error ? styles.inputError : ''} ${className}`} {...props} />
+      <textarea
+        className={`${styles.textarea} ${error ? styles.inputError : ''} ${className}`}
+        {...props}
+      />
       {error && <span className={styles.errorText}>{error}</span>}
     </div>
   );

@@ -20,7 +20,9 @@ export const Text = ({ children, className = '' }: TypographyProps) => (
 );
 
 export const Label = ({ children, className = '' }: TypographyProps) => (
-  <span className={`text-[10px] font-heading font-bold uppercase tracking-widest text-white/40 ${className}`}>
+  <span
+    className={`text-[10px] font-heading font-bold uppercase tracking-widest text-white/40 ${className}`}
+  >
     {children}
   </span>
 );

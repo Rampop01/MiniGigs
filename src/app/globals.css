@@ -8,10 +8,10 @@
   --bg-card-hover: #1a1a1a;
 
   /* ── Celo Prosperity Palette ── */
-  --celo-prosperity: #35D07F;
-  --celo-forest: #155D44;
-  --celo-wood: #FBCC5C;
-  --celo-gold: #FBCC5C;
+  --celo-prosperity: #35d07f;
+  --celo-forest: #155d44;
+  --celo-wood: #fbcc5c;
+  --celo-gold: #fbcc5c;
 
   /* SaaS / Azure Blue */
   --primary: var(--celo-prosperity);

@@ -7,16 +7,8 @@ interface BadgeProps {
   className?: string;
 }
 
-export const Badge = ({
-  children,
-  variant = 'blue',
-  className = '',
-}: BadgeProps) => {
+export const Badge = ({ children, variant = 'blue', className = '' }: BadgeProps) => {
   const variantClass = styles[variant] || styles.blue;
 
-  return (
-    <span className={`${styles.badge} ${variantClass} ${className}`}>
-      {children}
-    </span>
-  );
+  return <span className={`${styles.badge} ${variantClass} ${className}`}>{children}</span>;
 };

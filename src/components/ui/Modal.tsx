@@ -16,7 +16,9 @@ export const Modal = ({ children, isOpen, onClose, title }: ModalProps) => {
     } else {
       document.body.style.overflow = 'unset';
     }
-    return () => { document.body.style.overflow = 'unset'; };
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
   }, [isOpen]);
 
   if (!isOpen) return null;
@@ -30,9 +32,7 @@ export const Modal = ({ children, isOpen, onClose, title }: ModalProps) => {
             <X size={20} />
           </button>
         </div>
-        <div className={styles.content}>
-          {children}
-        </div>
+        <div className={styles.content}>{children}</div>
       </div>
     </div>
   );
