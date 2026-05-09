@@ -60,12 +60,12 @@ describe('MiniGigs', function () {
     expect(gig.deliverables).to.equal('ipfs://proof');
   });
 
-  it("Should release rewards and collect platform fees upon completion", async function () {
-    const bounty = ethers.parseEther("10");
+  it('Should release rewards and collect platform fees upon completion', async function () {
+    const bounty = ethers.parseEther('10');
     await token.connect(poster).approve(await miniGigs.getAddress(), bounty);
-    await miniGigs.connect(poster).postGig("Task", "Desc", bounty, 7);
+    await miniGigs.connect(poster).postGig('Task', 'Desc', bounty, 7);
     await miniGigs.connect(worker).acceptGig(1);
-    await miniGigs.connect(worker).submitWork(1, "proof");
+    await miniGigs.connect(worker).submitWork(1, 'proof');
 
     const initialWorkerBalance = await token.balanceOf(worker.address);
     const initialContractBalance = await token.balanceOf(await miniGigs.getAddress());
@@ -77,8 +77,21 @@ describe('MiniGigs', function () {
     const payout = bounty - fee;
 
     expect(await token.balanceOf(worker.address)).to.equal(initialWorkerBalance + payout);
-    
+
     const gig = await miniGigs.gigs(1);
     expect(gig.status).to.equal(3); // Completed
+  });
+
+  it("Should prevent unauthorized users from completing a gig", async function () {
+    const bounty = ethers.parseEther("10");
+    await token.connect(poster).approve(await miniGigs.getAddress(), bounty);
+    await miniGigs.connect(poster).postGig("Task", "Desc", bounty, 7);
+    await miniGigs.connect(worker).acceptGig(1);
+    await miniGigs.connect(worker).submitWork(1, "proof");
+
+    // Try to complete from worker (unauthorized)
+    await expect(miniGigs.connect(worker).completeGig(1)).to.be.revertedWith(
+      "Only poster can release funds"
+    );
   });
 });
