@@ -1,8 +1,8 @@
 declare module 'minigigs-sdk' {
-    export const MINIGIGS_ADDRESS: string;
-    export const CUSD_ADDRESS: string;
-    export const MINIGIGS_ABI: any[];
-    export const ERC20_ABI: any[];
-    export function getMiniGigsContract(signerOrProvider: any): any;
-    export function getCUSDContract(signerOrProvider: any): any;
+  export const MINIGIGS_ADDRESS: string;
+  export const CUSD_ADDRESS: string;
+  export const MINIGIGS_ABI: readonly unknown[];
+  export const ERC20_ABI: readonly unknown[];
+  export function getMiniGigsContract(signerOrProvider: unknown): unknown;
+  export function getCUSDContract(signerOrProvider: unknown): unknown;
 }

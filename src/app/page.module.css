@@ -98,7 +98,9 @@
   border-radius: var(--r-xl);
   background: linear-gradient(180deg, #111 0%, #000 100%);
   border: 1px solid var(--primary);
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8), 0 0 20px rgba(0, 162, 255, 0.1);
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.8),
+    0 0 20px rgba(0, 162, 255, 0.1);
   position: relative;
   overflow: hidden;
 }

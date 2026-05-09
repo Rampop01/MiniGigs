@@ -1,0 +1,93 @@
+
+> minigigs@0.1.0 lint
+> eslint
+
+
+/Users/a/Desktop/MiniGigs/hardhat.config.js
+  6:1  warning  Assign object to a variable before exporting as module default  import/no-anonymous-default-export
+
+/Users/a/Desktop/MiniGigs/scripts/commander.js
+  156:9   error  Use "@ts-expect-error" instead of "@ts-ignore", as "@ts-ignore" will do nothing if the following line is error-free  @typescript-eslint/ban-ts-comment
+  177:15  error  Use "@ts-expect-error" instead of "@ts-ignore", as "@ts-ignore" will do nothing if the following line is error-free  @typescript-eslint/ban-ts-comment
+  190:15  error  Use "@ts-expect-error" instead of "@ts-ignore", as "@ts-ignore" will do nothing if the following line is error-free  @typescript-eslint/ban-ts-comment
+  203:15  error  Use "@ts-expect-error" instead of "@ts-ignore", as "@ts-ignore" will do nothing if the following line is error-free  @typescript-eslint/ban-ts-comment
+  228:13  error  Use "@ts-expect-error" instead of "@ts-ignore", as "@ts-ignore" will do nothing if the following line is error-free  @typescript-eslint/ban-ts-comment
+
+/Users/a/Desktop/MiniGigs/scripts/test-flow.js
+  72:9  warning  'postReceipt' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+/Users/a/Desktop/MiniGigs/src/app/api/market-stats/route.ts
+  18:34  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/a/Desktop/MiniGigs/src/app/marketplace/page.tsx
+    3:29  warning  'useEffect' is defined but never used                                                                                @typescript-eslint/no-unused-vars
+   14:10  warning  'MOCK_GIGS' is defined but never used                                                                                @typescript-eslint/no-unused-vars
+   15:34  warning  'useReadContract' is defined but never used                                                                          @typescript-eslint/no-unused-vars
+   23:3   warning  'History' is defined but never used                                                                                  @typescript-eslint/no-unused-vars
+   26:3   warning  'Clock' is defined but never used                                                                                    @typescript-eslint/no-unused-vars
+  318:19  error    Use "@ts-expect-error" instead of "@ts-ignore", as "@ts-ignore" will do nothing if the following line is error-free  @typescript-eslint/ban-ts-comment
+  332:19  error    Use "@ts-expect-error" instead of "@ts-ignore", as "@ts-ignore" will do nothing if the following line is error-free  @typescript-eslint/ban-ts-comment
+  346:19  error    Use "@ts-expect-error" instead of "@ts-ignore", as "@ts-ignore" will do nothing if the following line is error-free  @typescript-eslint/ban-ts-comment
+  358:29  error    Unexpected any. Specify a different type                                                                             @typescript-eslint/no-explicit-any
+
+/Users/a/Desktop/MiniGigs/src/app/page.tsx
+  8:10  warning  'Sparkles' is defined but never used  @typescript-eslint/no-unused-vars
+
+/Users/a/Desktop/MiniGigs/src/components/AdminPanel.tsx
+   3:25  warning  'ERC20_ABI' is defined but never used                                                                                @typescript-eslint/no-unused-vars
+  57:9   error    Use "@ts-expect-error" instead of "@ts-ignore", as "@ts-ignore" will do nothing if the following line is error-free  @typescript-eslint/ban-ts-comment
+  63:21  error    Unexpected any. Specify a different type                                                                             @typescript-eslint/no-explicit-any
+
+/Users/a/Desktop/MiniGigs/src/components/BottomNav.tsx
+  13:47  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/a/Desktop/MiniGigs/src/components/CreateGig.tsx
+   78:11  error  Use "@ts-expect-error" instead of "@ts-ignore", as "@ts-ignore" will do nothing if the following line is error-free  @typescript-eslint/ban-ts-comment
+  105:9   error  Use "@ts-expect-error" instead of "@ts-ignore", as "@ts-ignore" will do nothing if the following line is error-free  @typescript-eslint/ban-ts-comment
+  112:21  error  Unexpected any. Specify a different type                                                                             @typescript-eslint/no-explicit-any
+
+/Users/a/Desktop/MiniGigs/src/components/Header.tsx
+  16:5  error  Use "@ts-expect-error" instead of "@ts-ignore", as "@ts-ignore" will do nothing if the following line is error-free                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              @typescript-eslint/ban-ts-comment
+  18:7  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+/Users/a/Desktop/MiniGigs/src/components/Header.tsx:18:7
+  16 |     // @ts-ignore - MiniPay specific property
+  17 |     if (typeof window !== 'undefined' && window.ethereum?.isMiniPay) {
+> 18 |       setIsMiniPay(true);
+     |       ^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  19 |       // Auto-trigger connect modal if in MiniPay and not connected
+  20 |       if (!isConnected && openConnectModal) {
+  21 |         openConnectModal();  react-hooks/set-state-in-effect
+
+/Users/a/Desktop/MiniGigs/src/components/Hero.tsx
+  2:18  warning  'Sparkles' is defined but never used  @typescript-eslint/no-unused-vars
+
+/Users/a/Desktop/MiniGigs/src/hooks/useGigs.ts
+   34:14  warning  'e' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               @typescript-eslint/no-unused-vars
+   68:7   error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+/Users/a/Desktop/MiniGigs/src/hooks/useGigs.ts:68:7
+  66 |   useEffect(() => {
+  67 |     if (gigCount === 0) {
+> 68 |       setIsLoading(false);
+     |       ^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  69 |       return;
+  70 |     }
+  71 |  react-hooks/set-state-in-effect
+   89:23  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    @typescript-eslint/no-explicit-any
+  121:20  warning  '_' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               @typescript-eslint/no-unused-vars
+
+✖ 32 problems (20 errors, 12 warnings)
+

@@ -3,29 +3,29 @@
 :root {
   /* ── Shiny Blue & Black Palette ── */
   --bg-base: #000000;
-  --bg-surface: #0A0A0A;
+  --bg-surface: #0a0a0a;
   --bg-surface-elevated: #141414;
-  --bg-card-hover: #1A1A1A;
+  --bg-card-hover: #1a1a1a;
 
   /* SaaS / Azure Blue */
-  --primary: #3B82F6;
-  --primary-hover: #2563EB;
+  --primary: #3b82f6;
+  --primary-hover: #2563eb;
   --primary-glow: rgba(59, 130, 246, 0.4);
   --primary-subtle: rgba(59, 130, 246, 0.12);
 
-  --secondary-blue: #1E40AF;
-  --accent-cyan: #60A5FA;
+  --secondary-blue: #1e40af;
+  --accent-cyan: #60a5fa;
 
   /* Accents */
-  --accent-green: #00FF9D;
+  --accent-green: #00ff9d;
   --accent-green-bg: rgba(0, 255, 157, 0.1);
-  --accent-amber: #FFD700;
+  --accent-amber: #ffd700;
   --accent-amber-bg: rgba(255, 215, 0, 0.1);
-  --accent-rose: #FF3B3B;
+  --accent-rose: #ff3b3b;
   --accent-rose-bg: rgba(255, 59, 59, 0.1);
 
-  --text-primary: #FFFFFF;
-  --text-secondary: #B0B0B0;
+  --text-primary: #ffffff;
+  --text-secondary: #b0b0b0;
   --text-tertiary: #666666;
 
   /* ── Typography ── */
@@ -86,8 +86,7 @@ body {
   min-height: 100dvh;
   position: relative;
   background:
-    radial-gradient(circle at 50% -10%, rgba(0, 162, 255, 0.15) 0%, transparent 60%),
-    var(--bg-base);
+    radial-gradient(circle at 50% -10%, rgba(0, 162, 255, 0.15) 0%, transparent 60%), var(--bg-base);
 }
 
 /* ── Components ── */
@@ -110,7 +109,9 @@ body {
 .card:hover {
   background: var(--bg-card-hover);
   border-color: rgba(0, 162, 255, 0.3);
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5), 0 0 15px rgba(0, 162, 255, 0.1);
+  box-shadow:
+    0 10px 40px rgba(0, 0, 0, 0.5),
+    0 0 15px rgba(0, 162, 255, 0.1);
   transform: translateY(-4px);
 }
 
@@ -132,7 +133,9 @@ body {
 
 .btn-primary:hover {
   transform: scale(1.02);
-  box-shadow: 0 8px 30px var(--primary-glow), 0 0 10px var(--accent-cyan);
+  box-shadow:
+    0 8px 30px var(--primary-glow),
+    0 0 10px var(--accent-cyan);
 }
 
 .btn-primary:active {
@@ -164,11 +167,11 @@ body {
 
 /* Inputs */
 .input {
-  background: #0F0F0F;
+  background: #0f0f0f;
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: var(--r-md);
   padding: 14px 18px;
-  color: #FFF;
+  color: #fff;
   outline: none;
   transition: all 0.2s;
 }
@@ -206,7 +209,7 @@ body {
 }
 
 .shiny-text {
-  background: linear-gradient(90deg, #FFF, var(--primary), #FFF);
+  background: linear-gradient(90deg, #fff, var(--primary), #fff);
   background-size: 200% auto;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;

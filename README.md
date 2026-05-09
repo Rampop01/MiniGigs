@@ -4,10 +4,12 @@ MiniGigs is a mobile-first micro-task marketplace built for the Celo ecosystem. 
 
 ---
 
-##  Vision
+## Vision
+
 Despite the rise of the gig economy, global workers are often limited by high transaction fees and slow cross-border payments. MiniGigs leverages Celo's ultra-low fees and second-fast finality to enable a "pennies-for-minutes" economy that works anywhere in the world.
 
 ### Features
+
 - **MiniPay Optimized**: Native mobile-first design with smooth wallet integration.
 - **Instant Payouts**: Escrow-based smart contracts trigger instant settlement in stablecoins.
 - **Identity Verification**: Integrated with **World ID** and **Self Protocol** to prevent sybil attacks.
@@ -15,7 +17,8 @@ Despite the rise of the gig economy, global workers are often limited by high tr
 
 ---
 
-##  Technology Stack
+## Technology Stack
+
 - **Framework**: [Next.js](https://nextjs.org/) (App Router)
 - **Blockchain**: [Celo Mainnet](https://celo.org/)
 - **Payments**: cUSD (Celo Dollar)
@@ -25,7 +28,8 @@ Despite the rise of the gig economy, global workers are often limited by high tr
 
 ---
 
-##  How it Works
+## How it Works
+
 1. **Explore**: Browse available micro-gigs categorized by task type and bounty.
 2. **Accept**: Securely accept a gig and lock the escrow.
 3. **Submit**: Complete the task and submit proof-of-work.
@@ -33,12 +37,15 @@ Despite the rise of the gig economy, global workers are often limited by high tr
 
 ---
 
-##  Smart Contract
+## Smart Contract
+
 The platform is powered by a robust escrow contract supporting cUSD payments.
+
 - **Source**: `contracts/MiniGigs.sol`
 - **ABI**: Found in `src/lib/abi.ts`
 
 ### Deployment
+
 1. Add your private key to `.env`:
    ```bash
    PRIVATE_KEY=your_key
@@ -52,7 +59,8 @@ The platform is powered by a robust escrow contract supporting cUSD payments.
    npx hardhat run scripts/deploy.js --network celo
    ```
 
-##  Getting Started
+## Getting Started
+
 1. Install dependencies:
    ```bash
    npm install
@@ -70,6 +78,7 @@ The platform is powered by a robust escrow contract supporting cUSD payments.
 ---
 
 ## 🚦 Project Status: **Live Marketplace & Autonomous Economy**
+
 - **Autonomous Market**: Active (100+ bots simulating real-world gig transactions)
 - **Gig Volume**: 500+ micro-gigs posted and settled on Celo
 - **Identity**: Integrated Self Protocol for verified agent identification
@@ -78,14 +87,17 @@ The platform is powered by a robust escrow contract supporting cUSD payments.
 ---
 
 ## 🤖 Market Autonomous Mode
+
 The MiniGigs marketplace is powered by an autonomous fleet of 100 bots.
+
 - **Commander**: `scripts/commander.js` (Simulates posters and workers)
 - **Funder**: `scripts/funder.js` (Ensures fleet has sufficient CELO for gas)
 - **Config**: `scripts/bot-fleet.json`
 
 ---
 
-##  Proof of Ship Status
+## Proof of Ship Status
+
 - [x] Integrate MiniPay / Web3 Wallet
 - [x] UI/UX optimized for mobile screens
 - [x] cUSD stablecoin integration
@@ -93,5 +105,3 @@ The MiniGigs marketplace is powered by an autonomous fleet of 100 bots.
 - [x] Identity verification hooks
 - [x] **Verified Agent Hub (Self Protocol Integration)**
 - [ ] Production escrow contract deployment (Upcoming)
-
-

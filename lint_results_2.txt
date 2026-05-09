@@ -1,0 +1,66 @@
+
+> minigigs@0.1.0 lint
+> eslint
+
+
+/Users/a/Desktop/MiniGigs/hardhat.config.js
+  6:1  warning  Assign object to a variable before exporting as module default  import/no-anonymous-default-export
+
+/Users/a/Desktop/MiniGigs/scripts/commander.js
+  156:9   error  Include a description after the "@ts-expect-error" directive to explain why the @ts-expect-error is necessary. The description must be 3 characters or longer  @typescript-eslint/ban-ts-comment
+  177:15  error  Include a description after the "@ts-expect-error" directive to explain why the @ts-expect-error is necessary. The description must be 3 characters or longer  @typescript-eslint/ban-ts-comment
+  190:15  error  Include a description after the "@ts-expect-error" directive to explain why the @ts-expect-error is necessary. The description must be 3 characters or longer  @typescript-eslint/ban-ts-comment
+  203:15  error  Include a description after the "@ts-expect-error" directive to explain why the @ts-expect-error is necessary. The description must be 3 characters or longer  @typescript-eslint/ban-ts-comment
+  228:13  error  Include a description after the "@ts-expect-error" directive to explain why the @ts-expect-error is necessary. The description must be 3 characters or longer  @typescript-eslint/ban-ts-comment
+
+/Users/a/Desktop/MiniGigs/scripts/test-flow.js
+  72:9  warning  'postReceipt' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+/Users/a/Desktop/MiniGigs/src/app/page.tsx
+  8:10  warning  'Sparkles' is defined but never used  @typescript-eslint/no-unused-vars
+
+/Users/a/Desktop/MiniGigs/src/components/Header.tsx
+  18:7  error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+/Users/a/Desktop/MiniGigs/src/components/Header.tsx:18:7
+  16 |     // @ts-expect-error - MiniPay specific property
+  17 |     if (typeof window !== 'undefined' && window.ethereum?.isMiniPay && !isMiniPay) {
+> 18 |       setIsMiniPay(true);
+     |       ^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  19 |       // Auto-trigger connect modal if in MiniPay and not connected
+  20 |       if (!isConnected && openConnectModal) {
+  21 |         openConnectModal();  react-hooks/set-state-in-effect
+  24:6  warning  React Hook useEffect has a missing dependency: 'isMiniPay'. Either include it or remove the dependency array                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         react-hooks/exhaustive-deps
+
+/Users/a/Desktop/MiniGigs/src/components/Hero.tsx
+  2:18  warning  'Sparkles' is defined but never used  @typescript-eslint/no-unused-vars
+
+/Users/a/Desktop/MiniGigs/src/hooks/useGigs.ts
+   34:14  warning  'e' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            @typescript-eslint/no-unused-vars
+   67:7   error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+/Users/a/Desktop/MiniGigs/src/hooks/useGigs.ts:67:7
+  65 |   useEffect(() => {
+  66 |     if (gigCount === 0 && isLoading) {
+> 67 |       setIsLoading(false);
+     |       ^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  68 |       return;
+  69 |     }
+  70 |  react-hooks/set-state-in-effect
+  121:20  warning  '_' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            @typescript-eslint/no-unused-vars
+  150:6   warning  React Hook useEffect has a missing dependency: 'isLoading'. Either include it or remove the dependency array                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             react-hooks/exhaustive-deps
+
+✖ 15 problems (7 errors, 8 warnings)
+
