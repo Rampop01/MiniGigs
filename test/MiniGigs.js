@@ -82,16 +82,34 @@ describe('MiniGigs', function () {
     expect(gig.status).to.equal(3); // Completed
   });
 
-  it("Should prevent unauthorized users from completing a gig", async function () {
-    const bounty = ethers.parseEther("10");
+  it('Should prevent unauthorized users from completing a gig', async function () {
+    const bounty = ethers.parseEther('10');
     await token.connect(poster).approve(await miniGigs.getAddress(), bounty);
-    await miniGigs.connect(poster).postGig("Task", "Desc", bounty, 7);
+    await miniGigs.connect(poster).postGig('Task', 'Desc', bounty, 7);
     await miniGigs.connect(worker).acceptGig(1);
-    await miniGigs.connect(worker).submitWork(1, "proof");
+    await miniGigs.connect(worker).submitWork(1, 'proof');
 
     // Try to complete from worker (unauthorized)
     await expect(miniGigs.connect(worker).completeGig(1)).to.be.revertedWith(
       "Only poster can release funds"
     );
+  });
+
+  it("Should allow a poster to cancel and get a refund", async function () {
+    const bounty = ethers.parseEther("10");
+    await token.connect(poster).approve(await miniGigs.getAddress(), bounty);
+    await miniGigs.connect(poster).postGig("Task", "Desc", bounty, 7);
+
+    const initialPosterBalance = await token.balanceOf(poster.address);
+
+    // Cancel
+    await expect(miniGigs.connect(poster).cancelGig(1))
+      .to.emit(miniGigs, "GigCancelled")
+      .withArgs(1);
+
+    expect(await token.balanceOf(poster.address)).to.equal(initialPosterBalance + bounty);
+    
+    const gig = await miniGigs.gigs(1);
+    expect(gig.status).to.equal(5); // Cancelled
   });
 });
