@@ -29,7 +29,7 @@ import toast from 'react-hot-toast';
 import confetti from 'canvas-confetti';
 import styles from './page.module.css';
 
-export default function MarketplacePage() {
+export default function MarketplacePage({ filter }: { filter?: 'all' | 'my' }) {
   const [activeTab, setActiveTab] = useState<TabId>('explore');
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [selectedGig, setSelectedGig] = useState<Gig | null>(null);
@@ -41,10 +41,13 @@ export default function MarketplacePage() {
 
   // ── Tab: Explore (The Marketplace) ──
   const filteredGigs = useMemo(() => {
-    // Only use live data at the contract
-    if (selectedCategory === 'all') return liveGigs;
-    return liveGigs.filter((g) => g.category === selectedCategory);
-  }, [selectedCategory, liveGigs]);
+    let result = liveGigs;
+    if (filter === 'my' && address) {
+      result = liveGigs.filter((g) => g.poster === address || g.worker === address);
+    }
+    if (selectedCategory === 'all') return result;
+    return result.filter((g) => g.category === selectedCategory);
+  }, [selectedCategory, liveGigs, filter, address]);
 
   const ExploreView = () => {
     const openGigs = liveGigs.filter((g) => g.status === 'open').length;
