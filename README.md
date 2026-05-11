@@ -25,6 +25,19 @@ Despite the rise of the gig economy, global workers are often limited by high tr
 - **Web3 Tools**: [Wagmi](https://wagmi.sh/), [Viem](https://viem.sh/), [RainbowKit](https://www.rainbowkit.com/)
 - **Security**: WorldID Verification / Self Protocol
 - **Styling**: Vanilla CSS with a custom-engineered "Premium Dark" design system.
+- **Design System**: Atomic component architecture with glassmorphism effects.
+
+---
+
+## Design Standards: Premium Mobile-First
+
+MiniGigs follows a strict design philosophy to ensure it feels like a native application within the MiniPay environment:
+
+- **Safe Area Awareness**: All layout components use `env(safe-area-inset-*)` to handle notches and navigation bars.
+- **Glassmorphism**: High-blur backdrops (20px+) and 1px borders with subtle gradients for a modern, tactile feel.
+- **Touch-First Interactivity**: All interactive elements (buttons, tabs) maintain a minimum 44px tap target and use haptic-style "pop" animations.
+- **Perceived Performance**: Integrated Skeleton loaders and "Pull to Refresh" indicators ensure the UI stays responsive even on limited mobile networks.
+- **Atomic Components**: Foundational UI elements (Button, Card, Badge, Modal) are isolated for maximum reuse and visual consistency.
 
 ---
 
