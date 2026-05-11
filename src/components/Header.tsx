@@ -10,8 +10,8 @@ import styles from './Header.module.css';
 export default function Header() {
   const [isMiniPay, setIsMiniPay] = useState(() => {
     if (typeof window !== 'undefined') {
-      // @ts-expect-error - MiniPay specific property
-      return !!window.ethereum?.isMiniPay;
+      const eth = window.ethereum as { isMiniPay?: boolean } | undefined;
+      return !!eth?.isMiniPay;
     }
     return false;
   });
