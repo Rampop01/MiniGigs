@@ -13,8 +13,9 @@ export type GigEvent = {
   data: Record<string, unknown>;
 };
 
-export function useGigsEvents() {
+export function useGigsEvents(userAddress?: `0x${string}`) {
   const [events, setEvents] = useState<GigEvent[]>([]);
+  const [userEvents, setUserEvents] = useState<GigEvent[]>([]);
   const publicClient = usePublicClient();
 
   useEffect(() => {
@@ -42,6 +43,19 @@ export function useGigsEvents() {
 
           setEvents((prev) => [newEvent, ...prev].slice(0, 50));
 
+          // Filter for user-specific events
+          if (userAddress) {
+            const gigArgs = args as Record<string, unknown>;
+            const poster = (gigArgs.poster as string | undefined)?.toLowerCase();
+            const worker = (gigArgs.worker as string | undefined)?.toLowerCase();
+            const isRelevant =
+              poster === userAddress.toLowerCase() || worker === userAddress.toLowerCase();
+
+            if (isRelevant) {
+              setUserEvents((prev) => [newEvent, ...prev].slice(0, 20));
+            }
+          }
+
           // Real-time notifications
           if (eventName === 'GigPosted') {
             toast.success(`New Gig #${args.gigId} Posted!`, { icon: '🚀' });
@@ -53,7 +67,7 @@ export function useGigsEvents() {
     });
 
     return () => unwatch();
-  }, [publicClient]);
+  }, [publicClient, userAddress]);
 
-  return { events };
+  return { events, userEvents };
 }
