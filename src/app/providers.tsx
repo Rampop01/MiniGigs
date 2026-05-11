@@ -7,6 +7,7 @@ import '@rainbow-me/rainbowkit/styles.css';
 import { wagmiConfig } from '@/lib/web3';
 import { useState, type ReactNode } from 'react';
 import { Toaster } from 'react-hot-toast';
+import NavigationWrapper from '@/components/NavigationWrapper';
 
 export default function Providers({ children }: { children: ReactNode }) {
   const [queryClient] = useState(() => new QueryClient());
@@ -23,7 +24,7 @@ export default function Providers({ children }: { children: ReactNode }) {
             overlayBlur: 'small',
           })}
         >
-          {children}
+          <NavigationWrapper>{children}</NavigationWrapper>
           <Toaster
             position="top-center"
             toastOptions={{
