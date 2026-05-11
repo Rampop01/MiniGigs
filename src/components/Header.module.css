@@ -1,8 +1,17 @@
 .header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--sp-20);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: var(--sp-6) 0;
+  padding: 0 var(--sp-6);
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  z-index: 1000;
 }
 
 .brand {
@@ -22,7 +31,7 @@
 
 .logoM {
   font-family: var(--font-heading);
-  font-size: 38px;
+  font-size: 32px;
   font-weight: 900;
   line-height: normal;
   background: var(--shiny-gradient);
@@ -37,7 +46,7 @@
 
 .logoText {
   font-family: var(--font-heading);
-  font-size: 26px;
+  font-size: 22px;
   font-weight: 900;
   letter-spacing: -2px;
   color: #fff;
