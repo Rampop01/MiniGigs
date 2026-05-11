@@ -1,15 +1,19 @@
 .nav {
   position: fixed;
-  bottom: var(--sp-3);
+  bottom: var(--sp-6);
   left: 50%;
   transform: translateX(-50%);
   width: calc(100% - var(--sp-6));
   max-width: 440px;
-  padding: var(--sp-2) var(--sp-2);
+  padding: 6px;
   display: flex;
   justify-content: space-around;
-  border-radius: var(--r-xl);
-  z-index: 100;
+  background: var(--glass-bg);
+  backdrop-filter: blur(25px);
+  border: var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  border-radius: var(--r-full);
+  z-index: 1000;
 }
 
 .tab,
@@ -17,28 +21,45 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 3px;
+  gap: 4px;
   background: transparent;
   border: none;
-  padding: 8px 12px;
+  padding: 10px;
   cursor: pointer;
-  transition: all var(--transition-fast);
-  border-radius: var(--r-md);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: var(--r-full);
   color: var(--text-tertiary);
-  min-width: 60px;
-}
-
-.tab:hover {
-  color: var(--text-secondary);
+  flex: 1;
+  position: relative;
 }
 
 .tabActive {
-  color: var(--primary);
-  background: var(--primary-subtle);
+  color: #fff;
+}
+
+.tabActive::after {
+  content: '';
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  left: 4px;
+  right: 4px;
+  background: var(--shiny-gradient);
+  border-radius: var(--r-full);
+  z-index: -1;
+  opacity: 1;
+  box-shadow: 0 4px 15px var(--primary-glow);
+  animation: tab-pop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes tab-pop {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
 }
 
 .label {
   font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.3px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
 }
