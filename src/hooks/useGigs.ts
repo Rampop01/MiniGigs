@@ -88,7 +88,7 @@ export function useGigs() {
             abi: MINI_GIGS_ABI,
             functionName: 'gigs',
             data: result as `0x${string}`,
-          }) as unknown[];
+          }) as readonly unknown[];
 
           if (!data) continue;
 
