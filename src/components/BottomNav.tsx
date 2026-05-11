@@ -29,7 +29,11 @@ export default function BottomNav({ active, onNavigate }: BottomNavProps) {
           onClick={() => onNavigate(id)}
           aria-label={label}
         >
-          <Icon size={20} strokeWidth={active === id ? 3 : 2} color={active === id ? "#000" : "currentColor"} />
+          <Icon
+            size={20}
+            strokeWidth={active === id ? 3 : 2}
+            color={active === id ? '#000' : 'currentColor'}
+          />
           <span className={styles.label}>{label}</span>
         </button>
       ))}

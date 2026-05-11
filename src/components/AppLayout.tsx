@@ -15,9 +15,7 @@ export const AppLayout = ({ children, activeTab, onNavigate }: AppLayoutProps) =
       <div className={styles.container}>
         <Header />
         <main className={styles.main}>
-          <div className="anim-slide-up">
-            {children}
-          </div>
+          <div className="anim-slide-up">{children}</div>
         </main>
         <BottomNav active={activeTab} onNavigate={onNavigate} />
       </div>

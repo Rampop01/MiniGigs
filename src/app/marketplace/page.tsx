@@ -11,6 +11,7 @@ import CreateGig from '@/components/CreateGig';
 import AgentHub from '@/components/AgentHub';
 import SelfClawBadge from '@/components/SelfClawBadge';
 import AdminPanel from '@/components/AdminPanel';
+import ActivityFeed from '@/components/ActivityFeed';
 import { Gig, MINIGIGS_CONTRACT_ADDRESS, CUSD_ADDRESS } from '@/lib/constants';
 import { useAccount, useBalance, useWriteContract } from 'wagmi';
 import { MINI_GIGS_ABI } from '@/lib/abi';
@@ -56,6 +57,7 @@ export default function MarketplacePage({ filter }: { filter?: 'all' | 'my' }) {
     return (
       <div className={`${styles.tabContent} anim-slide-up`}>
         <StatsBanner openGigs={openGigs} totalBounty={totalBounty} />
+        <ActivityFeed />
 
         <div className={styles.sectionHeader}>
           <h2 className={styles.sectionTitle}>

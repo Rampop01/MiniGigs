@@ -22,8 +22,8 @@ export default function NavigationWrapper({ children }: { children: React.ReactN
       case 'wallet':
         return (
           <div className="flex flex-col items-center justify-center min-height-50vh">
-             <h2 className="text-xl font-bold">Wallet View</h2>
-             <p className="text-gray-400">Coming soon to MiniPay</p>
+            <h2 className="text-xl font-bold">Wallet View</h2>
+            <p className="text-gray-400">Coming soon to MiniPay</p>
           </div>
         );
       case 'profile':

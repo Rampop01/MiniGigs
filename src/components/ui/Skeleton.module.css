@@ -10,13 +10,28 @@
   border-radius: var(--r-sm);
 }
 
-.text { height: 16px; width: 100%; border-radius: 4px; }
-.rect { height: 100%; width: 100%; }
-.circle { height: 32px; width: 32px; border-radius: 50%; }
+.text {
+  height: 16px;
+  width: 100%;
+  border-radius: 4px;
+}
+.rect {
+  height: 100%;
+  width: 100%;
+}
+.circle {
+  height: 32px;
+  width: 32px;
+  border-radius: 50%;
+}
 
 @keyframes loading {
-  0% { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
 }
 
 .gigSkeleton {
@@ -29,10 +44,34 @@
   gap: 12px;
 }
 
-.image { height: 120px; border-radius: var(--r-md); }
-.content { display: flex; flex-direction: column; gap: 8px; }
-.title { width: 80%; }
-.subtitle { width: 50%; height: 12px; }
-.footer { display: flex; align-items: center; justify-content: space-between; margin-top: 4px; }
-.avatar { width: 24px; height: 24px; }
-.badge { width: 60px; height: 20px; border-radius: var(--r-full); }
+.image {
+  height: 120px;
+  border-radius: var(--r-md);
+}
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.title {
+  width: 80%;
+}
+.subtitle {
+  width: 50%;
+  height: 12px;
+}
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 4px;
+}
+.avatar {
+  width: 24px;
+  height: 24px;
+}
+.badge {
+  width: 60px;
+  height: 20px;
+  border-radius: var(--r-full);
+}

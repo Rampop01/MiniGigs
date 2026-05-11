@@ -61,15 +61,24 @@ export function useGigsEvents(userAddress?: `0x${string}`) {
           if (eventName === 'GigPosted') {
             toast.success(`New Gig #${args.gigId} is now live!`, { icon: '🚀' });
           } else if (eventName === 'GigAccepted') {
-            const isUser = (gigArgs.worker as string | undefined)?.toLowerCase() === userAddress?.toLowerCase();
-            toast(isUser ? `You accepted Gig #${args.gigId}!` : `Gig #${args.gigId} was accepted`, { icon: '🤝' });
+            const isUser =
+              (gigArgs.worker as string | undefined)?.toLowerCase() === userAddress?.toLowerCase();
+            toast(isUser ? `You accepted Gig #${args.gigId}!` : `Gig #${args.gigId} was accepted`, {
+              icon: '🤝',
+            });
           } else if (eventName === 'GigSubmitted') {
             toast(`Work submitted for Gig #${args.gigId}`, { icon: '📤' });
           } else if (eventName === 'GigCompleted') {
             const poster = (gigArgs.poster as string | undefined)?.toLowerCase();
             const worker = (gigArgs.worker as string | undefined)?.toLowerCase();
-            const isUser = poster === userAddress?.toLowerCase() || worker === userAddress?.toLowerCase();
-            toast.success(isUser ? `Gig #${args.gigId} settled! Check your wallet.` : `Gig #${args.gigId} completed`, { icon: '💰' });
+            const isUser =
+              poster === userAddress?.toLowerCase() || worker === userAddress?.toLowerCase();
+            toast.success(
+              isUser
+                ? `Gig #${args.gigId} settled! Check your wallet.`
+                : `Gig #${args.gigId} completed`,
+              { icon: '💰' },
+            );
           }
         });
       },
