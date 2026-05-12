@@ -87,15 +87,17 @@ MiniGigs ensures a safe marketplace through a multi-layered escrow protection sy
 MiniGigs is optimized for high-performance and low-cost operations on Celo:
 
 ### 🏎️ RPC Optimization
+
 - **Multicall3 Integration**: We use Multicall3 to batch 20+ gig metadata requests into a single RPC call.
 - **Client-Side Caching**: Initial loads utilize `localStorage` for instant UI rendering while syncing with the chain in the background.
 
-### ⛽ Gas Benchmarks
+### ⛽ Gas Benchmarks (Hardhat Local)
 | Action | Standard Gas | Optimized Gas | Saving |
 | :--- | :--- | :--- | :--- |
+| Post Gig | 259,259 | N/A | Baseline |
+| Accept Gig | 70,612 | N/A | Baseline |
+| Complete Gig | 77,579 | **28,523** (Batch) | **~63%** |
 | Fetch 20 Gigs | 20 RPC calls | 1 RPC call | **95%** |
-| Complete 10 Gigs | ~500k gas | ~280k gas (Batch) | **~45%** |
-| Post Gig | ~120k gas | N/A | Baseline |
 
 ---
 
