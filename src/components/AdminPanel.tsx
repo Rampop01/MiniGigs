@@ -12,7 +12,7 @@ export default function AdminPanel() {
   const [isWithdrawing, setIsWithdrawing] = useState(false);
   const [isResolving, setIsResolving] = useState(false);
   const [disputeId, setDisputeId] = useState('');
-  const [recipient, setRecipient] = useState('');
+  const [payoutToPoster, setPayoutToPoster] = useState('0');
 
   // Read contract owner
   const { data: contractOwner } = useReadContract({
@@ -73,8 +73,8 @@ export default function AdminPanel() {
   };
 
   const handleResolveDispute = async () => {
-    if (!disputeId || !recipient) {
-      toast.error('Please provide both Gig ID and Recipient Address');
+    if (!disputeId || payoutToPoster === '') {
+      toast.error('Please provide both Gig ID and Poster Payout %');
       return;
     }
 
@@ -86,14 +86,14 @@ export default function AdminPanel() {
         address: MINIGIGS_CONTRACT_ADDRESS as `0x${string}`,
         abi: MINI_GIGS_ABI,
         functionName: 'resolveDispute',
-        args: [BigInt(disputeId), recipient as `0x${string}`],
+        args: [BigInt(disputeId), BigInt(payoutToPoster)],
         // @ts-expect-error - external - feeCurrency is supported on Celo
         feeCurrency: CUSD_ADDRESS as `0x${string}`,
       });
 
       toast.success('Dispute resolved successfully!', { id: 'resolve' });
       setDisputeId('');
-      setRecipient('');
+      setPayoutToPoster('0');
     } catch (error: unknown) {
       const err = error as { shortMessage?: string };
       console.error(err);
@@ -150,23 +150,21 @@ export default function AdminPanel() {
             onChange={(e) => setDisputeId(e.target.value)}
           />
           <input
-            type="text"
-            placeholder="Recipient Address (0x...)"
+            type="number"
+            placeholder="Poster Payout % (0-100)"
             className={styles.input}
-            value={recipient}
-            onChange={(e) => setRecipient(e.target.value)}
+            min="0"
+            max="100"
+            value={payoutToPoster}
+            onChange={(e) => setPayoutToPoster(e.target.value)}
           />
         </div>
         <button
           className={styles.resolveBtn}
           onClick={handleResolveDispute}
-          disabled={isResolving || !disputeId || !recipient}
+          disabled={isResolving || !disputeId || payoutToPoster === ''}
         >
-          {isResolving ? (
-            <RefreshCcw size={16} className="animate-spin" />
-          ) : (
-            <Shield size={16} />
-          )}
+          {isResolving ? <RefreshCcw size={16} className="animate-spin" /> : <Shield size={16} />}
           Resolve & Pay
         </button>
       </div>
