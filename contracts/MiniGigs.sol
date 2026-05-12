@@ -13,7 +13,7 @@ contract MiniGigs is Ownable, ReentrancyGuard {
     
     // ─── Enums & Structs ───
 
-    enum GigStatus { Open, InProgress, Submitted, Completed, Disputed, Cancelled }
+    enum GigStatus { Open, InProgress, Submitted, Completed, Disputed, Cancelled, Expired }
 
     struct Gig {
         uint256 id;
@@ -45,6 +45,7 @@ contract MiniGigs is Ownable, ReentrancyGuard {
     event GigCompleted(uint256 indexed id, address indexed worker, address indexed poster, uint256 payout);
     event GigCancelled(uint256 indexed id);
     event GigDisputed(uint256 indexed id, address indexed disputer);
+    event GigExpired(uint256 indexed id);
     event DisputeResolved(uint256 indexed id, address indexed winner, uint256 payout);
 
     // ─── Constructor ───
@@ -194,6 +195,21 @@ contract MiniGigs is Ownable, ReentrancyGuard {
         gig.status = GigStatus.Completed; // Mark as done
 
         emit DisputeResolved(_id, _payoutToPoster == 100 ? gig.poster : gig.worker, gig.bounty);
+    }
+
+    /**
+     * @notice Expire an unaccepted gig after its deadline
+     * @param _id The ID of the gig
+     */
+    function expireGig(uint256 _id) external nonReentrant {
+        Gig storage gig = gigs[_id];
+        require(gig.status == GigStatus.Open, "Only open gigs can expire");
+        require(block.timestamp > gig.deadline, "Deadline not reached");
+
+        gig.status = GigStatus.Expired;
+        require(stablecoin.transfer(gig.poster, gig.bounty), "Refund failed");
+
+        emit GigExpired(_id);
     }
 
     /**
