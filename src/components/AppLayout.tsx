@@ -1,6 +1,7 @@
 import React from 'react';
 import Header from './Header';
 import BottomNav, { TabId } from './BottomNav';
+import OfflineIndicator from './OfflineIndicator';
 import styles from './AppLayout.module.css';
 
 interface AppLayoutProps {
@@ -12,6 +13,7 @@ interface AppLayoutProps {
 export const AppLayout = ({ children, activeTab, onNavigate }: AppLayoutProps) => {
   return (
     <div className="layout-mobile">
+      <OfflineIndicator />
       <div className={styles.container}>
         <Header />
         <main className={styles.main}>
