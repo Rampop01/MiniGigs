@@ -52,7 +52,15 @@ export default function GigCard({ gig, now, onClick }: GigCardProps) {
             {gig.verification === 'worldid' ? 'World ID' : 'Self Protocol'}
           </span>
         )}
-        <span className={`badge ${gig.status === 'open' ? 'badge-blue' : 'badge-surface'}`}>
+        <span
+          className={`badge ${
+            gig.status === 'open'
+              ? 'badge-blue'
+              : gig.status === 'disputed'
+                ? 'badge-rose'
+                : 'badge-surface'
+          }`}
+        >
           {gig.status === 'open'
             ? 'Open'
             : gig.status.charAt(0).toUpperCase() + gig.status.slice(1).replace('_', ' ')}
