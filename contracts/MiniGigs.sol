@@ -44,7 +44,8 @@ contract MiniGigs is Ownable, ReentrancyGuard {
     event GigSubmitted(uint256 indexed id, address indexed worker, string deliverables);
     event GigCompleted(uint256 indexed id, address indexed worker, address indexed poster, uint256 payout);
     event GigCancelled(uint256 indexed id);
-    event GigDisputed(uint256 indexed id);
+    event GigDisputed(uint256 indexed id, address indexed disputer);
+    event DisputeResolved(uint256 indexed id, address indexed winner, uint256 payout);
 
     // ─── Constructor ───
 
@@ -151,6 +152,48 @@ contract MiniGigs is Ownable, ReentrancyGuard {
         require(stablecoin.transfer(msg.sender, gig.bounty), "Refund failed");
 
         emit GigCancelled(_id);
+    }
+
+    /**
+     * @notice Raise a dispute for a gig (Poster or Worker)
+     * @param _id The ID of the gig
+     */
+    function disputeGig(uint256 _id) external {
+        Gig storage gig = gigs[_id];
+        require(gig.status == GigStatus.Submitted || gig.status == GigStatus.InProgress, "Invalid status for dispute");
+        require(msg.sender == gig.poster || msg.sender == gig.worker, "Not authorized to dispute");
+
+        gig.status = GigStatus.Disputed;
+
+        emit GigDisputed(_id, msg.sender);
+    }
+
+    /**
+     * @notice Resolve a dispute (Owner/Admin only)
+     * @param _id The ID of the gig
+     * @param _payoutToPoster Percentage of bounty to return to poster (0-100)
+     */
+    function resolveDispute(uint256 _id, uint256 _payoutToPoster) external onlyOwner nonReentrant {
+        Gig storage gig = gigs[_id];
+        require(gig.status == GigStatus.Disputed, "Gig not disputed");
+        require(_payoutToPoster <= 100, "Invalid percentage");
+
+        uint256 posterShare = (gig.bounty * _payoutToPoster) / 100;
+        uint256 workerShare = gig.bounty - posterShare;
+
+        if (posterShare > 0) {
+            require(stablecoin.transfer(gig.poster, posterShare), "Poster refund failed");
+        }
+        
+        if (workerShare > 0) {
+            uint256 fee = (workerShare * platformFeeBps) / 10000;
+            uint256 finalWorkerPayout = workerShare - fee;
+            require(stablecoin.transfer(gig.worker, finalWorkerPayout), "Worker payout failed");
+        }
+
+        gig.status = GigStatus.Completed; // Mark as done
+
+        emit DisputeResolved(_id, _payoutToPoster == 100 ? gig.poster : gig.worker, gig.bounty);
     }
 
     /**
