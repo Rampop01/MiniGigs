@@ -1,5 +1,5 @@
 import React from 'react';
-import { Search, Sparkles, Zap, Shield } from 'lucide-react';
+import { Search, Zap, Shield } from 'lucide-react';
 import styles from './Hero.module.css';
 
 export default function Hero() {

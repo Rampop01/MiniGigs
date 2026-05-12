@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Header from '@/components/Header';
 import Hero from '@/components/Hero';
 import Onboarding from '@/components/Onboarding';
-import { Sparkles, ArrowRight, ShieldCheck, Globe, Zap, Users, BarChart3 } from 'lucide-react';
+import { ArrowRight, ShieldCheck, Globe, Zap, Users, BarChart3 } from 'lucide-react';
 import styles from './landing.module.css';
 
 export default function LandingPage() {

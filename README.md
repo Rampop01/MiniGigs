@@ -92,12 +92,13 @@ MiniGigs is optimized for high-performance and low-cost operations on Celo:
 - **Client-Side Caching**: Initial loads utilize `localStorage` for instant UI rendering while syncing with the chain in the background.
 
 ### ⛽ Gas Benchmarks (Hardhat Local)
-| Action | Standard Gas | Optimized Gas | Saving |
-| :--- | :--- | :--- | :--- |
-| Post Gig | 259,259 | N/A | Baseline |
-| Accept Gig | 70,612 | N/A | Baseline |
-| Complete Gig | 77,579 | **28,523** (Batch) | **~63%** |
-| Fetch 20 Gigs | 20 RPC calls | 1 RPC call | **95%** |
+
+| Action        | Standard Gas | Optimized Gas      | Saving   |
+| :------------ | :----------- | :----------------- | :------- |
+| Post Gig      | 259,259      | N/A                | Baseline |
+| Accept Gig    | 70,612       | N/A                | Baseline |
+| Complete Gig  | 77,579       | **28,523** (Batch) | **~63%** |
+| Fetch 20 Gigs | 20 RPC calls | 1 RPC call         | **95%**  |
 
 ---
 

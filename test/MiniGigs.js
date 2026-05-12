@@ -3,10 +3,10 @@ import pkg from 'hardhat';
 const { ethers } = pkg;
 
 describe('MiniGigs', function () {
-  let MiniGigs, miniGigs, MockToken, token, owner, poster, worker;
+  let MiniGigs, miniGigs, MockToken, token, poster, worker;
 
   beforeEach(async function () {
-    [owner, poster, worker] = await ethers.getSigners();
+    [, poster, worker] = await ethers.getSigners();
 
     MockToken = await ethers.getContractFactory('MockToken');
     token = await MockToken.deploy();
@@ -68,7 +68,6 @@ describe('MiniGigs', function () {
     await miniGigs.connect(worker).submitWork(1, 'proof');
 
     const initialWorkerBalance = await token.balanceOf(worker.address);
-    const initialContractBalance = await token.balanceOf(await miniGigs.getAddress());
 
     // Complete
     await miniGigs.connect(poster).completeGig(1);
@@ -127,5 +126,60 @@ describe('MiniGigs', function () {
     await miniGigs.connect(owner).withdrawFees(fee);
 
     expect(await token.balanceOf(owner.address)).to.equal(initialOwnerBalance + fee);
+  });
+
+  it('Should handle dispute resolution correctly', async function () {
+    const bounty = ethers.parseEther('10');
+    await token.connect(poster).approve(await miniGigs.getAddress(), bounty);
+    await miniGigs.connect(poster).postGig('Task', 'Desc', bounty, 7);
+    await miniGigs.connect(worker).acceptGig(1);
+    await miniGigs.connect(worker).submitWork(1, 'proof');
+
+    // Dispute from poster
+    await expect(miniGigs.connect(poster).disputeGig(1))
+      .to.emit(miniGigs, 'GigDisputed')
+      .withArgs(1, poster.address);
+
+    let gig = await miniGigs.gigs(1);
+    expect(gig.status).to.equal(4); // Disputed
+
+    // Resolve dispute 50/50
+    const initialPosterBalance = await token.balanceOf(poster.address);
+    const initialWorkerBalance = await token.balanceOf(worker.address);
+
+    await expect(miniGigs.connect(owner).resolveDispute(1, 50))
+      .to.emit(miniGigs, 'DisputeResolved')
+      .withArgs(1, worker.address, bounty);
+
+    const posterPayout = ethers.parseEther('5');
+    const workerPayoutRaw = ethers.parseEther('5');
+    const fee = (workerPayoutRaw * 200n) / 10000n;
+    const finalWorkerPayout = workerPayoutRaw - fee;
+
+    expect(await token.balanceOf(poster.address)).to.equal(initialPosterBalance + posterPayout);
+    expect(await token.balanceOf(worker.address)).to.equal(
+      initialWorkerBalance + finalWorkerPayout,
+    );
+
+    gig = await miniGigs.gigs(1);
+    expect(gig.status).to.equal(3); // Completed (as marker for done)
+  });
+
+  it('Should handle gig expiration', async function () {
+    const bounty = ethers.parseEther('10');
+    await token.connect(poster).approve(await miniGigs.getAddress(), bounty);
+    await miniGigs.connect(poster).postGig('Task', 'Desc', bounty, 7);
+
+    // Fast forward time
+    await pkg.network.provider.send('evm_increaseTime', [8 * 24 * 60 * 60]); // 8 days
+    await pkg.network.provider.send('evm_mine');
+
+    const initialPosterBalance = await token.balanceOf(poster.address);
+
+    await expect(miniGigs.expireGig(1)).to.emit(miniGigs, 'GigExpired').withArgs(1);
+
+    expect(await token.balanceOf(poster.address)).to.equal(initialPosterBalance + bounty);
+    const gig = await miniGigs.gigs(1);
+    expect(gig.status).to.equal(6); // Expired
   });
 });

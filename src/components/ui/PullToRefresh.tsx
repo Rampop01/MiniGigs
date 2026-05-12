@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { RefreshCcw } from 'lucide-react';
 import styles from './PullToRefresh.module.css';
 
@@ -12,14 +12,16 @@ interface PullToRefreshProps {
 export const PullToRefresh = ({ onRefresh, children }: PullToRefreshProps) => {
   const [isRefreshing, setIsRefreshing] = useState(false);
 
-  const handleRefresh = async () => {
+  const handleTouchEnd = async () => {
+    // Basic implementation: trigger on scroll up or similar
+    // For now, let's just make it clickable for testing or use a simple timeout
     setIsRefreshing(true);
     await onRefresh();
     setTimeout(() => setIsRefreshing(false), 1000);
   };
 
   return (
-    <div className={styles.container}>
+    <div className={styles.container} onClick={handleTouchEnd}>
       <div className={`${styles.indicator} ${isRefreshing ? styles.spinning : ''}`}>
         <RefreshCcw size={16} />
       </div>

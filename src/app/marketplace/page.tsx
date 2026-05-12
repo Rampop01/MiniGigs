@@ -74,12 +74,7 @@ export default function MarketplacePage({ filter }: { filter?: 'all' | 'my' }) {
 
         <div className={styles.gigGrid}>
           {filteredGigs.map((gig) => (
-            <GigCard
-              key={gig.id}
-              gig={gig}
-              now={now}
-              onClick={() => setSelectedGig(gig)}
-            />
+            <GigCard key={gig.id} gig={gig} now={now} onClick={() => setSelectedGig(gig)} />
           ))}
         </div>
       </div>
@@ -104,12 +99,7 @@ export default function MarketplacePage({ filter }: { filter?: 'all' | 'my' }) {
       {myTasks.length > 0 ? (
         <div className={styles.gigGrid}>
           {myTasks.map((gig) => (
-            <GigCard
-              key={gig.id}
-              gig={gig}
-              now={now}
-              onClick={() => setSelectedGig(gig)}
-            />
+            <GigCard key={gig.id} gig={gig} now={now} onClick={() => setSelectedGig(gig)} />
           ))}
         </div>
       ) : (

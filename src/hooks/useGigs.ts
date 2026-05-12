@@ -47,7 +47,6 @@ function decodeMulticall(result: string): `0x${string}`[] {
   if (result === '0x') return [];
   // Result is an array of Result structs: (bool success, bytes returnData)
   const hex = result.replace('0x', '');
-  const offset = parseInt(hex.slice(0, 64), 16);
   const count = parseInt(hex.slice(64, 128), 16);
   const outputs: `0x${string}`[] = [];
 
@@ -84,7 +83,7 @@ async function rpcCallWithFallback(data: string): Promise<string | null> {
     try {
       const result = await rpcCall(data, url);
       if (result && result !== '0x') return result;
-    } catch (e) {
+    } catch {
       console.warn(`RPC ${url} failed, trying next...`);
     }
   }
@@ -200,7 +199,9 @@ export function useGigs() {
                 finalVer = meta.ver || 'none';
                 finalTime = meta.time || '3h';
               }
-            } catch (_) {}
+            } catch {
+              // Ignore JSON parse errors
+            }
 
             fetchedGigs.push({
               id: gigIds[idx].toString(),

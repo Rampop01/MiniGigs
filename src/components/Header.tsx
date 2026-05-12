@@ -8,7 +8,7 @@ import { CheckCircle } from 'lucide-react';
 import styles from './Header.module.css';
 
 export default function Header() {
-  const [isMiniPay, setIsMiniPay] = useState(() => {
+  const [isMiniPay] = useState(() => {
     if (typeof window !== 'undefined') {
       const eth = window.ethereum as { isMiniPay?: boolean } | undefined;
       return !!eth?.isMiniPay;
