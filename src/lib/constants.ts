@@ -49,7 +49,8 @@ export type GigStatus =
   | 'submitted'
   | 'completed'
   | 'disputed'
-  | 'cancelled';
+  | 'cancelled'
+  | 'expired';
 
 export interface Gig {
   id: string;

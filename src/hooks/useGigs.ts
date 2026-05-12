@@ -99,6 +99,7 @@ export function useGigs() {
             'completed',
             'disputed',
             'cancelled',
+            'expired',
           ];
 
           // viem returns named properties for named tuple fields
