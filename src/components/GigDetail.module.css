@@ -205,3 +205,48 @@
   color: #fff;
   border-color: var(--primary);
 }
+
+.disputeBtn {
+  width: 100%;
+  padding: 14px;
+  border: 1px solid rgba(255, 59, 59, 0.2);
+  border-radius: var(--r-full);
+  background: rgba(255, 59, 59, 0.05);
+  color: #ff3b3b;
+  font-size: 14px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.disputeBtn:hover {
+  background: rgba(255, 59, 59, 0.1);
+  border-color: #ff3b3b;
+}
+
+.statusBadge {
+  width: 100%;
+  padding: 18px;
+  background: var(--bg-surface-elevated);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--r-full);
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.deliverablesBox {
+  background: rgba(255, 255, 255, 0.03);
+  padding: var(--sp-4);
+  border-radius: var(--r-lg);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  font-size: 14px;
+  color: #fff;
+  line-height: 1.6;
+}

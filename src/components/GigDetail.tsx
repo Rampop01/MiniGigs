@@ -11,9 +11,10 @@ interface GigDetailProps {
   gig: Gig;
   onClose: () => void;
   onAccept?: (gig: Gig) => void;
+  onDispute?: (gig: Gig) => void;
 }
 
-export default function GigDetail({ gig, onClose, onAccept }: GigDetailProps) {
+export default function GigDetail({ gig, onClose, onAccept, onDispute }: GigDetailProps) {
   const { address, isConnected } = useAccount();
   const cat = getCategoryInfo(gig.category);
 
@@ -45,7 +46,13 @@ export default function GigDetail({ gig, onClose, onAccept }: GigDetailProps) {
   } else if (gig.status === 'completed') {
     actionLabel = 'Job Completed';
     showAction = false;
+  } else if (gig.status === 'disputed') {
+    actionLabel = 'Under Dispute';
+    showAction = false;
   }
+
+  const canDispute =
+    (gig.status === 'submitted' || gig.status === 'in_progress') && (isPoster || isWorker);
 
   return (
     <div className={styles.overlay} onClick={onClose}>
@@ -115,6 +122,12 @@ export default function GigDetail({ gig, onClose, onAccept }: GigDetailProps) {
             <div className={styles.statusBadge}>
               <CheckCircle size={18} /> {actionLabel}
             </div>
+          )}
+
+          {canDispute && (
+            <button className={styles.disputeBtn} onClick={() => onDispute?.(gig)}>
+              Raise Dispute
+            </button>
           )}
           <button
             className={styles.viewChainBtn}
