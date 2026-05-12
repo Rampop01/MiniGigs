@@ -35,6 +35,7 @@ export default function MarketplacePage({ filter }: { filter?: 'all' | 'my' }) {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [selectedGig, setSelectedGig] = useState<Gig | null>(null);
   const [showCreateModal, setShowCreateModal] = useState(false);
+  const [now] = useState(() => Date.now());
 
   const { address, isConnected } = useAccount();
   const { writeContractAsync } = useWriteContract();
@@ -73,7 +74,12 @@ export default function MarketplacePage({ filter }: { filter?: 'all' | 'my' }) {
 
         <div className={styles.gigGrid}>
           {filteredGigs.map((gig) => (
-            <GigCard key={gig.id} gig={gig} onClick={() => setSelectedGig(gig)} />
+            <GigCard
+              key={gig.id}
+              gig={gig}
+              now={now}
+              onClick={() => setSelectedGig(gig)}
+            />
           ))}
         </div>
       </div>
@@ -98,7 +104,12 @@ export default function MarketplacePage({ filter }: { filter?: 'all' | 'my' }) {
       {myTasks.length > 0 ? (
         <div className={styles.gigGrid}>
           {myTasks.map((gig) => (
-            <GigCard key={gig.id} gig={gig} onClick={() => setSelectedGig(gig)} />
+            <GigCard
+              key={gig.id}
+              gig={gig}
+              now={now}
+              onClick={() => setSelectedGig(gig)}
+            />
           ))}
         </div>
       ) : (

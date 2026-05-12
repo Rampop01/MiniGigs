@@ -51,10 +51,14 @@
 .bounty {
   font-family: var(--font-heading);
   font-weight: 900;
-  font-size: 16px;
+  font-size: 15px;
   color: var(--primary);
   white-space: nowrap;
-  text-shadow: 0 0 10px rgba(0, 162, 255, 0.3);
+  background: var(--primary-subtle);
+  padding: 4px 10px;
+  border-radius: var(--r-full);
+  display: flex;
+  align-items: center;
 }
 
 .title {
@@ -80,4 +84,45 @@
   display: flex;
   gap: var(--sp-2);
   flex-wrap: wrap;
+}
+
+.liveBadge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(255, 59, 59, 0.1);
+  color: #ff3b3b;
+  padding: 4px 8px;
+  border-radius: var(--r-full);
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border: 1px solid rgba(255, 59, 59, 0.2);
+  z-index: 10;
+  pointer-events: none;
+}
+
+.pulse {
+  width: 6px;
+  height: 6px;
+  background: #ff3b3b;
+  border-radius: 50%;
+  box-shadow: 0 0 0 rgba(255, 59, 59, 0.4);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 59, 59, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 8px rgba(255, 59, 59, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 59, 59, 0);
+  }
 }

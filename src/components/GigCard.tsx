@@ -7,6 +7,7 @@ import styles from './GigCard.module.css';
 
 interface GigCardProps {
   gig: Gig;
+  now?: number;
   onClick?: () => void;
 }
 
@@ -16,11 +17,18 @@ function VerificationIcon({ method }: { method: string }) {
   return null;
 }
 
-export default function GigCard({ gig, onClick }: GigCardProps) {
+export default function GigCard({ gig, now, onClick }: GigCardProps) {
   const cat = getCategoryInfo(gig.category);
+  const isLive = now ? now - gig.createdAt < 300000 : false;
 
   return (
     <article className={`card ${styles.card} anim-fade-up`} onClick={onClick}>
+      {isLive && (
+        <div className={styles.liveBadge}>
+          <div className={styles.pulse} />
+          <span>Live</span>
+        </div>
+      )}
       <div className={styles.top}>
         <div className={styles.iconBox}>
           <cat.Icon size={16} color="var(--primary)" />
@@ -30,11 +38,11 @@ export default function GigCard({ gig, onClick }: GigCardProps) {
           <span className={styles.dot}>·</span>
           <span className={styles.time}>{timeAgo(gig.createdAt)}</span>
         </div>
-        <span className={styles.bounty}>{formatCUSD(gig.bounty)}</span>
       </div>
       <h3 className={styles.title}>{gig.title}</h3>
       <p className={styles.desc}>{gig.description}</p>
       <div className={styles.tags}>
+        <span className={styles.bounty}>{formatCUSD(gig.bounty)}</span>
         <span className={`badge badge-surface`}>
           <Clock size={12} /> {gig.timeEstimate || '3h'}
         </span>
