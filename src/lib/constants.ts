@@ -153,4 +153,32 @@ export const MOCK_GIGS: Gig[] = [
     worker: null,
     createdAt: Date.now() - 900000,
   },
+  {
+    id: '7',
+    title: 'Logo Concept for Celo MiniApp',
+    description:
+      'Sketch 3 minimalist logo concepts for a new Celo-based micro-lending platform. Focus on trust and accessibility.',
+    category: 'design',
+    bounty: 25,
+    timeEstimate: '2 hr',
+    verification: 'worldid',
+    status: 'open',
+    poster: '0xAb5801a7D398351b8bE11C439e05C5B3259aeC9B',
+    worker: null,
+    createdAt: Date.now() - 3600000,
+  },
+  {
+    id: '8',
+    title: 'Verify Local Store Presence',
+    description:
+      'Visit "Oasis Shop" in Lagos and confirm they accept mobile payments. Submit a photo of their storefront QR code.',
+    category: 'data',
+    bounty: 6,
+    timeEstimate: '30 min',
+    verification: 'worldid',
+    status: 'open',
+    poster: '0x1234567890ABCdef1234567890ABCdEf12345678',
+    worker: null,
+    createdAt: Date.now() - 5400000,
+  },
 ];
