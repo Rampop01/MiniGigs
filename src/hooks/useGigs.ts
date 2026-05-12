@@ -92,7 +92,13 @@ async function rpcCallWithFallback(data: string): Promise<string | null> {
 }
 
 export function useGigs() {
-  const [gigs, setGigs] = useState<Gig[]>([]);
+  const [gigs, setGigs] = useState<Gig[]>(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('minigigs_cache');
+      return saved ? JSON.parse(saved) : [];
+    }
+    return [];
+  });
   const [isLoading, setIsLoading] = useState(true);
   const [gigCount, setGigCount] = useState<number>(0);
 
@@ -216,8 +222,8 @@ export function useGigs() {
             console.error(`Failed to decode gig #${gigIds[idx]}:`, e);
           }
         });
-
         setGigs(fetchedGigs);
+        localStorage.setItem('minigigs_cache', JSON.stringify(fetchedGigs));
       } catch (e) {
         console.error('Multicall failed:', e);
       } finally {
