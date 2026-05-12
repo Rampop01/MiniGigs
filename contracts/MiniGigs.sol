@@ -141,6 +141,31 @@ contract MiniGigs is Ownable, ReentrancyGuard {
     }
 
     /**
+     * @notice Complete multiple gigs in a single transaction to save gas
+     * @param _ids Array of gig IDs to complete
+     */
+    function batchCompleteGigs(uint256[] calldata _ids) external nonReentrant {
+        for (uint256 i = 0; i < _ids.length; i++) {
+            uint256 id = _ids[i];
+            Gig storage gig = gigs[id];
+            
+            // Skip invalid ones rather than revert to ensure partial success if needed,
+            // or strictly revert if any fail. For efficiency, we'll revert.
+            require(gig.status == GigStatus.Submitted, "Work not submitted");
+            require(gig.poster == msg.sender, "Only poster can release funds");
+
+            gig.status = GigStatus.Completed;
+
+            uint256 fee = (gig.bounty * platformFeeBps) / 10000;
+            uint256 payout = gig.bounty - fee;
+
+            require(stablecoin.transfer(gig.worker, payout), "Payout failed");
+
+            emit GigCompleted(id, gig.worker, msg.sender, payout);
+        }
+    }
+
+    /**
      * @notice Cancel an open gig and refund the poster
      * @param _id The ID of the gig
      */
