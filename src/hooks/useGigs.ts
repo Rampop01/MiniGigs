@@ -10,6 +10,59 @@ const GIGS_COUNT_SELECTOR = '0x3689e916';
 const GIGS_SELECTOR = '0x5e3fbdc8';
 const RPC_URLS = ['https://forno.celo.org', 'https://rpc.ankr.com/celo'];
 
+// Multicall3 helpers (aggregate3)
+function encodeMulticall(calls: { to: string; data: string }[]) {
+  // selector for aggregate3((address,bool,bytes)[]) => 0x82ad56a4
+  let calldata = '0x82ad56a4';
+  // offset to the array
+  calldata += '0000000000000000000000000000000000000000000000000000000000000020';
+  // length of the array
+  calldata += calls.length.toString(16).padStart(64, '0');
+
+  const dataOffset = calls.length * 32; // Each struct is 3 words (offset, allowFailure, offset to data)
+  let dataPointer = dataOffset;
+
+  let structSection = '';
+  let dataSection = '';
+
+  calls.forEach((call) => {
+    const callData = call.data.replace('0x', '');
+    const callDataLen = callData.length / 2;
+    const callDataPaddedLen = Math.ceil(callDataLen / 32) * 32;
+
+    structSection += call.to.toLowerCase().replace('0x', '').padStart(64, '0');
+    structSection += '0000000000000000000000000000000000000000000000000000000000000001'; // allowFailure = true
+    structSection += dataPointer.toString(16).padStart(64, '0');
+
+    dataSection += callDataLen.toString(16).padStart(64, '0');
+    dataSection += callData.padEnd(callDataPaddedLen * 2, '0');
+
+    dataPointer += 32 + callDataPaddedLen;
+  });
+
+  return (calldata + structSection + dataSection) as `0x${string}`;
+}
+
+function decodeMulticall(result: string): `0x${string}`[] {
+  if (result === '0x') return [];
+  // Result is an array of Result structs: (bool success, bytes returnData)
+  const hex = result.replace('0x', '');
+  const offset = parseInt(hex.slice(0, 64), 16);
+  const count = parseInt(hex.slice(64, 128), 16);
+  const outputs: `0x${string}`[] = [];
+
+  for (let i = 0; i < count; i++) {
+    const structStart = 64 + i * 64;
+    const success = parseInt(hex.slice(structStart, structStart + 64), 16) === 1;
+    const dataOffset = parseInt(hex.slice(structStart + 64, structStart + 128), 16);
+    const dataStart = 64 + dataOffset * 2;
+    const dataLen = parseInt(hex.slice(dataStart, dataStart + 64), 16);
+    const data = hex.slice(dataStart + 64, dataStart + 64 + dataLen * 2);
+    outputs.push(success ? (`0x${data}` as `0x${string}`) : ('0x' as `0x${string}`));
+  }
+  return outputs;
+}
+
 async function rpcCall(data: string, rpcUrl: string) {
   const res = await fetch(rpcUrl, {
     method: 'POST',
@@ -69,80 +122,107 @@ export function useGigs() {
         return;
       }
       setIsLoading(true);
-      const fetchedGigs: Gig[] = [];
 
       // Fetch the last 20 gigs (newest first)
       const limit = Math.min(gigCount, 20);
-      const start = gigCount - limit + 1;
+      const gigIds = Array.from({ length: limit }, (_, i) => BigInt(gigCount - i));
 
-      console.log(`📡 Fetching gigs ${start} to ${gigCount}...`);
+      try {
+        console.log(`📡 Fetching ${limit} gigs via Multicall...`);
 
-      for (let i = gigCount; i >= start; i--) {
-        try {
-          const calldata = `${GIGS_SELECTOR}${BigInt(i).toString(16).padStart(64, '0')}`;
-          const result = await rpcCallWithFallback(calldata);
+        // Create multicall params
+        const calls = gigIds.map((id) => ({
+          to: MINIGIGS_CONTRACT_ADDRESS,
+          data: `${GIGS_SELECTOR}${id.toString(16).padStart(64, '0')}` as `0x${string}`,
+        }));
 
-          if (!result || result === '0x') continue;
+        // Batch call
+        const res = await fetch(RPC_URLS[0], {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            jsonrpc: '2.0',
+            id: Date.now(),
+            method: 'eth_call',
+            params: [
+              {
+                to: '0xcA11bde05977b3631167028862bE2a173976CA11', // Multicall3 on Celo
+                data: encodeMulticall(calls),
+              },
+              'latest',
+            ],
+          }),
+        });
 
-          const data = decodeFunctionResult({
-            abi: MINI_GIGS_ABI,
-            functionName: 'gigs',
-            data: result as `0x${string}`,
-          }) as readonly unknown[];
+        const json = await res.json();
+        if (json.error) throw new Error(json.error.message);
 
-          if (!data) continue;
+        const results = decodeMulticall(json.result);
+        const fetchedGigs: Gig[] = [];
 
-          const statusMap: GigStatus[] = [
-            'open',
-            'in_progress',
-            'submitted',
-            'completed',
-            'disputed',
-            'cancelled',
-            'expired',
-          ];
-
-          // viem returns named properties for named tuple fields
-          const rawDesc = (data.description ?? data[5] ?? '') as string;
-          let finalDesc = rawDesc;
-          let finalCat = 'other';
-          let finalVer = 'none';
-          let finalTime = '3h';
+        results.forEach((result, idx) => {
+          if (!result || result === '0x') return;
 
           try {
-            if (rawDesc.startsWith('{')) {
-              const meta = JSON.parse(rawDesc);
-              finalDesc = meta.desc || rawDesc;
-              finalCat = meta.cat || 'other';
-              finalVer = meta.ver || 'none';
-              finalTime = meta.time || '3h';
-            }
-          } catch (_) {}
+            const data = decodeFunctionResult({
+              abi: MINI_GIGS_ABI,
+              functionName: 'gigs',
+              data: result,
+            }) as readonly unknown[];
 
-          const statusIdx = Number(data.status ?? data[6] ?? 0);
-          const workerAddr = (data.worker ?? data[2] ?? '') as string;
+            const statusMap: GigStatus[] = [
+              'open',
+              'in_progress',
+              'submitted',
+              'completed',
+              'disputed',
+              'cancelled',
+              'expired',
+            ];
 
-          fetchedGigs.push({
-            id: i.toString(),
-            poster: (data.poster ?? data[1] ?? '') as string,
-            worker: workerAddr === '0x0000000000000000000000000000000000000000' ? null : workerAddr,
-            bounty: Number(formatEther((data.bounty ?? data[3] ?? BigInt(0)) as bigint)),
-            title: (data.title ?? data[4] ?? `Gig #${i}`) as string,
-            description: finalDesc,
-            category: finalCat,
-            status: statusMap[statusIdx] ?? 'open',
-            verification: finalVer,
-            timeEstimate: finalTime,
-            createdAt: Number(data.createdAt ?? data[8] ?? 0) * 1000,
-          });
-        } catch (e) {
-          console.error(`Failed to fetch gig #${i}:`, e);
-        }
+            const rawDesc = (data[5] as string) || '';
+            let finalDesc = rawDesc;
+            let finalCat = 'other';
+            let finalVer = 'none';
+            let finalTime = '3h';
+
+            try {
+              if (rawDesc.startsWith('{')) {
+                const meta = JSON.parse(rawDesc);
+                finalDesc = meta.desc || rawDesc;
+                finalCat = meta.cat || 'other';
+                finalVer = meta.ver || 'none';
+                finalTime = meta.time || '3h';
+              }
+            } catch (_) {}
+
+            fetchedGigs.push({
+              id: gigIds[idx].toString(),
+              poster: data[1] as string,
+              worker:
+                (data[2] as string) === '0x0000000000000000000000000000000000000000'
+                  ? null
+                  : (data[2] as string),
+              bounty: Number(formatEther(data[3] as bigint)),
+              title: (data[4] as string) || `Gig #${gigIds[idx]}`,
+              description: finalDesc,
+              category: finalCat,
+              status: statusMap[Number(data[6] as number)] ?? 'open',
+              verification: finalVer,
+              timeEstimate: finalTime,
+              createdAt: Number(data[8] as bigint) * 1000,
+            });
+          } catch (e) {
+            console.error(`Failed to decode gig #${gigIds[idx]}:`, e);
+          }
+        });
+
+        setGigs(fetchedGigs);
+      } catch (e) {
+        console.error('Multicall failed:', e);
+      } finally {
+        setIsLoading(false);
       }
-
-      console.log(`✅ Loaded ${fetchedGigs.length} gigs`);
-      setGigs(fetchedGigs);
-      setIsLoading(false);
     }
 
     fetchGigs();
