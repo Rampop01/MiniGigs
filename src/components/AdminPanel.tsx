@@ -10,6 +10,9 @@ export default function AdminPanel() {
   const { address, isConnected } = useAccount();
   const { writeContractAsync } = useWriteContract();
   const [isWithdrawing, setIsWithdrawing] = useState(false);
+  const [isResolving, setIsResolving] = useState(false);
+  const [disputeId, setDisputeId] = useState('');
+  const [recipient, setRecipient] = useState('');
 
   // Read contract owner
   const { data: contractOwner } = useReadContract({
@@ -69,6 +72,37 @@ export default function AdminPanel() {
     }
   };
 
+  const handleResolveDispute = async () => {
+    if (!disputeId || !recipient) {
+      toast.error('Please provide both Gig ID and Recipient Address');
+      return;
+    }
+
+    try {
+      setIsResolving(true);
+      toast.loading('Resolving dispute on-chain...', { id: 'resolve' });
+
+      await writeContractAsync({
+        address: MINIGIGS_CONTRACT_ADDRESS as `0x${string}`,
+        abi: MINI_GIGS_ABI,
+        functionName: 'resolveDispute',
+        args: [BigInt(disputeId), recipient as `0x${string}`],
+        // @ts-expect-error - external - feeCurrency is supported on Celo
+        feeCurrency: CUSD_ADDRESS as `0x${string}`,
+      });
+
+      toast.success('Dispute resolved successfully!', { id: 'resolve' });
+      setDisputeId('');
+      setRecipient('');
+    } catch (error: unknown) {
+      const err = error as { shortMessage?: string };
+      console.error(err);
+      toast.error(err.shortMessage || 'Resolution failed', { id: 'resolve' });
+    } finally {
+      setIsResolving(false);
+    }
+  };
+
   if (!isConnected || !isOwner) return null;
 
   return (
@@ -100,6 +134,40 @@ export default function AdminPanel() {
             <Download size={16} />
           )}
           Withdraw
+        </button>
+      </div>
+
+      <div className={styles.divider} />
+
+      <div className={styles.disputeSection}>
+        <h4 className={styles.sectionSubtitle}>Dispute Resolution</h4>
+        <div className={styles.inputGroup}>
+          <input
+            type="number"
+            placeholder="Gig ID"
+            className={styles.input}
+            value={disputeId}
+            onChange={(e) => setDisputeId(e.target.value)}
+          />
+          <input
+            type="text"
+            placeholder="Recipient Address (0x...)"
+            className={styles.input}
+            value={recipient}
+            onChange={(e) => setRecipient(e.target.value)}
+          />
+        </div>
+        <button
+          className={styles.resolveBtn}
+          onClick={handleResolveDispute}
+          disabled={isResolving || !disputeId || !recipient}
+        >
+          {isResolving ? (
+            <RefreshCcw size={16} className="animate-spin" />
+          ) : (
+            <Shield size={16} />
+          )}
+          Resolve & Pay
         </button>
       </div>
 
