@@ -38,6 +38,18 @@ MiniGigs follows a strict design philosophy to ensure it feels like a native app
 - **Touch-First Interactivity**: All interactive elements (buttons, tabs) maintain a minimum 44px tap target and use haptic-style "pop" animations.
 - **Perceived Performance**: Integrated Skeleton loaders and "Pull to Refresh" indicators ensure the UI stays responsive even on limited mobile networks.
 - **Atomic Components**: Foundational UI elements (Button, Card, Badge, Modal) are isolated for maximum reuse and visual consistency.
+- **Real-time Event Architecture**: Powered by Viem's `watchContractEvent`, the UI provides immediate feedback for on-chain actions (GigPosted, GigCompleted) without page refreshes.
+
+---
+
+## Technical Architecture: Real-time Indexing
+
+MiniGigs employs a client-side real-time indexing strategy to ensure a "live" marketplace feel:
+
+- **useGigsEvents**: A custom hook that subscribes to all `MiniGigs` contract events on-chain.
+- **Activity Feed**: A dedicated component that aggregates global market activity (Acceptances, Submissions, Settlements) into a chronological stream.
+- **User-Specific Filtering**: The indexing engine identifies and prioritizes events involving the connected user's address, triggering specialized toast notifications.
+- **Live Indicators**: Gigs posted within a 5-minute window are automatically flagged with a pulsing "Live" indicator, driven by the real-time event stream.
 
 ---
 
@@ -47,6 +59,25 @@ MiniGigs follows a strict design philosophy to ensure it feels like a native app
 2. **Accept**: Securely accept a gig and lock the escrow.
 3. **Submit**: Complete the task and submit proof-of-work.
 4. **Earn**: Get paid directly to your MiniPay wallet as soon as work is verified.
+
+---
+
+## Escrow Security & Dispute Resolution
+
+MiniGigs ensures a safe marketplace through a multi-layered escrow protection system:
+
+### 🔐 Escrow Protection
+- **Instant Locking**: When a poster creates a gig, cUSD is immediately locked in the smart contract.
+- **Worker Guarantee**: Funds are guaranteed for the worker once they accept the gig and the status moves to `InProgress`.
+
+### ⚖️ Dispute Resolution
+- **Raising a Dispute**: Either the Poster or the Worker can raise a formal dispute if work is unsatisfactory or if communication breaks down. This can be done via the "Raise Dispute" button in the Gig Detail view.
+- **On-Chain Arbitration**: Disputed gigs are frozen until an administrator (or multi-sig) reviews the submitted evidence.
+- **Resolution Outcomes**: Administrators can resolve disputes by distributing the escrowed funds proportionally (e.g., 50/50 refund, full refund to poster, or full payout to worker).
+
+### ⏳ Automatic Expiration
+- **Safety Deadlines**: Every gig has a predefined deadline.
+- **Unaccepted Refund**: If a gig is not accepted by any worker before the deadline, the poster can trigger an `expireGig` transaction to reclaim their full escrow amount automatically.
 
 ---
 
