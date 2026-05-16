@@ -1,0 +1,45 @@
+'use client';
+
+import React, { createContext, useContext, useState, ReactNode } from 'react';
+import { useAccount } from 'wagmi';
+import { useGigsEvents, GigEvent } from '@/hooks/useGigsEvents';
+
+interface NotificationContextType {
+  notifications: GigEvent[];
+  unreadCount: number;
+  markAllAsRead: () => void;
+  isOpen: boolean;
+  setIsOpen: (open: boolean) => void;
+}
+
+const NotificationContext = createContext<NotificationContextType | undefined>(undefined);
+
+export function NotificationProvider({ children }: { children: ReactNode }) {
+  const { address } = useAccount();
+  const { events } = useGigsEvents(address);
+  const [isOpen, setIsOpen] = useState(false);
+  const [lastReadTimestamp, setLastReadTimestamp] = useState<number>(0);
+
+  // Derived state: unread count based on lastReadTimestamp
+  const unreadCount = events.filter((e) => e.timestamp > lastReadTimestamp).length;
+
+  const markAllAsRead = () => {
+    setLastReadTimestamp(Date.now());
+  };
+
+  return (
+    <NotificationContext.Provider
+      value={{ notifications: events, unreadCount, markAllAsRead, isOpen, setIsOpen }}
+    >
+      {children}
+    </NotificationContext.Provider>
+  );
+}
+
+export function useNotifications() {
+  const context = useContext(NotificationContext);
+  if (context === undefined) {
+    throw new Error('useNotifications must be used within a NotificationProvider');
+  }
+  return context;
+}
