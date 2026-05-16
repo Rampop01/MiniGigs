@@ -4,41 +4,12 @@ import React from 'react';
 import { useNotifications } from './NotificationProvider';
 import { X, Bell, Info, CheckCircle, Clock, AlertCircle } from 'lucide-react';
 import styles from './NotificationCenter.module.css';
+import { useRelativeTime } from '@/hooks/useRelativeTime';
 
 export default function NotificationCenter() {
   const { notifications, unreadCount, markAllAsRead, isOpen, setIsOpen } = useNotifications();
-  const [now, setNow] = React.useState(0);
-
-  React.useEffect(() => {
-    if (!isOpen) return;
-    setNow(Date.now());
-    const interval = setInterval(() => setNow(Date.now()), 60000);
-    return () => clearInterval(interval);
-  }, [isOpen]);
 
   if (!isOpen) return null;
-
-  const getIcon = (type: string) => {
-    switch (type) {
-      case 'posted':
-        return <Info size={18} className={styles.infoIcon} />;
-      case 'accepted':
-        return <CheckCircle size={18} className={styles.successIcon} />;
-      case 'submitted':
-        return <Clock size={18} className={styles.pendingIcon} />;
-      case 'completed':
-        return <CheckCircle size={18} className={styles.payoutIcon} />;
-      default:
-        return <AlertCircle size={18} className={styles.defaultIcon} />;
-    }
-  };
-
-  const getTimeAgo = (timestamp: number) => {
-    const seconds = Math.floor((now - timestamp) / 1000);
-    if (seconds < 60) return 'Just now';
-    if (seconds < 3600) return `${Math.floor(seconds / 60)}m ago`;
-    return `${Math.floor(seconds / 3600)}h ago`;
-  };
 
   return (
     <div className={styles.overlay} onClick={() => setIsOpen(false)}>
@@ -63,15 +34,7 @@ export default function NotificationCenter() {
             </div>
           ) : (
             notifications.map((notif, idx) => (
-              <div key={`${notif.gigId}-${idx}`} className={styles.notifItem}>
-                <div className={styles.iconContainer}>{getIcon(notif.type)}</div>
-                <div className={styles.details}>
-                  <p className={styles.message}>
-                    Gig <strong>#{notif.gigId.toString()}</strong> was {notif.type}
-                  </p>
-                  <span className={styles.time}>{getTimeAgo(notif.timestamp)}</span>
-                </div>
-              </div>
+              <NotificationItem key={`${notif.gigId}-${idx}`} notif={notif} />
             ))
           )}
         </div>
@@ -87,3 +50,35 @@ export default function NotificationCenter() {
     </div>
   );
 }
+
+function NotificationItem({ notif }: { notif: any }) {
+  const timeAgo = useRelativeTime(Number(notif.timestamp));
+  
+  const getIcon = (type: string) => {
+    switch (type) {
+      case 'posted':
+        return <Info size={18} className={styles.infoIcon} />;
+      case 'accepted':
+        return <CheckCircle size={18} className={styles.successIcon} />;
+      case 'submitted':
+        return <Clock size={18} className={styles.pendingIcon} />;
+      case 'completed':
+        return <CheckCircle size={18} className={styles.payoutIcon} />;
+      default:
+        return <AlertCircle size={18} className={styles.defaultIcon} />;
+    }
+  };
+
+  return (
+    <div className={styles.notifItem}>
+      <div className={styles.iconContainer}>{getIcon(notif.type)}</div>
+      <div className={styles.details}>
+        <p className={styles.message}>
+          Gig <strong>#{notif.gigId.toString()}</strong> was {notif.type}
+        </p>
+        <span className={styles.time}>{timeAgo}</span>
+      </div>
+    </div>
+  );
+}
+
