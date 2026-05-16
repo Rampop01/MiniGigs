@@ -335,6 +335,37 @@ export const MINI_GIGS_ABI = [
     inputs: [
       {
         internalType: 'uint256',
+        name: '_id',
+        type: 'uint256',
+      },
+    ],
+    name: 'disputeGig',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: '_id',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: '_payoutToPoster',
+        type: 'uint256',
+      },
+    ],
+    name: 'resolveDispute',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
         name: '_bps',
         type: 'uint256',
       },
@@ -344,6 +375,7 @@ export const MINI_GIGS_ABI = [
     stateMutability: 'nonpayable',
     type: 'function',
   },
+
 ] as const;
 
 export const ERC20_ABI = [
