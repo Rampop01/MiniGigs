@@ -3,17 +3,18 @@
   top: 0;
   left: 0;
   right: 0;
-  height: var(--sp-20);
+  height: 64px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 var(--sp-8);
+  padding: 0 var(--sp-4);
   background: var(--glass-bg);
   backdrop-filter: blur(24px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   z-index: 1000;
-  transition: background 0.3s ease;
+  transition: all 0.3s ease;
 }
+
 
 
 .brand {
@@ -33,7 +34,7 @@
 
 .logoM {
   font-family: var(--font-heading);
-  font-size: 32px;
+  font-size: 24px;
   font-weight: 900;
   line-height: normal;
   background: var(--shiny-gradient);
@@ -48,9 +49,9 @@
 
 .logoText {
   font-family: var(--font-heading);
-  font-size: 22px;
+  font-size: 18px;
   font-weight: 900;
-  letter-spacing: -2px;
+  letter-spacing: -1.5px;
   color: #fff;
   transform: skewX(-15deg);
   text-transform: uppercase;
@@ -66,17 +67,17 @@
   }
 
   50% {
-    transform: skewX(-15deg) scale(1.1) translateY(-3px);
+    transform: skewX(-15deg) scale(1.1) translateY(-2px);
   }
 }
 
 .tagline {
-  font-size: 11px;
+  font-size: 9px;
   color: var(--text-tertiary);
   font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 2px;
-  margin-top: -4px;
+  letter-spacing: 1.5px;
+  margin-top: -6px;
   padding-left: 2px;
 }
 
@@ -84,14 +85,15 @@
   background: var(--bg-surface-elevated);
   color: #fff;
   font-weight: 700;
-  font-size: 13px;
-  padding: 10px 20px;
+  font-size: 12px;
+  padding: 8px 16px;
   border-radius: var(--r-full);
   border: 1px solid var(--primary);
   cursor: pointer;
-  box-shadow: 0 0 15px var(--primary-subtle);
+  box-shadow: 0 0 10px var(--primary-subtle);
   transition: all 0.3s;
 }
+
 
 .walletBtn:hover {
   background: var(--primary);
@@ -126,9 +128,9 @@
   background: var(--bg-surface-elevated);
   border: 1px solid rgba(255, 255, 255, 0.08);
   color: var(--text-secondary);
-  width: 44px;
-  height: 44px;
-  border-radius: 12px;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -136,6 +138,7 @@
   position: relative;
   transition: all 0.3s;
 }
+
 
 .notifBtn:hover {
   background: rgba(255, 255, 255, 0.05);
