@@ -70,7 +70,15 @@ function NotificationItem({ notif }: { notif: any }) {
   };
 
   return (
-    <div className={styles.notifItem}>
+    <div 
+      className={styles.notifItem} 
+      onClick={() => {
+        // In a real app, this would navigate or open a modal
+        console.log(`Viewing Gig #${notif.gigId}`);
+      }}
+      role="button"
+      tabIndex={0}
+    >
       <div className={styles.iconContainer}>{getIcon(notif.type)}</div>
       <div className={styles.details}>
         <p className={styles.message}>
@@ -81,4 +89,5 @@ function NotificationItem({ notif }: { notif: any }) {
     </div>
   );
 }
+
 
