@@ -190,3 +190,10 @@ MiniGigs features a robust, real-time notification engine:
 - **Global Context**: Centralized NotificationProvider ensures state consistency across the App.
 - **Responsive Drawer**: Optimized for mobile with glassmorphism and slide-in animations.
 - **Unread Logic**: Intelligent unread count tracking based on user interaction.
+
+---
+
+## Technical Stack (Extended)
+- **State Management**: React Context with LocalStorage persistence.
+- **Animations**: CSS Keyframes & Transitions for zero-overhead performance.
+- **Audio**: HTML5 Audio API for marketplace engagement cues.
