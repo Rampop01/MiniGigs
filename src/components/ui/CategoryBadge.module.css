@@ -1,0 +1,19 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  background: rgba(var(--badge-color-rgb), 0.1);
+  color: var(--badge-color);
+  border: 1px solid rgba(var(--badge-color), 0.2);
+  transition: all 0.2s;
+}
+
+.badge:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(var(--badge-color), 0.15);
+}
