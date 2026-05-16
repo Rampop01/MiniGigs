@@ -18,13 +18,20 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
   const { address } = useAccount();
   const { events } = useGigsEvents(address);
   const [isOpen, setIsOpen] = useState(false);
-  const [lastReadTimestamp, setLastReadTimestamp] = useState<number>(0);
+  const [lastReadTimestamp, setLastReadTimestamp] = useState<number>(() => {
+    if (typeof window !== 'undefined') {
+      return Number(localStorage.getItem('minigigs_last_read') || 0);
+    }
+    return 0;
+  });
 
   // Derived state: unread count based on lastReadTimestamp
   const unreadCount = events.filter((e) => e.timestamp > lastReadTimestamp).length;
 
   const markAllAsRead = () => {
-    setLastReadTimestamp(Date.now());
+    const now = Date.now();
+    setLastReadTimestamp(now);
+    localStorage.setItem('minigigs_last_read', now.toString());
   };
 
   return (
@@ -35,6 +42,7 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
     </NotificationContext.Provider>
   );
 }
+
 
 export function useNotifications() {
   const context = useContext(NotificationContext);
