@@ -34,14 +34,21 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
     localStorage.setItem('minigigs_last_read', now.toString());
   };
 
+  const value = React.useMemo(() => ({
+    notifications: events,
+    unreadCount,
+    markAllAsRead,
+    isOpen,
+    setIsOpen,
+  }), [events, unreadCount, isOpen]);
+
   return (
-    <NotificationContext.Provider
-      value={{ notifications: events, unreadCount, markAllAsRead, isOpen, setIsOpen }}
-    >
+    <NotificationContext.Provider value={value}>
       {children}
     </NotificationContext.Provider>
   );
 }
+
 
 
 export function useNotifications() {
