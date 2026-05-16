@@ -5,7 +5,10 @@ import { getCategoryInfo, formatCUSD, timeAgo, shortenAddress } from '@/lib/util
 import { X, Clock, ShieldCheck, Globe, User, ExternalLink, CheckCircle } from 'lucide-react';
 import { useAccount } from 'wagmi';
 import toast from 'react-hot-toast';
+import confetti from 'canvas-confetti';
 import styles from './GigDetail.module.css';
+import { useEffect } from 'react';
+
 
 interface GigDetailProps {
   gig: Gig;
@@ -20,6 +23,17 @@ export default function GigDetail({ gig, onClose, onAccept, onDispute }: GigDeta
 
   const isPoster = address && gig.poster.toLowerCase() === address.toLowerCase();
   const isWorker = address && gig.worker?.toLowerCase() === address.toLowerCase();
+
+  useEffect(() => {
+    if (gig.status === 'completed') {
+      confetti({
+        particleCount: 100,
+        spread: 70,
+        origin: { y: 0.6 },
+        colors: ['#3B82F6', '#10B981', '#F59E0B'],
+      });
+    }
+  }, [gig.status]);
 
   const handleAction = () => {
     if (!isConnected) {
