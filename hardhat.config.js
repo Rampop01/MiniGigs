@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 dotenv.config({ path: '.env.local' });
 
 /** @type import('hardhat/config').HardhatUserConfig */
-export default {
+const config = {
   solidity: '0.8.20',
   networks: {
     celo: {
@@ -43,3 +43,6 @@ export default {
     enabled: true,
   },
 };
+
+export default config;
+
