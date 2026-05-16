@@ -7,20 +7,21 @@
   --bg-surface-elevated: #141414;
   --bg-card-hover: #1a1a1a;
 
-  /* ── Celo Prosperity Palette ── */
-  --celo-prosperity: #35d07f;
-  --celo-forest: #155d44;
-  --celo-wood: #fbcc5c;
-  --celo-gold: #fbcc5c;
+  /* ── Azure Blue Palette ── */
+  --azure-blue: #00a2ff;
+  --azure-deep: #0070f3;
+  --azure-glow: rgba(0, 162, 255, 0.4);
+  --azure-subtle: rgba(0, 162, 255, 0.12);
 
   /* SaaS / Azure Blue */
-  --primary: var(--celo-prosperity);
-  --primary-hover: #2db36d;
-  --primary-glow: rgba(53, 208, 127, 0.4);
-  --primary-subtle: rgba(53, 208, 127, 0.12);
+  --primary: var(--azure-blue);
+  --primary-hover: var(--azure-deep);
+  --primary-glow: var(--azure-glow);
+  --primary-subtle: var(--azure-subtle);
 
-  --secondary-blue: var(--celo-forest);
-  --accent-cyan: var(--celo-wood);
+  --secondary-blue: #0052cc;
+  --accent-cyan: #00fbff;
+
 
   /* Accents */
   --accent-green: var(--celo-prosperity);
