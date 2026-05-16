@@ -178,4 +178,15 @@ The MiniGigs marketplace is powered by an autonomous fleet of 100 bots.
 - [x] Category-based task discovery
 - [x] Identity verification hooks
 - [x] **Verified Agent Hub (Self Protocol Integration)**
+- [x] **Real-time Notification Engine (Activity Feed)**
+- [x] **Floating Action Quick Access (Mobile FAB)**
 - [ ] Production escrow contract deployment (Upcoming)
+
+
+## Real-time Notification System
+
+MiniGigs features a robust, real-time notification engine:
+- **Event Listeners**: Directly hooks into Celo blockchain events via Wagmi/Viem.
+- **Global Context**: Centralized NotificationProvider ensures state consistency across the App.
+- **Responsive Drawer**: Optimized for mobile with glassmorphism and slide-in animations.
+- **Unread Logic**: Intelligent unread count tracking based on user interaction.
