@@ -8,6 +8,7 @@ import { wagmiConfig } from '@/lib/web3';
 import { useState, type ReactNode } from 'react';
 import { Toaster } from 'react-hot-toast';
 import NavigationWrapper from '@/components/NavigationWrapper';
+import { NotificationProvider } from '@/components/NotificationProvider';
 
 export default function Providers({ children }: { children: ReactNode }) {
   const [queryClient] = useState(() => new QueryClient());
@@ -24,7 +25,9 @@ export default function Providers({ children }: { children: ReactNode }) {
             overlayBlur: 'small',
           })}
         >
-          <NavigationWrapper>{children}</NavigationWrapper>
+          <NotificationProvider>
+            <NavigationWrapper>{children}</NavigationWrapper>
+          </NotificationProvider>
           <Toaster
             position="top-center"
             toastOptions={{
