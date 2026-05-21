@@ -104,10 +104,11 @@ export default function MarketplacePage({ filter }: { filter?: 'all' | 'my' }) {
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '8px' }}>
             <FilterChips 
               options={[
-                { id: 'all', label: 'All Status' },
+                { id: 'all', label: 'All' },
                 { id: 'open', label: 'Open' },
-                { id: 'in_progress', label: 'Active' },
-                { id: 'completed', label: 'Done' }
+                { id: 'in_progress', label: 'In Progress' },
+                { id: 'completed', label: 'Completed' },
+                { id: 'disputed', label: 'Disputed' },
               ]} 
               activeId={statusFilter} 
               onChange={setStatusFilter} 
