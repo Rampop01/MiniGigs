@@ -9,6 +9,7 @@ import confetti from 'canvas-confetti';
 import styles from './GigDetail.module.css';
 import { useState, useEffect } from 'react';
 import ReviewModal from './ReviewModal';
+import DisputeModal from './DisputeModal';
 
 interface GigDetailProps {
   gig: Gig;
@@ -20,6 +21,7 @@ interface GigDetailProps {
 export default function GigDetail({ gig, onClose, onAccept, onDispute }: GigDetailProps) {
   const { address, isConnected } = useAccount();
   const [showReview, setShowReview] = useState(false);
+  const [showDispute, setShowDispute] = useState(false);
   const cat = getCategoryInfo(gig.category);
 
   const isPoster = address && gig.poster.toLowerCase() === address.toLowerCase();
@@ -140,7 +142,7 @@ export default function GigDetail({ gig, onClose, onAccept, onDispute }: GigDeta
           )}
 
           {canDispute && (
-            <button className={styles.disputeBtn} onClick={() => onDispute?.(gig)}>
+            <button className={styles.disputeBtn} onClick={() => setShowDispute(true)}>
               Raise Dispute
             </button>
           )}
@@ -152,6 +154,20 @@ export default function GigDetail({ gig, onClose, onAccept, onDispute }: GigDeta
           </button>
         </div>
       </div>
+      
+      {showDispute && (
+        <DisputeModal 
+          gigId={gig.id} 
+          onClose={() => setShowDispute(false)} 
+          onSubmit={async (reason, evidence) => {
+            // Mock API call for dispute
+            await new Promise(r => setTimeout(r, 1000));
+            toast.success('Dispute submitted successfully');
+            setShowDispute(false);
+            onClose();
+          }} 
+        />
+      )}
     </div>
   );
 }
