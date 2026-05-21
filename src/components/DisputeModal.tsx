@@ -52,6 +52,15 @@ export default function DisputeModal({ gigId, onClose, onSubmit }: DisputeModalP
               onChange={(e) => setEvidence(e.target.value)}
             />
           </div>
+
+          <button
+            className="btn-primary"
+            style={{ marginTop: '8px', background: 'var(--accent-rose)', borderColor: 'rgba(255,59,59,0.3)', color: '#fff', boxShadow: '0 0 15px rgba(255,59,59,0.2)' }}
+            disabled={!reason}
+            onClick={() => onSubmit(reason, evidence)}
+          >
+            Submit Dispute
+          </button>
         </div>
       </div>
     </div>
