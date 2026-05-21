@@ -13,11 +13,21 @@ interface DisputeModalProps {
 export default function DisputeModal({ gigId, onClose, onSubmit }: DisputeModalProps) {
   const [reason, setReason] = useState('');
   const [evidence, setEvidence] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = async () => {
+    setIsSubmitting(true);
+    try {
+      await onSubmit(reason, evidence);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <div className={styles.overlay} onClick={onClose}>
       <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
-        <button className={styles.closeBtn} onClick={onClose}>
+        <button className={styles.closeBtn} onClick={onClose} disabled={isSubmitting}>
           <X size={20} />
         </button>
         <div className={styles.header}>
@@ -33,6 +43,7 @@ export default function DisputeModal({ gigId, onClose, onSubmit }: DisputeModalP
               className={styles.select}
               value={reason}
               onChange={(e) => setReason(e.target.value)}
+              disabled={isSubmitting}
             >
               <option value="">Select a reason...</option>
               <option value="incomplete">Work is incomplete</option>
@@ -50,16 +61,17 @@ export default function DisputeModal({ gigId, onClose, onSubmit }: DisputeModalP
               placeholder="https://... (Screenshots, logs)"
               value={evidence}
               onChange={(e) => setEvidence(e.target.value)}
+              disabled={isSubmitting}
             />
           </div>
 
           <button
             className="btn-primary"
-            style={{ marginTop: '8px', background: 'var(--accent-rose)', borderColor: 'rgba(255,59,59,0.3)', color: '#fff', boxShadow: '0 0 15px rgba(255,59,59,0.2)' }}
-            disabled={!reason}
-            onClick={() => onSubmit(reason, evidence)}
+            style={{ marginTop: '8px', background: 'var(--accent-rose)', borderColor: 'rgba(255,59,59,0.3)', color: '#fff', boxShadow: '0 0 15px rgba(255,59,59,0.2)', opacity: (!reason || isSubmitting) ? 0.5 : 1 }}
+            disabled={!reason || isSubmitting}
+            onClick={handleSubmit}
           >
-            Submit Dispute
+            {isSubmitting ? 'Submitting...' : 'Submit Dispute'}
           </button>
         </div>
       </div>
