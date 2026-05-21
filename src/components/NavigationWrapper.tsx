@@ -30,6 +30,11 @@ function NavigationWrapperInner({ children }: { children: React.ReactNode }) {
     }
   };
 
+  // The landing page has its own layout and header, don't wrap it in AppLayout
+  if (pathname === '/') {
+    return <>{children}</>;
+  }
+
   return (
     <AppLayout activeTab={activeTab} onNavigate={handleNavigate}>
       {children}
