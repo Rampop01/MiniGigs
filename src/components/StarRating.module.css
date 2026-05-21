@@ -1,0 +1,35 @@
+.starContainer {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.star {
+  color: var(--text-tertiary);
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  padding: 2px;
+}
+
+.star:hover {
+  transform: scale(1.15);
+}
+
+.starFilled {
+  color: var(--celo-prosperity);
+  filter: drop-shadow(0 0 8px rgba(53, 208, 127, 0.4));
+}
+
+.starActive {
+  color: var(--accent-amber);
+  filter: drop-shadow(0 0 10px rgba(251, 204, 92, 0.6));
+  transform: scale(1.1);
+}
+
+.readonly .star {
+  cursor: default;
+}
+
+.readonly .star:hover {
+  transform: none;
+}
