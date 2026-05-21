@@ -37,6 +37,21 @@ export default function DisputeCard({ gig, onResolve }: DisputeCardProps) {
           </div>
         </div>
       </div>
+
+      <div className={styles.actions}>
+        <button 
+          className={styles.resolveBtn} 
+          onClick={() => onResolve(gig, 'poster')}
+        >
+          Favor Poster
+        </button>
+        <button 
+          className={styles.resolveBtn} 
+          onClick={() => onResolve(gig, 'worker')}
+        >
+          Favor Worker
+        </button>
+      </div>
     </div>
   );
 }

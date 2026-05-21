@@ -88,3 +88,28 @@
   padding: 4px 8px;
   border-radius: var(--r-full);
 }
+
+.actions {
+  display: flex;
+  gap: var(--sp-3);
+  margin-top: var(--sp-2);
+}
+
+.resolveBtn {
+  flex: 1;
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--r-md);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.resolveBtn:hover {
+  background: var(--accent-rose);
+  border-color: var(--accent-rose);
+}
