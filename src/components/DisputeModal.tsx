@@ -12,6 +12,7 @@ interface DisputeModalProps {
 
 export default function DisputeModal({ gigId, onClose, onSubmit }: DisputeModalProps) {
   const [reason, setReason] = useState('');
+  const [evidence, setEvidence] = useState('');
 
   return (
     <div className={styles.overlay} onClick={onClose}>
@@ -39,6 +40,17 @@ export default function DisputeModal({ gigId, onClose, onSubmit }: DisputeModalP
               <option value="unresponsive">Worker is unresponsive</option>
               <option value="other">Other</option>
             </select>
+          </div>
+          
+          <div className={styles.formGroup}>
+            <label>Evidence URL (Optional)</label>
+            <input
+              type="text"
+              className={styles.input}
+              placeholder="https://... (Screenshots, logs)"
+              value={evidence}
+              onChange={(e) => setEvidence(e.target.value)}
+            />
           </div>
         </div>
       </div>
