@@ -33,8 +33,12 @@ import toast from 'react-hot-toast';
 import confetti from 'canvas-confetti';
 import styles from './page.module.css';
 
+import { useSearchParams, useRouter } from 'next/navigation';
+
 export default function MarketplacePage({ filter }: { filter?: 'all' | 'my' }) {
-  const [activeTab, setActiveTab] = useState<TabId>('explore');
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const activeTab = (searchParams.get('tab') as TabId) || 'explore';
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [selectedGig, setSelectedGig] = useState<Gig | null>(null);
   const [showCreateModal, setShowCreateModal] = useState(false);
@@ -166,7 +170,7 @@ export default function MarketplacePage({ filter }: { filter?: 'all' | 'my' }) {
           <button
             className="btn-primary"
             style={{ marginTop: 'var(--sp-4)' }}
-            onClick={() => setActiveTab('explore')}
+            onClick={() => router.push('/marketplace?tab=explore')}
           >
             Browse Markets
           </button>

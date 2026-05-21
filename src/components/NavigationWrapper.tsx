@@ -1,42 +1,46 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { Suspense } from 'react';
 import { AppLayout } from './AppLayout';
 import { TabId } from './BottomNav';
-import MarketplacePage from '../app/marketplace/page';
-import AdminPanel from './AdminPanel';
-import AgentHub from './AgentHub';
-import ProfilePage from '../app/profile/page';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
-// This is a simple client-side router for the MiniPay experience
-export default function NavigationWrapper({ children }: { children: React.ReactNode }) {
-  const [activeTab, setActiveTab] = useState<TabId>('explore');
+function NavigationWrapperInner({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const router = useRouter();
 
-  const renderContent = () => {
-    switch (activeTab) {
-      case 'explore':
-        return children;
-      case 'my-tasks':
-        return <MarketplacePage filter="my" />; // We'll update MarketplacePage to handle filters
-      case 'agents':
-        return <AgentHub />;
-      case 'wallet':
-        return (
-          <div className="flex flex-col items-center justify-center min-height-50vh">
-            <h2 className="text-xl font-bold">Wallet View</h2>
-            <p className="text-gray-400">Coming soon to MiniPay</p>
-          </div>
-        );
-      case 'profile':
-        return <ProfilePage />;
-      default:
-        return children;
+  let activeTab: TabId = 'explore';
+  if (pathname === '/profile') {
+    activeTab = 'profile';
+  } else if (pathname === '/analytics') {
+    activeTab = 'explore'; // Analytics is a separate route without a dedicated tab icon for now
+  } else {
+    const tab = searchParams.get('tab');
+    if (tab && ['explore', 'my-tasks', 'agents', 'wallet', 'profile'].includes(tab)) {
+      activeTab = tab as TabId;
+    }
+  }
+
+  const handleNavigate = (tab: TabId) => {
+    if (tab === 'profile') {
+      router.push('/profile');
+    } else {
+      router.push(`/marketplace?tab=${tab}`);
     }
   };
 
   return (
-    <AppLayout activeTab={activeTab} onNavigate={setActiveTab}>
-      {renderContent()}
+    <AppLayout activeTab={activeTab} onNavigate={handleNavigate}>
+      {children}
     </AppLayout>
+  );
+}
+
+export default function NavigationWrapper({ children }: { children: React.ReactNode }) {
+  return (
+    <Suspense fallback={<div className="layout-mobile"><div className="min-height-100dvh bg-base flex-center">Loading...</div></div>}>
+      <NavigationWrapperInner>{children}</NavigationWrapperInner>
+    </Suspense>
   );
 }
