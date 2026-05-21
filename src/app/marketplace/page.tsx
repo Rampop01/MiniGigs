@@ -12,6 +12,9 @@ import AgentHub from '@/components/AgentHub';
 import SelfClawBadge from '@/components/SelfClawBadge';
 import AdminPanel from '@/components/AdminPanel';
 import ActivityFeed from '@/components/ActivityFeed';
+import SearchBar from '@/components/SearchBar';
+import FilterChips from '@/components/FilterChips';
+import SortDropdown from '@/components/SortDropdown';
 import { Gig, MINIGIGS_CONTRACT_ADDRESS, CUSD_ADDRESS } from '@/lib/constants';
 import { useAccount, useBalance, useWriteContract } from 'wagmi';
 import { MINI_GIGS_ABI } from '@/lib/abi';
@@ -42,14 +45,35 @@ export default function MarketplacePage({ filter }: { filter?: 'all' | 'my' }) {
   const { gigs: liveGigs, isLoading: isGigsLoading } = useGigs();
 
   // ── Tab: Explore (The Marketplace) ──
+  const [searchQuery, setSearchQuery] = useState('');
+  const [statusFilter, setStatusFilter] = useState('all');
+  const [sortOrder, setSortOrder] = useState('newest');
+
   const filteredGigs = useMemo(() => {
     let result = liveGigs;
     if (filter === 'my' && address) {
       result = liveGigs.filter((g) => g.poster === address || g.worker === address);
     }
-    if (selectedCategory === 'all') return result;
-    return result.filter((g) => g.category === selectedCategory);
-  }, [selectedCategory, liveGigs, filter, address]);
+    if (selectedCategory !== 'all') {
+      result = result.filter((g) => g.category === selectedCategory);
+    }
+    if (statusFilter !== 'all') {
+      result = result.filter((g) => g.status === statusFilter);
+    }
+    if (searchQuery) {
+      const q = searchQuery.toLowerCase();
+      result = result.filter(g => g.title.toLowerCase().includes(q) || g.description.toLowerCase().includes(q));
+    }
+    
+    // Sort
+    result = [...result].sort((a, b) => {
+      if (sortOrder === 'bounty-high') return b.bounty - a.bounty;
+      if (sortOrder === 'deadline-soon') return a.deadline - b.deadline;
+      return b.createdAt - a.createdAt; // newest
+    });
+    
+    return result;
+  }, [selectedCategory, statusFilter, searchQuery, sortOrder, liveGigs, filter, address]);
 
   const ExploreView = () => {
     const openGigs = liveGigs.filter((g) => g.status === 'open').length;
@@ -70,12 +94,42 @@ export default function MarketplacePage({ filter }: { filter?: 'all' | 'my' }) {
           </button>
         </div>
 
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', marginBottom: '16px' }}>
+          <SearchBar onSearch={setSearchQuery} />
+          
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '8px' }}>
+            <FilterChips 
+              options={[
+                { id: 'all', label: 'All Status' },
+                { id: 'open', label: 'Open' },
+                { id: 'in_progress', label: 'Active' },
+                { id: 'completed', label: 'Done' }
+              ]} 
+              activeId={statusFilter} 
+              onChange={setStatusFilter} 
+            />
+            <SortDropdown 
+              options={[
+                { id: 'newest', label: 'Newest' },
+                { id: 'bounty-high', label: 'Highest Bounty' },
+                { id: 'deadline-soon', label: 'Ending Soon' }
+              ]} 
+              activeId={sortOrder} 
+              onChange={setSortOrder} 
+            />
+          </div>
+        </div>
+
         <CategoryFilter selected={selectedCategory} onChange={setSelectedCategory} />
 
         <div className={styles.gigGrid}>
-          {filteredGigs.map((gig) => (
-            <GigCard key={gig.id} gig={gig} now={now} onClick={() => setSelectedGig(gig)} />
-          ))}
+          {filteredGigs.length > 0 ? (
+            filteredGigs.map((gig) => (
+              <GigCard key={gig.id} gig={gig} now={now} onClick={() => setSelectedGig(gig)} />
+            ))
+          ) : (
+            <div className={styles.emptyState}>No gigs match your filters.</div>
+          )}
         </div>
       </div>
     );
