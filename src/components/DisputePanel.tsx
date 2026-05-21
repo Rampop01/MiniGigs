@@ -26,7 +26,9 @@ export default function DisputePanel() {
   const [gigs, setGigs] = useState<Gig[]>(MOCK_DISPUTED_GIGS);
 
   const handleResolve = async (gig: Gig, inFavorOf: 'poster' | 'worker') => {
-    toast.success(`Dispute resolved in favor of ${inFavorOf}`);
+    toast.loading('Resolving dispute on-chain...', { id: 'resolve' });
+    await new Promise(r => setTimeout(r, 1500));
+    toast.success(`Dispute resolved in favor of ${inFavorOf}`, { id: 'resolve' });
     setGigs((prev) => prev.filter((g) => g.id !== gig.id));
   };
 
