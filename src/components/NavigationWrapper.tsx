@@ -6,6 +6,7 @@ import { TabId } from './BottomNav';
 import MarketplacePage from '../app/marketplace/page';
 import AdminPanel from './AdminPanel';
 import AgentHub from './AgentHub';
+import ProfilePage from '../app/profile/page';
 
 // This is a simple client-side router for the MiniPay experience
 export default function NavigationWrapper({ children }: { children: React.ReactNode }) {
@@ -27,7 +28,7 @@ export default function NavigationWrapper({ children }: { children: React.ReactN
           </div>
         );
       case 'profile':
-        return <AdminPanel />;
+        return <ProfilePage />;
       default:
         return children;
     }
