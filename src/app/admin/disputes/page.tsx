@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import DisputePanel from '@/components/DisputePanel';
 import Header from '@/components/Header';
@@ -13,7 +15,7 @@ export default function AdminDisputesPage() {
             <DisputePanel />
           </div>
         </main>
-        <BottomNav active="profile" />
+        <BottomNav active="profile" onNavigate={(tab) => window.location.href = `/marketplace?tab=${tab}`} />
       </div>
     </div>
   );

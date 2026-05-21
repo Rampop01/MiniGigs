@@ -27,8 +27,11 @@ const MOCK_PROFILE = {
   ]
 };
 
+import { useAccount } from 'wagmi';
+
 export default function ProfilePage() {
   const [mounted, setMounted] = useState(false);
+  const { address } = useAccount();
 
   useEffect(() => {
     setMounted(true);
