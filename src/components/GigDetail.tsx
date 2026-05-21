@@ -7,8 +7,8 @@ import { useAccount } from 'wagmi';
 import toast from 'react-hot-toast';
 import confetti from 'canvas-confetti';
 import styles from './GigDetail.module.css';
-import { useEffect } from 'react';
-
+import { useState, useEffect } from 'react';
+import ReviewModal from './ReviewModal';
 
 interface GigDetailProps {
   gig: Gig;
@@ -19,6 +19,7 @@ interface GigDetailProps {
 
 export default function GigDetail({ gig, onClose, onAccept, onDispute }: GigDetailProps) {
   const { address, isConnected } = useAccount();
+  const [showReview, setShowReview] = useState(false);
   const cat = getCategoryInfo(gig.category);
 
   const isPoster = address && gig.poster.toLowerCase() === address.toLowerCase();
@@ -133,7 +134,7 @@ export default function GigDetail({ gig, onClose, onAccept, onDispute }: GigDeta
               {actionLabel}
             </button>
           ) : (
-            <div className={styles.statusBadge}>
+            <div className={`${styles.statusBadge} ${gig.status === 'disputed' ? styles.disputed : ''}`}>
               <CheckCircle size={18} /> {actionLabel}
             </div>
           )}

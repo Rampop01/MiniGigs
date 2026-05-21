@@ -241,6 +241,12 @@
   font-size: 16px;
 }
 
+.statusBadge.disputed {
+  background: rgba(255, 59, 59, 0.1);
+  border-color: rgba(255, 59, 59, 0.3);
+  color: #ff3b3b;
+}
+
 .deliverablesBox {
   background: rgba(255, 255, 255, 0.03);
   padding: var(--sp-4);
