@@ -54,7 +54,17 @@ export default function ProfilePage() {
         </div>
       </div>
 
-      {/* Stats Grid */}
+      {address && address.toLowerCase() === '0x1111222233334444555566667777888899990000' && (
+        <button 
+          className="btn-primary" 
+          style={{ width: '100%', padding: '16px', background: 'var(--accent-rose)', color: 'white', marginTop: '16px' }}
+          onClick={() => window.location.href = '/admin/disputes'}
+        >
+          Dispute Resolution Center
+        </button>
+      )}
+
+      {/* Settings Options */}
       <div className={styles.section}>
         <h2 className={styles.sectionTitle}>Overview</h2>
         <div className={styles.statsGrid}>
