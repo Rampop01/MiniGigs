@@ -340,13 +340,14 @@ export default function MarketplacePage({ filter }: { filter?: 'all' | 'my' }) {
   );
 
   return (
-    <main className={styles.main}>
-      {activeTab === 'explore' && <ExploreView />}
-      {activeTab === 'my-tasks' && <MyTasksView />}
-      {activeTab === 'agents' && <AgentHub />}
-      {activeTab === 'wallet' && <WalletView />}
-      {activeTab === 'profile' && <ProfileView />}
-    </main>
+    <>
+      <main className={styles.main}>
+        {activeTab === 'explore' && <ExploreView />}
+        {activeTab === 'my-tasks' && <MyTasksView />}
+        {activeTab === 'agents' && <AgentHub />}
+        {activeTab === 'wallet' && <WalletView />}
+        {activeTab === 'profile' && <ProfileView />}
+      </main>
 
       {selectedGig && (
         <GigDetail
@@ -424,6 +425,6 @@ export default function MarketplacePage({ filter }: { filter?: 'all' | 'my' }) {
           }}
         />
       )}
-    </div>
+    </>
   );
 }
