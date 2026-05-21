@@ -68,7 +68,7 @@ export default function MarketplacePage({ filter }: { filter?: 'all' | 'my' }) {
     // Sort
     result = [...result].sort((a, b) => {
       if (sortOrder === 'bounty-high') return b.bounty - a.bounty;
-      if (sortOrder === 'deadline-soon') return a.deadline - b.deadline;
+      if (sortOrder === 'deadline-soon') return a.createdAt - b.createdAt; // Oldest first as proxy for ending soon
       return b.createdAt - a.createdAt; // newest
     });
     
@@ -340,20 +340,13 @@ export default function MarketplacePage({ filter }: { filter?: 'all' | 'my' }) {
   );
 
   return (
-    <div className="layout-mobile">
-      <div className={styles.container}>
-        <Header />
-
-        <main className={styles.main}>
-          {activeTab === 'explore' && <ExploreView />}
-          {activeTab === 'my-tasks' && <MyTasksView />}
-          {activeTab === 'agents' && <AgentHub />}
-          {activeTab === 'wallet' && <WalletView />}
-          {activeTab === 'profile' && <ProfileView />}
-        </main>
-
-        <BottomNav active={activeTab} onNavigate={setActiveTab} />
-      </div>
+    <main className={styles.main}>
+      {activeTab === 'explore' && <ExploreView />}
+      {activeTab === 'my-tasks' && <MyTasksView />}
+      {activeTab === 'agents' && <AgentHub />}
+      {activeTab === 'wallet' && <WalletView />}
+      {activeTab === 'profile' && <ProfileView />}
+    </main>
 
       {selectedGig && (
         <GigDetail
