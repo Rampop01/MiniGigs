@@ -8,7 +8,7 @@
 
 .main {
   flex: 1;
-  padding: var(--sp-20) var(--sp-6) var(--sp-24) var(--sp-6);
+  padding: 80px var(--sp-6) 120px var(--sp-6); /* 80px top, 120px bottom */
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
 }

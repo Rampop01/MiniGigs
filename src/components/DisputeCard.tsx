@@ -12,8 +12,15 @@ interface DisputeCardProps {
 }
 
 export default function DisputeCard({ gig, onResolve }: DisputeCardProps) {
+  const [isResolved, setIsResolved] = React.useState(false);
+
+  const handleResolve = (favor: 'poster' | 'worker') => {
+    setIsResolved(true);
+    onResolve(gig, favor);
+  };
+
   return (
-    <div className={styles.card}>
+    <div className={styles.card} style={{ opacity: isResolved ? 0.5 : 1 }}>
       <div className={styles.header}>
         <div className={styles.titleInfo}>
           <AlertCircle size={18} className={styles.warningIcon} />
