@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { MINI_GIGS_ABI } from '@/lib/abi';
 import { MINIGIGS_CONTRACT_ADDRESS, Gig, GigStatus } from '@/lib/constants';
-import { formatEther, decodeFunctionResult } from 'viem';
+import { formatEther, decodeFunctionResult, encodeFunctionData } from 'viem';
 
 // Verified correct keccak256 selectors:
 // gigCount()    => 0x3689e916
@@ -10,57 +10,34 @@ const GIGS_COUNT_SELECTOR = '0x3689e916';
 const GIGS_SELECTOR = '0x5e3fbdc8';
 const RPC_URLS = ['https://forno.celo.org', 'https://rpc.ankr.com/celo'];
 
-// Multicall3 helpers (aggregate3)
-function encodeMulticall(calls: { to: string; data: string }[]) {
-  // selector for aggregate3((address,bool,bytes)[]) => 0x82ad56a4
-  let calldata = '0x82ad56a4';
-  // offset to the array
-  calldata += '0000000000000000000000000000000000000000000000000000000000000020';
-  // length of the array
-  calldata += calls.length.toString(16).padStart(64, '0');
-
-  const dataOffset = calls.length * 32; // Each struct is 3 words (offset, allowFailure, offset to data)
-  let dataPointer = dataOffset;
-
-  let structSection = '';
-  let dataSection = '';
-
-  calls.forEach((call) => {
-    const callData = call.data.replace('0x', '');
-    const callDataLen = callData.length / 2;
-    const callDataPaddedLen = Math.ceil(callDataLen / 32) * 32;
-
-    structSection += call.to.toLowerCase().replace('0x', '').padStart(64, '0');
-    structSection += '0000000000000000000000000000000000000000000000000000000000000001'; // allowFailure = true
-    structSection += dataPointer.toString(16).padStart(64, '0');
-
-    dataSection += callDataLen.toString(16).padStart(64, '0');
-    dataSection += callData.padEnd(callDataPaddedLen * 2, '0');
-
-    dataPointer += 32 + callDataPaddedLen;
-  });
-
-  return (calldata + structSection + dataSection) as `0x${string}`;
-}
-
-function decodeMulticall(result: string): `0x${string}`[] {
-  if (result === '0x') return [];
-  // Result is an array of Result structs: (bool success, bytes returnData)
-  const hex = result.replace('0x', '');
-  const count = parseInt(hex.slice(64, 128), 16);
-  const outputs: `0x${string}`[] = [];
-
-  for (let i = 0; i < count; i++) {
-    const structStart = 64 + i * 64;
-    const success = parseInt(hex.slice(structStart, structStart + 64), 16) === 1;
-    const dataOffset = parseInt(hex.slice(structStart + 64, structStart + 128), 16);
-    const dataStart = 64 + dataOffset * 2;
-    const dataLen = parseInt(hex.slice(dataStart, dataStart + 64), 16);
-    const data = hex.slice(dataStart + 64, dataStart + 64 + dataLen * 2);
-    outputs.push(success ? (`0x${data}` as `0x${string}`) : ('0x' as `0x${string}`));
-  }
-  return outputs;
-}
+const MULTICALL3_ABI = [{
+  "inputs": [
+    {
+      "components": [
+        { "internalType": "address", "name": "target", "type": "address" },
+        { "internalType": "bool", "name": "allowFailure", "type": "bool" },
+        { "internalType": "bytes", "name": "callData", "type": "bytes" }
+      ],
+      "internalType": "struct Multicall3.Call3[]",
+      "name": "calls",
+      "type": "tuple[]"
+    }
+  ],
+  "name": "aggregate3",
+  "outputs": [
+    {
+      "components": [
+        { "internalType": "bool", "name": "success", "type": "bool" },
+        { "internalType": "bytes", "name": "returnData", "type": "bytes" }
+      ],
+      "internalType": "struct Multicall3.Result[]",
+      "name": "returnData",
+      "type": "tuple[]"
+    }
+  ],
+  "stateMutability": "payable",
+  "type": "function"
+}] as const;
 
 async function rpcCall(data: string, rpcUrl: string) {
   const res = await fetch(rpcUrl, {
@@ -137,8 +114,9 @@ export function useGigs() {
 
         // Create multicall params
         const calls = gigIds.map((id) => ({
-          to: MINIGIGS_CONTRACT_ADDRESS,
-          data: `${GIGS_SELECTOR}${id.toString(16).padStart(64, '0')}` as `0x${string}`,
+          target: MINIGIGS_CONTRACT_ADDRESS as `0x${string}`,
+          allowFailure: true,
+          callData: `${GIGS_SELECTOR}${id.toString(16).padStart(64, '0')}` as `0x${string}`,
         }));
 
         // Batch call
@@ -152,7 +130,11 @@ export function useGigs() {
             params: [
               {
                 to: '0xcA11bde05977b3631167028862bE2a173976CA11', // Multicall3 on Celo
-                data: encodeMulticall(calls),
+                data: encodeFunctionData({
+                  abi: MULTICALL3_ABI,
+                  functionName: 'aggregate3',
+                  args: [calls],
+                }),
               },
               'latest',
             ],
@@ -162,7 +144,13 @@ export function useGigs() {
         const json = await res.json();
         if (json.error) throw new Error(json.error.message);
 
-        const results = decodeMulticall(json.result);
+        const multicallResult = decodeFunctionResult({
+          abi: MULTICALL3_ABI,
+          functionName: 'aggregate3',
+          data: json.result,
+        }) as readonly { success: boolean; returnData: `0x${string}` }[];
+
+        const results = multicallResult.map((r) => (r.success ? r.returnData : '0x'));
         const fetchedGigs: Gig[] = [];
 
         results.forEach((result, idx) => {
