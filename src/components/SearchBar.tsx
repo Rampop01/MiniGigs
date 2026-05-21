@@ -1,0 +1,59 @@
+'use client';
+
+import React, { useState, useEffect } from 'react';
+import { Search, X } from 'lucide-react';
+import styles from './SearchBar.module.css';
+
+interface SearchBarProps {
+  onSearch: (query: string) => void;
+  placeholder?: string;
+  debounceMs?: number;
+}
+
+export default function SearchBar({ 
+  onSearch, 
+  placeholder = 'Search gigs...', 
+  debounceMs = 300 
+}: SearchBarProps) {
+  const [query, setQuery] = useState('');
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      onSearch(query);
+    }, debounceMs);
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [query, onSearch, debounceMs]);
+
+  const handleClear = () => {
+    setQuery('');
+    onSearch('');
+  };
+
+  return (
+    <div className={styles.searchContainer}>
+      <input
+        type="text"
+        className={styles.searchInput}
+        placeholder={placeholder}
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+        aria-label="Search"
+      />
+      <Search className={styles.searchIcon} size={20} />
+      
+      {query && (
+        <button 
+          onClick={handleClear} 
+          className={styles.clearButton}
+          aria-label="Clear search"
+          type="button"
+        >
+          <X size={16} />
+        </button>
+      )}
+    </div>
+  );
+}
