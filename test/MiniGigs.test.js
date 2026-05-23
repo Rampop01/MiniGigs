@@ -33,4 +33,3 @@ describe('MiniGigs', function () {
     expect(gig.status).to.equal(0); // Open
   });
 });
-

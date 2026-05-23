@@ -53,7 +53,7 @@ export default function NotificationCenter() {
 
 function NotificationItem({ notif }: { notif: any }) {
   const timeAgo = useRelativeTime(Number(notif.timestamp));
-  
+
   const getIcon = (type: string) => {
     switch (type) {
       case 'posted':
@@ -70,8 +70,8 @@ function NotificationItem({ notif }: { notif: any }) {
   };
 
   return (
-    <div 
-      className={styles.notifItem} 
+    <div
+      className={styles.notifItem}
       onClick={() => {
         // In a real app, this would navigate or open a modal
         console.log(`Viewing Gig #${notif.gigId}`);
@@ -89,5 +89,3 @@ function NotificationItem({ notif }: { notif: any }) {
     </div>
   );
 }
-
-

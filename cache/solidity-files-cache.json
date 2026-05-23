@@ -379,6 +379,44 @@
       "artifacts": [
         "MockToken"
       ]
+    },
+    "/Users/a/Desktop/MiniGigs/contracts/MockToken.sol": {
+      "lastModificationDate": 1778944617316,
+      "contentHash": "7a3e5e8ff691a3a08ab31ea8ef83673f",
+      "sourceName": "contracts/MockToken.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "evmVersion": "paris",
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts/token/ERC20/ERC20.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "MockToken"
+      ]
     }
   }
 }

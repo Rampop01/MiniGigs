@@ -44,7 +44,13 @@ function NavigationWrapperInner({ children }: { children: React.ReactNode }) {
 
 export default function NavigationWrapper({ children }: { children: React.ReactNode }) {
   return (
-    <Suspense fallback={<div className="layout-mobile"><div className="min-height-100dvh bg-base flex-center">Loading...</div></div>}>
+    <Suspense
+      fallback={
+        <div className="layout-mobile">
+          <div className="min-height-100dvh bg-base flex-center">Loading...</div>
+        </div>
+      }
+    >
       <NavigationWrapperInner>{children}</NavigationWrapperInner>
     </Suspense>
   );

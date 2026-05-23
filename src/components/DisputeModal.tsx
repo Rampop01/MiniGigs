@@ -52,7 +52,7 @@ export default function DisputeModal({ gigId, onClose, onSubmit }: DisputeModalP
               <option value="other">Other</option>
             </select>
           </div>
-          
+
           <div className={styles.formGroup}>
             <label>Evidence URL (Optional)</label>
             <input
@@ -67,7 +67,14 @@ export default function DisputeModal({ gigId, onClose, onSubmit }: DisputeModalP
 
           <button
             className="btn-primary"
-            style={{ marginTop: '8px', background: 'var(--accent-rose)', borderColor: 'rgba(255,59,59,0.3)', color: '#fff', boxShadow: '0 0 15px rgba(255,59,59,0.2)', opacity: (!reason || isSubmitting) ? 0.5 : 1 }}
+            style={{
+              marginTop: '8px',
+              background: 'var(--accent-rose)',
+              borderColor: 'rgba(255,59,59,0.3)',
+              color: '#fff',
+              boxShadow: '0 0 15px rgba(255,59,59,0.2)',
+              opacity: !reason || isSubmitting ? 0.5 : 1,
+            }}
             disabled={!reason || isSubmitting}
             onClick={handleSubmit}
           >

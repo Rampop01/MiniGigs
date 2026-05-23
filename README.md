@@ -182,10 +182,10 @@ The MiniGigs marketplace is powered by an autonomous fleet of 100 bots.
 - [x] **Floating Action Quick Access (Mobile FAB)**
 - [ ] Production escrow contract deployment (Upcoming)
 
-
 ## Real-time Notification System
 
 MiniGigs features a robust, real-time notification engine:
+
 - **Event Listeners**: Directly hooks into Celo blockchain events via Wagmi/Viem.
 - **Global Context**: Centralized NotificationProvider ensures state consistency across the App.
 - **Responsive Drawer**: Optimized for mobile with glassmorphism and slide-in animations.
@@ -194,6 +194,7 @@ MiniGigs features a robust, real-time notification engine:
 ---
 
 ## Technical Stack (Extended)
+
 - **State Management**: React Context with LocalStorage persistence.
 - **Animations**: CSS Keyframes & Transitions for zero-overhead performance.
 - **Audio**: HTML5 Audio API for marketplace engagement cues.

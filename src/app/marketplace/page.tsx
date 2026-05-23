@@ -66,16 +66,18 @@ export default function MarketplacePage({ filter }: { filter?: 'all' | 'my' }) {
     }
     if (searchQuery) {
       const q = searchQuery.toLowerCase();
-      result = result.filter(g => g.title.toLowerCase().includes(q) || g.description.toLowerCase().includes(q));
+      result = result.filter(
+        (g) => g.title.toLowerCase().includes(q) || g.description.toLowerCase().includes(q),
+      );
     }
-    
+
     // Sort
     result = [...result].sort((a, b) => {
       if (sortOrder === 'bounty-high') return b.bounty - a.bounty;
       if (sortOrder === 'deadline-soon') return a.createdAt - b.createdAt; // Oldest first as proxy for ending soon
       return b.createdAt - a.createdAt; // newest
     });
-    
+
     return result;
   }, [selectedCategory, statusFilter, searchQuery, sortOrder, liveGigs, filter, address]);
 
@@ -98,29 +100,39 @@ export default function MarketplacePage({ filter }: { filter?: 'all' | 'my' }) {
           </button>
         </div>
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', marginBottom: '16px' }}>
+        <div
+          style={{ display: 'flex', flexDirection: 'column', gap: '16px', marginBottom: '16px' }}
+        >
           <SearchBar onSearch={setSearchQuery} />
-          
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '8px' }}>
-            <FilterChips 
+
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              flexWrap: 'wrap',
+              gap: '8px',
+            }}
+          >
+            <FilterChips
               options={[
                 { id: 'all', label: 'All' },
                 { id: 'open', label: 'Open' },
                 { id: 'in_progress', label: 'In Progress' },
                 { id: 'completed', label: 'Completed' },
                 { id: 'disputed', label: 'Disputed' },
-              ]} 
-              activeId={statusFilter} 
-              onChange={setStatusFilter} 
+              ]}
+              activeId={statusFilter}
+              onChange={setStatusFilter}
             />
-            <SortDropdown 
+            <SortDropdown
               options={[
                 { id: 'newest', label: 'Newest' },
                 { id: 'bounty-high', label: 'Highest Bounty' },
-                { id: 'deadline-soon', label: 'Ending Soon' }
-              ]} 
-              activeId={sortOrder} 
-              onChange={setSortOrder} 
+                { id: 'deadline-soon', label: 'Ending Soon' },
+              ]}
+              activeId={sortOrder}
+              onChange={setSortOrder}
             />
           </div>
         </div>
@@ -358,7 +370,7 @@ export default function MarketplacePage({ filter }: { filter?: 'all' | 'my' }) {
         <GigDetail
           gig={selectedGig}
           onClose={() => setSelectedGig(null)}
-          onAccept={async (gig) => {
+          onAccept={async (gig, workProof) => {
             if (!isConnected || !address) {
               toast.error('Connect your wallet first');
               return;
@@ -380,12 +392,16 @@ export default function MarketplacePage({ filter }: { filter?: 'all' | 'my' }) {
                 gig.status === 'in_progress' &&
                 gig.worker?.toLowerCase() === address.toLowerCase()
               ) {
+                if (!workProof) {
+                  toast.error('Work proof is missing', { id: 'gig-action' });
+                  return;
+                }
                 toast.loading('Submitting work...', { id: 'gig-action' });
                 await writeContractAsync({
                   address: MINIGIGS_CONTRACT_ADDRESS,
                   abi: MINI_GIGS_ABI,
                   functionName: 'submitWork',
-                  args: [BigInt(gig.id), 'Proof of work: Job completed successfully.'],
+                  args: [BigInt(gig.id), workProof],
                   // @ts-expect-error - external - feeCurrency is supported on Celo
                   feeCurrency: CUSD_ADDRESS as `0x${string}`,
                 });

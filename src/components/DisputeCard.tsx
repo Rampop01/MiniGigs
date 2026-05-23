@@ -24,11 +24,13 @@ export default function DisputeCard({ gig, onResolve }: DisputeCardProps) {
       <div className={styles.header}>
         <div className={styles.titleInfo}>
           <AlertCircle size={18} className={styles.warningIcon} />
-          <h3>Gig #{gig.id}: {gig.title}</h3>
+          <h3>
+            Gig #{gig.id}: {gig.title}
+          </h3>
         </div>
         <span className={styles.bounty}>{formatCUSD(gig.bounty)}</span>
       </div>
-      
+
       <div className={styles.parties}>
         <div className={styles.party}>
           <span className={styles.partyLabel}>Poster</span>
@@ -46,16 +48,10 @@ export default function DisputeCard({ gig, onResolve }: DisputeCardProps) {
       </div>
 
       <div className={styles.actions}>
-        <button 
-          className={styles.resolveBtn} 
-          onClick={() => onResolve(gig, 'poster')}
-        >
+        <button className={styles.resolveBtn} onClick={() => onResolve(gig, 'poster')}>
           Favor Poster
         </button>
-        <button 
-          className={styles.resolveBtn} 
-          onClick={() => onResolve(gig, 'worker')}
-        >
+        <button className={styles.resolveBtn} onClick={() => onResolve(gig, 'worker')}>
           Favor Worker
         </button>
       </div>

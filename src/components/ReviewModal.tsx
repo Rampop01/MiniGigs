@@ -28,18 +28,24 @@ export default function ReviewModal({ gigTitle, onClose, onSubmit }: ReviewModal
 
   const getRatingLabel = (val: number) => {
     switch (val) {
-      case 1: return 'Poor';
-      case 2: return 'Fair';
-      case 3: return 'Good';
-      case 4: return 'Very Good';
-      case 5: return 'Excellent';
-      default: return 'Rate this worker';
+      case 1:
+        return 'Poor';
+      case 2:
+        return 'Fair';
+      case 3:
+        return 'Good';
+      case 4:
+        return 'Very Good';
+      case 5:
+        return 'Excellent';
+      default:
+        return 'Rate this worker';
     }
   };
 
   return (
     <div className={styles.overlay} onClick={onClose}>
-      <div className={`${styles.modal} anim-scale-up`} onClick={e => e.stopPropagation()}>
+      <div className={`${styles.modal} anim-scale-up`} onClick={(e) => e.stopPropagation()}>
         <div className={styles.header}>
           <h3 className={styles.title}>Leave a Review</h3>
           <button className={styles.closeBtn} onClick={onClose}>
@@ -66,12 +72,14 @@ export default function ReviewModal({ gigTitle, onClose, onSubmit }: ReviewModal
           disabled={isSubmitting}
         />
 
-        <button 
-          className={`btn-primary ${styles.submitBtn}`} 
+        <button
+          className={`btn-primary ${styles.submitBtn}`}
           onClick={handleSubmit}
           disabled={rating === 0 || isSubmitting}
         >
-          {isSubmitting ? 'Submitting...' : (
+          {isSubmitting ? (
+            'Submitting...'
+          ) : (
             <>
               Submit Review <Send size={16} />
             </>

@@ -256,3 +256,22 @@
   color: #fff;
   line-height: 1.6;
 }
+
+.workProofInput {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--r-md);
+  padding: var(--sp-3);
+  color: #fff;
+  font-size: 14px;
+  resize: vertical;
+  min-height: 80px;
+  margin-bottom: var(--sp-2);
+}
+
+.workProofInput:focus {
+  outline: none;
+  border-color: var(--primary);
+  background: rgba(0, 0, 0, 0.3);
+}

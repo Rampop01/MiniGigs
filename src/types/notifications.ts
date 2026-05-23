@@ -1,4 +1,10 @@
-export type NotificationType = 'posted' | 'accepted' | 'submitted' | 'completed' | 'cancelled' | 'disputed';
+export type NotificationType =
+  | 'posted'
+  | 'accepted'
+  | 'submitted'
+  | 'completed'
+  | 'cancelled'
+  | 'disputed';
 
 export interface Notification {
   id: string;

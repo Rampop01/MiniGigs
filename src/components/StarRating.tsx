@@ -12,12 +12,12 @@ interface StarRatingProps {
   size?: number;
 }
 
-export default function StarRating({ 
-  rating, 
-  maxStars = 5, 
-  readonly = false, 
+export default function StarRating({
+  rating,
+  maxStars = 5,
+  readonly = false,
   onChange,
-  size = 20 
+  size = 20,
 }: StarRatingProps) {
   const [hoverRating, setHoverRating] = useState(0);
 
@@ -36,7 +36,7 @@ export default function StarRating({
   };
 
   return (
-    <div 
+    <div
       className={`${styles.starContainer} ${readonly ? styles.readonly : ''}`}
       onMouseLeave={handleMouseLeave}
     >
@@ -44,7 +44,7 @@ export default function StarRating({
         const starValue = i + 1;
         const isFilled = starValue <= (hoverRating || rating);
         const isActive = !readonly && hoverRating === starValue;
-        
+
         return (
           <Star
             key={i}

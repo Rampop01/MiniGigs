@@ -18,10 +18,7 @@ export default function CategoryBadge({ category }: CategoryBadgeProps) {
   const config = CATEGORY_MAP[category.toLowerCase()] || { label: category, color: '#6B7280' };
 
   return (
-    <span 
-      className={styles.badge} 
-      style={{ '--badge-color': config.color } as React.CSSProperties}
-    >
+    <span className={styles.badge} style={{ '--badge-color': config.color } as React.CSSProperties}>
       {config.label}
     </span>
   );

@@ -10,10 +10,10 @@ interface SearchBarProps {
   debounceMs?: number;
 }
 
-export default function SearchBar({ 
-  onSearch, 
-  placeholder = 'Search gigs...', 
-  debounceMs = 300 
+export default function SearchBar({
+  onSearch,
+  placeholder = 'Search gigs...',
+  debounceMs = 300,
 }: SearchBarProps) {
   const [query, setQuery] = useState('');
 
@@ -43,10 +43,10 @@ export default function SearchBar({
         aria-label="Search"
       />
       <Search className={styles.searchIcon} size={20} />
-      
+
       {query && (
-        <button 
-          onClick={handleClear} 
+        <button
+          onClick={handleClear}
           className={styles.clearButton}
           aria-label="Clear search"
           type="button"

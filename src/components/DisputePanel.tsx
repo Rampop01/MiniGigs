@@ -6,30 +6,34 @@ import DisputeCard from './DisputeCard';
 import toast from 'react-hot-toast';
 import styles from './DisputePanel.module.css';
 
-const MOCK_DISPUTED_GIGS: Gig[] = [
-  {
-    id: '42',
-    poster: '0x1111222233334444555566667777888899990000',
-    worker: '0xaaaabbbbccccddddeeeeffff0000111122223333',
-    bounty: 50,
-    title: 'Design Logo for Web3 Project',
-    description: 'Worker claims submitted final SVG but it was just a raster image.',
-    category: 'design',
-    status: 'disputed',
-    verification: 'none',
-    timeEstimate: '5h',
-    createdAt: Date.now() - 86400000 * 2,
-  },
-];
+import { useWriteContract } from 'wagmi';
+import { useGigs } from '@/hooks/useGigs';
+import { MINIGIGS_CONTRACT_ADDRESS, CUSD_ADDRESS } from '@/lib/constants';
+import { MINI_GIGS_ABI } from '@/lib/abi';
 
 export default function DisputePanel() {
-  const [gigs, setGigs] = useState<Gig[]>(MOCK_DISPUTED_GIGS);
+  const { gigs: liveGigs } = useGigs();
+  const { writeContractAsync } = useWriteContract();
+
+  const disputedGigs = liveGigs.filter(g => g.status === 'disputed');
 
   const handleResolve = async (gig: Gig, inFavorOf: 'poster' | 'worker') => {
     toast.loading('Resolving dispute on-chain...', { id: 'resolve' });
-    await new Promise(r => setTimeout(r, 1500));
-    toast.success(`Dispute resolved in favor of ${inFavorOf}`, { id: 'resolve' });
-    setGigs((prev) => prev.filter((g) => g.id !== gig.id));
+    try {
+      const payoutToPoster = inFavorOf === 'poster' ? 100n : 0n;
+      await writeContractAsync({
+        address: MINIGIGS_CONTRACT_ADDRESS,
+        abi: MINI_GIGS_ABI,
+        functionName: 'resolveDispute',
+        args: [BigInt(gig.id), payoutToPoster],
+        // @ts-expect-error - external - feeCurrency is supported on Celo
+        feeCurrency: CUSD_ADDRESS as `0x${string}`,
+      });
+      toast.success(`Dispute resolved in favor of ${inFavorOf}`, { id: 'resolve' });
+    } catch (err: any) {
+      console.error(err);
+      toast.error(err.shortMessage || 'Failed to resolve dispute', { id: 'resolve' });
+    }
   };
 
   return (
@@ -39,12 +43,10 @@ export default function DisputePanel() {
         <p>Admin control panel for resolving platform disputes</p>
       </div>
       <div className={styles.content}>
-        {gigs.length === 0 ? (
+        {disputedGigs.length === 0 ? (
           <div className={styles.emptyState}>No active disputes.</div>
         ) : (
-          gigs.map((gig) => (
-            <DisputeCard key={gig.id} gig={gig} onResolve={handleResolve} />
-          ))
+          disputedGigs.map((gig) => <DisputeCard key={gig.id} gig={gig} onResolve={handleResolve} />)
         )}
       </div>
     </div>

@@ -36,4 +36,3 @@ export const Label = ({ children, className = '' }: TypographyProps) => (
     {children}
   </span>
 );
-

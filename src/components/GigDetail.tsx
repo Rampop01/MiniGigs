@@ -14,7 +14,7 @@ import DisputeModal from './DisputeModal';
 interface GigDetailProps {
   gig: Gig;
   onClose: () => void;
-  onAccept?: (gig: Gig) => void;
+  onAccept?: (gig: Gig, workProof?: string) => void;
   onDispute?: (gig: Gig) => void;
 }
 
@@ -22,6 +22,7 @@ export default function GigDetail({ gig, onClose, onAccept, onDispute }: GigDeta
   const { address, isConnected } = useAccount();
   const [showReview, setShowReview] = useState(false);
   const [showDispute, setShowDispute] = useState(false);
+  const [workProof, setWorkProof] = useState('');
   const cat = getCategoryInfo(gig.category);
 
   const isPoster = address && gig.poster.toLowerCase() === address.toLowerCase();
@@ -43,8 +44,12 @@ export default function GigDetail({ gig, onClose, onAccept, onDispute }: GigDeta
       toast.error('Please connect your wallet first');
       return;
     }
+    if (gig.status === 'in_progress' && isWorker && !workProof.trim()) {
+      toast.error('Please provide proof of work');
+      return;
+    }
     // All actions (Accept, Submit, Complete) are passed back to the orchestrator
-    onAccept?.(gig);
+    onAccept?.(gig, workProof);
   };
 
   // Determine button text and visibility
@@ -114,6 +119,20 @@ export default function GigDetail({ gig, onClose, onAccept, onDispute }: GigDeta
           </>
         )}
 
+        {gig.status === 'in_progress' && isWorker && (
+          <>
+            <div className={styles.divider} />
+            <h4 className={styles.sectionLabel}>Submit Proof of Work</h4>
+            <textarea
+              className={styles.workProofInput}
+              placeholder="Paste a link to your work (e.g. GitHub PR, Figma link, Google Doc) or describe what you completed..."
+              value={workProof}
+              onChange={(e) => setWorkProof(e.target.value)}
+              rows={3}
+            />
+          </>
+        )}
+
         {gig.verification !== 'none' && (
           <>
             <div className={styles.divider} />
@@ -136,7 +155,9 @@ export default function GigDetail({ gig, onClose, onAccept, onDispute }: GigDeta
               {actionLabel}
             </button>
           ) : (
-            <div className={`${styles.statusBadge} ${gig.status === 'disputed' ? styles.disputed : ''}`}>
+            <div
+              className={`${styles.statusBadge} ${gig.status === 'disputed' ? styles.disputed : ''}`}
+            >
               <CheckCircle size={18} /> {actionLabel}
             </div>
           )}
@@ -154,18 +175,18 @@ export default function GigDetail({ gig, onClose, onAccept, onDispute }: GigDeta
           </button>
         </div>
       </div>
-      
+
       {showDispute && (
-        <DisputeModal 
-          gigId={gig.id} 
-          onClose={() => setShowDispute(false)} 
+        <DisputeModal
+          gigId={gig.id}
+          onClose={() => setShowDispute(false)}
           onSubmit={async (reason, evidence) => {
             // Mock API call for dispute
-            await new Promise(r => setTimeout(r, 1000));
+            await new Promise((r) => setTimeout(r, 1000));
             toast.success('Dispute submitted successfully');
             setShowDispute(false);
             onClose();
-          }} 
+          }}
         />
       )}
     </div>

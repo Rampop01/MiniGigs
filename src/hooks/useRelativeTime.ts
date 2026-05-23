@@ -8,7 +8,7 @@ export function useRelativeTime(timestamp: number) {
   useEffect(() => {
     const updateTime = () => {
       const seconds = Math.floor((Date.now() - timestamp) / 1000);
-      
+
       if (seconds < 60) {
         setRelativeTime('Just now');
       } else if (seconds < 3600) {

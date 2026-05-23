@@ -58,7 +58,7 @@ export function useGigsEvents(userAddress?: `0x${string}`) {
 
           // Real-time notifications
           const gigArgs = args as Record<string, unknown>;
-          
+
           const playSound = () => {
             const audio = new Audio('/notification.mp3');
             audio.volume = 0.4;
@@ -68,7 +68,6 @@ export function useGigsEvents(userAddress?: `0x${string}`) {
           if (eventName === 'GigPosted') {
             playSound();
             toast.success(`New Gig #${args.gigId} is now live!`, { icon: '🚀' });
-
           } else if (eventName === 'GigAccepted') {
             const isUser =
               (gigArgs.worker as string | undefined)?.toLowerCase() === userAddress?.toLowerCase();
