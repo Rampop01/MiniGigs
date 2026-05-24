@@ -1,5 +1,5 @@
 import React from 'react';
-import { Search, Zap, Shield } from 'lucide-react';
+import { Zap, Shield } from 'lucide-react';
 import styles from './Hero.module.css';
 
 export default function Hero() {
@@ -13,12 +13,6 @@ export default function Hero() {
         <p className={styles.subtitle}>
           MiniGigs connects you with instant-pay micro-tasks. Simple, fast, and verified on-chain.
         </p>
-
-        <div className={styles.searchBar}>
-          <Search className={styles.searchIcon} size={18} />
-          <input type="text" placeholder="Search for gigs..." className={styles.input} />
-          <button className={styles.searchBtn}>Find Gigs</button>
-        </div>
 
         <div className={styles.trustRow}>
           <div className={styles.trustItem}>
