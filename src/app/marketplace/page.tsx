@@ -100,41 +100,31 @@ export default function MarketplacePage({ filter }: { filter?: 'all' | 'my' }) {
           </button>
         </div>
 
-        <div
-          style={{ display: 'flex', flexDirection: 'column', gap: '16px', marginBottom: '16px' }}
-        >
+        <div style={{ display: 'flex', gap: '8px', marginBottom: '16px', alignItems: 'center' }}>
           <SearchBar onSearch={setSearchQuery} />
-
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              flexWrap: 'wrap',
-              gap: '8px',
-            }}
-          >
-            <FilterChips
-              options={[
-                { id: 'all', label: 'All' },
-                { id: 'open', label: 'Open' },
-                { id: 'in_progress', label: 'In Progress' },
-                { id: 'completed', label: 'Completed' },
-                { id: 'disputed', label: 'Disputed' },
-              ]}
-              activeId={statusFilter}
-              onChange={setStatusFilter}
-            />
-            <SortDropdown
-              options={[
-                { id: 'newest', label: 'Newest' },
-                { id: 'bounty-high', label: 'Highest Bounty' },
-                { id: 'deadline-soon', label: 'Ending Soon' },
-              ]}
-              activeId={sortOrder}
-              onChange={setSortOrder}
-            />
-          </div>
+          <SortDropdown
+            options={[
+              { id: 'all', label: 'All' },
+              { id: 'open', label: 'Open' },
+              { id: 'in_progress', label: 'In Progress' },
+              { id: 'completed', label: 'Completed' },
+              { id: 'disputed', label: 'Disputed' },
+            ]}
+            activeId={statusFilter}
+            onChange={setStatusFilter}
+            label="Status"
+            alignLeft
+          />
+          <SortDropdown
+            options={[
+              { id: 'newest', label: 'Newest' },
+              { id: 'bounty-high', label: 'Bounty' },
+              { id: 'deadline-soon', label: 'Ending' },
+            ]}
+            activeId={sortOrder}
+            onChange={setSortOrder}
+            label="Sort"
+          />
         </div>
 
         <CategoryFilter selected={selectedCategory} onChange={setSelectedCategory} />

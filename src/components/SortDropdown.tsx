@@ -13,9 +13,17 @@ interface SortDropdownProps {
   options: SortOption[];
   activeId: string;
   onChange: (id: string) => void;
+  label?: string;
+  alignLeft?: boolean;
 }
 
-export default function SortDropdown({ options, activeId, onChange }: SortDropdownProps) {
+export default function SortDropdown({
+  options,
+  activeId,
+  onChange,
+  label,
+  alignLeft = false,
+}: SortDropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -34,6 +42,10 @@ export default function SortDropdown({ options, activeId, onChange }: SortDropdo
     };
   }, []);
 
+  const displayLabel = label
+    ? `${label}: ${activeOption?.label || ''}`
+    : activeOption?.label || 'Sort By';
+
   return (
     <div className={styles.sortContainer} ref={dropdownRef}>
       <button
@@ -43,12 +55,16 @@ export default function SortDropdown({ options, activeId, onChange }: SortDropdo
         aria-haspopup="listbox"
         aria-expanded={isOpen}
       >
-        <span>{activeOption?.label || 'Sort By'}</span>
-        <ChevronDown size={16} />
+        <span>{displayLabel}</span>
+        <ChevronDown size={14} className={isOpen ? styles.chevronOpen : ''} />
       </button>
 
       {isOpen && (
-        <div className={styles.dropdownMenu} role="listbox">
+        <div
+          className={styles.dropdownMenu}
+          style={alignLeft ? { left: 0, right: 'auto' } : { right: 0, left: 'auto' }}
+          role="listbox"
+        >
           {options.map((option) => (
             <button
               key={option.id}
