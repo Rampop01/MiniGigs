@@ -121,30 +121,38 @@ export function useGigs() {
           callData: `${GIGS_SELECTOR}${id.toString(16).padStart(64, '0')}` as `0x${string}`,
         }));
 
-        // Batch call
-        const res = await fetch(RPC_URLS[0], {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            jsonrpc: '2.0',
-            id: Date.now(),
-            method: 'eth_call',
-            params: [
-              {
-                to: '0xcA11bde05977b3631167028862bE2a173976CA11', // Multicall3 on Celo
-                data: encodeFunctionData({
-                  abi: MULTICALL3_ABI,
-                  functionName: 'aggregate3',
-                  args: [calls],
-                }),
-              },
-              'latest',
-            ],
-          }),
-        });
+        let res;
+        let json;
+        for (const url of RPC_URLS) {
+          try {
+            res = await fetch(url, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                jsonrpc: '2.0',
+                id: Date.now(),
+                method: 'eth_call',
+                params: [
+                  {
+                    to: '0xcA11bde05977b3631167028862bE2a173976CA11', // Multicall3 on Celo
+                    data: encodeFunctionData({
+                      abi: MULTICALL3_ABI,
+                      functionName: 'aggregate3',
+                      args: [calls],
+                    }),
+                  },
+                  'latest',
+                ],
+              }),
+            });
+            json = await res.json();
+            if (!json.error) break;
+          } catch (err) {
+            console.warn(`Multicall failed on ${url}, trying next...`);
+          }
+        }
 
-        const json = await res.json();
-        if (json.error) throw new Error(json.error.message);
+        if (!json || json.error) throw new Error(json?.error?.message || 'All RPCs failed');
 
         const multicallResult = decodeFunctionResult({
           abi: MULTICALL3_ABI,
