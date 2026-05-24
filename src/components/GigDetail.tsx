@@ -1,4 +1,5 @@
 'use client';
+import { createPortal } from 'react-dom';
 
 import type { Gig } from '@/lib/constants';
 import { getCategoryInfo, formatCUSD, timeAgo, shortenAddress } from '@/lib/utils';
@@ -28,6 +29,16 @@ export default function GigDetail({ gig, onClose, onAccept, onDispute }: GigDeta
   const isPoster = address && gig.poster.toLowerCase() === address.toLowerCase();
   const isWorker = address && gig.worker?.toLowerCase() === address.toLowerCase();
 
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, []);
+
   useEffect(() => {
     if (gig.status === 'completed') {
       confetti({
@@ -48,11 +59,9 @@ export default function GigDetail({ gig, onClose, onAccept, onDispute }: GigDeta
       toast.error('Please provide proof of work');
       return;
     }
-    // All actions (Accept, Submit, Complete) are passed back to the orchestrator
     onAccept?.(gig, workProof);
   };
 
-  // Determine button text and visibility
   let actionLabel = 'Accept Gig';
   let showAction = true;
 
@@ -76,7 +85,9 @@ export default function GigDetail({ gig, onClose, onAccept, onDispute }: GigDeta
   const canDispute =
     (gig.status === 'submitted' || gig.status === 'in_progress') && (isPoster || isWorker);
 
-  return (
+  if (!isMounted) return null;
+
+  const modalContent = (
     <div className={styles.overlay} onClick={onClose}>
       <div className={`${styles.modal} glass`} onClick={(e) => e.stopPropagation()}>
         <button className={styles.closeBtn} onClick={onClose} aria-label="Close">
@@ -181,7 +192,6 @@ export default function GigDetail({ gig, onClose, onAccept, onDispute }: GigDeta
           gigId={gig.id}
           onClose={() => setShowDispute(false)}
           onSubmit={async (reason, evidence) => {
-            // Mock API call for dispute
             await new Promise((r) => setTimeout(r, 1000));
             toast.success('Dispute submitted successfully');
             setShowDispute(false);
@@ -191,4 +201,6 @@ export default function GigDetail({ gig, onClose, onAccept, onDispute }: GigDeta
       )}
     </div>
   );
+
+  return createPortal(modalContent, document.body);
 }

@@ -1,6 +1,7 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import {
   GIG_CATEGORIES,
   TIME_ESTIMATES,
@@ -119,7 +120,20 @@ export default function CreateGig({ onClose, onCreated }: CreateGigProps) {
     }
   };
 
-  return (
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+    // Prevent background scrolling while modal is open
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, []);
+
+  if (!isMounted) return null;
+
+  const modalContent = (
     <div className={styles.overlay} onClick={onClose}>
       <div className={`${styles.modal} glass`} onClick={(e) => e.stopPropagation()}>
         <div className={styles.modalHeader}>
@@ -226,4 +240,6 @@ export default function CreateGig({ onClose, onCreated }: CreateGigProps) {
       </div>
     </div>
   );
+
+  return createPortal(modalContent, document.body);
 }
