@@ -77,7 +77,7 @@ export default function ProfilePage() {
   if (!mounted) return null;
 
   return (
-    <main className={styles.main}>
+    <div className={styles.contentWrapper}>
       {/* Header / Basic Info */}
       <div className={styles.profileHeader}>
         <div className={styles.avatar}>{address ? address.slice(2, 4).toUpperCase() : '??'}</div>
@@ -193,6 +193,6 @@ export default function ProfilePage() {
           )}
         </div>
       </div>
-    </main>
+    </div>
   );
 }

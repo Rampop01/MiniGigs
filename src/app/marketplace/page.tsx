@@ -358,13 +358,13 @@ export default function MarketplacePage({ filter }: { filter?: 'all' | 'my' }) {
 
   return (
     <>
-      <main className={styles.main}>
+      <div className={styles.contentWrapper}>
         {activeTab === 'explore' && <ExploreView />}
         {activeTab === 'my-tasks' && <MyTasksView />}
         {activeTab === 'agents' && <AgentHub />}
         {activeTab === 'wallet' && <WalletView />}
         {activeTab === 'profile' && <ProfileView />}
-      </main>
+      </div>
 
       {selectedGig && (
         <GigDetail

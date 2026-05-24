@@ -5,10 +5,10 @@
   flex-direction: column;
 }
 
-.main {
+.contentWrapper {
+  display: flex;
+  flex-direction: column;
   flex: 1;
-  padding-bottom: 140px;
-  /* Space for bottom nav overflow */
 }
 
 .tabContent {

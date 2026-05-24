@@ -55,7 +55,7 @@ export default function AnalyticsPage() {
   }, [liveGigs]);
 
   return (
-    <main className={styles.main}>
+    <div className={styles.contentWrapper}>
       <div className={styles.header}>
         <h1 className={styles.title}>Analytics</h1>
         <p className={styles.subtitle}>Platform metrics and network health</p>
@@ -127,6 +127,6 @@ export default function AnalyticsPage() {
           )}
         </div>
       </div>
-    </main>
+    </div>
   );
 }

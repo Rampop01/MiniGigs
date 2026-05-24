@@ -1,10 +1,6 @@
-.container {
-  padding-bottom: 80px;
-  min-height: 100vh;
-}
 
-.main {
-  padding: var(--sp-4);
+
+.contentWrapper {
   display: flex;
   flex-direction: column;
   gap: var(--sp-6);
