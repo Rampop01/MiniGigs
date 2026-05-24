@@ -3,6 +3,7 @@
 import React from 'react';
 import { BarChart3, Users, DollarSign, Activity, TrendingUp } from 'lucide-react';
 import styles from './analytics.module.css';
+import Podium from '@/components/Podium';
 
 import { useGigs } from '@/hooks/useGigs';
 import { useMemo } from 'react';
@@ -111,6 +112,7 @@ export default function AnalyticsPage() {
 
       <div className={styles.chartCard}>
         <h2 className={styles.chartTitle}>Top Earners (7d)</h2>
+        <Podium topEarners={stats.topEarners.slice(0, 3)} />
         <div className={styles.leaderboard}>
           {stats.topEarners.map((earner, i) => (
             <div key={i} className={styles.leaderboardItem}>
