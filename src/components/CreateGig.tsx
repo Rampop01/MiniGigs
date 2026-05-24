@@ -37,13 +37,14 @@ export default function CreateGig({ onClose, onCreated }: CreateGigProps) {
     address: CUSD_ADDRESS as `0x${string}`,
     abi: ERC20_ABI,
     functionName: 'allowance',
-    args: [address!, MINIGIGS_CONTRACT_ADDRESS as `0x${string}`],
+    args: [address || '0x0000000000000000000000000000000000000000', MINIGIGS_CONTRACT_ADDRESS as `0x${string}`],
     query: { enabled: !!address },
   });
 
   const { data: balance } = useBalance({
-    address: address,
+    address: address || '0x0000000000000000000000000000000000000000',
     token: CUSD_ADDRESS as `0x${string}`,
+    query: { enabled: !!address },
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
