@@ -50,49 +50,68 @@
   line-height: 1.5;
 }
 
-.searchBar {
+.marqueeContainer {
   width: 100%;
-  max-width: 400px;
-  display: flex;
-  align-items: center;
+  max-width: 440px;
+  overflow: hidden;
   background: var(--bg-surface-elevated);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: var(--r-md);
-  padding: 6px;
+  border-radius: var(--r-full);
+  padding: 12px 0;
   margin-top: var(--sp-4);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  position: relative;
+  white-space: nowrap;
 }
 
-.searchIcon {
-  margin-left: 12px;
-  color: var(--text-tertiary);
+.marqueeContainer::before,
+.marqueeContainer::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  width: 40px;
+  height: 100%;
+  z-index: 2;
 }
 
-.input {
-  flex: 1;
-  background: transparent;
-  border: none;
-  padding: 10px 12px;
-  color: #fff;
-  font-size: 14px;
-  outline: none;
+.marqueeContainer::before {
+  left: 0;
+  background: linear-gradient(to right, var(--bg-surface-elevated), transparent);
 }
 
-.searchBtn {
-  background: var(--primary);
-  color: #000;
-  border: none;
-  padding: 10px 20px;
-  border-radius: var(--r-md);
-  font-weight: 800;
+.marqueeContainer::after {
+  right: 0;
+  background: linear-gradient(to left, var(--bg-surface-elevated), transparent);
+}
+
+.marqueeContent {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  animation: scrollText 15s linear infinite;
+  padding-left: 16px;
+}
+
+.marqueeContent span {
   font-size: 13px;
-  cursor: pointer;
-  transition: all 0.2s;
+  font-weight: 700;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
-.searchBtn:hover {
-  transform: scale(1.02);
-  box-shadow: 0 0 15px var(--primary-glow);
+.dot {
+  color: var(--primary) !important;
+  font-size: 16px !important;
+}
+
+@keyframes scrollText {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
 }
 
 .trustRow {
