@@ -1,5 +1,5 @@
 import React from 'react';
-import { Zap, Shield } from 'lucide-react';
+import { Zap, Shield, Clock, Globe, Coins, CheckCircle } from 'lucide-react';
 import styles from './Hero.module.css';
 
 export default function Hero() {
@@ -16,26 +16,30 @@ export default function Hero() {
 
         <div className={styles.marqueeContainer}>
           <div className={styles.marqueeContent}>
-            <span>⚡ Complete Micro-Tasks</span>
+            <span className={styles.marqueeItem}><Zap size={14} /> Micro-Tasks</span>
             <span className={styles.dot}>•</span>
-            <span>💰 Earn cUSD Instantly</span>
+            <span className={styles.marqueeItem}><Coins size={14} /> Earn cUSD Instantly</span>
             <span className={styles.dot}>•</span>
-            <span>🛡️ Secured by Self Protocol</span>
+            <span className={styles.marqueeItem}><Shield size={14} /> Self Protocol Secured</span>
             <span className={styles.dot}>•</span>
-            <span>🚀 No Waiting Periods</span>
+            <span className={styles.marqueeItem}><Clock size={14} /> No Waiting Periods</span>
             <span className={styles.dot}>•</span>
-            <span>🌍 100% On-Chain</span>
+            <span className={styles.marqueeItem}><Globe size={14} /> 100% On-Chain</span>
             <span className={styles.dot}>•</span>
-            {/* Duplicated for seamless scrolling */}
-            <span>⚡ Complete Micro-Tasks</span>
+            <span className={styles.marqueeItem}><CheckCircle size={14} /> Verified Workers</span>
             <span className={styles.dot}>•</span>
-            <span>💰 Earn cUSD Instantly</span>
+            {/* Duplicated for seamless looping */}
+            <span className={styles.marqueeItem}><Zap size={14} /> Micro-Tasks</span>
             <span className={styles.dot}>•</span>
-            <span>🛡️ Secured by Self Protocol</span>
+            <span className={styles.marqueeItem}><Coins size={14} /> Earn cUSD Instantly</span>
             <span className={styles.dot}>•</span>
-            <span>🚀 No Waiting Periods</span>
+            <span className={styles.marqueeItem}><Shield size={14} /> Self Protocol Secured</span>
             <span className={styles.dot}>•</span>
-            <span>🌍 100% On-Chain</span>
+            <span className={styles.marqueeItem}><Clock size={14} /> No Waiting Periods</span>
+            <span className={styles.dot}>•</span>
+            <span className={styles.marqueeItem}><Globe size={14} /> 100% On-Chain</span>
+            <span className={styles.dot}>•</span>
+            <span className={styles.marqueeItem}><CheckCircle size={14} /> Verified Workers</span>
           </div>
         </div>
 

@@ -100,6 +100,18 @@
   letter-spacing: 0.5px;
 }
 
+.marqueeItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-secondary) !important;
+}
+
+.marqueeItem svg {
+  color: var(--primary);
+  flex-shrink: 0;
+}
+
 .dot {
   color: var(--primary) !important;
   font-size: 16px !important;
