@@ -26,8 +26,6 @@ export default function DisputePanel() {
         abi: MINI_GIGS_ABI,
         functionName: 'resolveDispute',
         args: [BigInt(gig.id), payoutToPoster],
-        // @ts-expect-error - external - feeCurrency is supported on Celo
-        feeCurrency: CUSD_ADDRESS as `0x${string}`,
       });
       toast.success(`Dispute resolved in favor of ${inFavorOf}`, { id: 'resolve' });
     } catch (err: any) {

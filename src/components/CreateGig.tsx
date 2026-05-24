@@ -77,8 +77,6 @@ export default function CreateGig({ onClose, onCreated }: CreateGigProps) {
           abi: ERC20_ABI,
           functionName: 'approve',
           args: [MINIGIGS_CONTRACT_ADDRESS as `0x${string}`, bountyWei],
-          // @ts-expect-error - external - feeCurrency is supported on Celo
-          feeCurrency: CUSD_ADDRESS as `0x${string}`,
         });
         toast.success('cUSD Approved!', { id: 'post-gig' });
       }
@@ -104,8 +102,6 @@ export default function CreateGig({ onClose, onCreated }: CreateGigProps) {
           bountyWei,
           BigInt(14), // default 14 days duration
         ],
-        // @ts-expect-error - external - feeCurrency is supported on Celo
-        feeCurrency: CUSD_ADDRESS as `0x${string}`,
       });
 
       toast.success('Gig posted on-chain successfully!', { id: 'post-gig' });

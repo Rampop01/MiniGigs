@@ -57,8 +57,6 @@ export default function AdminPanel() {
         abi: MINI_GIGS_ABI,
         functionName: 'withdrawFees',
         args: [contractBalance.value],
-        // @ts-expect-error - external - feeCurrency is supported on Celo
-        feeCurrency: CUSD_ADDRESS as `0x${string}`,
       });
 
       toast.success('Fees withdrawn successfully!', { id: 'withdraw' });
@@ -87,8 +85,6 @@ export default function AdminPanel() {
         abi: MINI_GIGS_ABI,
         functionName: 'resolveDispute',
         args: [BigInt(disputeId), BigInt(payoutToPoster)],
-        // @ts-expect-error - external - feeCurrency is supported on Celo
-        feeCurrency: CUSD_ADDRESS as `0x${string}`,
       });
 
       toast.success('Dispute resolved successfully!', { id: 'resolve' });

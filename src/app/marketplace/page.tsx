@@ -374,8 +374,6 @@ export default function MarketplacePage({ filter }: { filter?: 'all' | 'my' }) {
                   abi: MINI_GIGS_ABI,
                   functionName: 'acceptGig',
                   args: [BigInt(gig.id)],
-                  // @ts-expect-error - external - feeCurrency is supported on Celo
-                  feeCurrency: CUSD_ADDRESS as `0x${string}`,
                 });
                 toast.success('Gig accepted! Go to My Tasks.', { id: 'gig-action' });
               } else if (
@@ -392,8 +390,6 @@ export default function MarketplacePage({ filter }: { filter?: 'all' | 'my' }) {
                   abi: MINI_GIGS_ABI,
                   functionName: 'submitWork',
                   args: [BigInt(gig.id), workProof],
-                  // @ts-expect-error - external - feeCurrency is supported on Celo
-                  feeCurrency: CUSD_ADDRESS as `0x${string}`,
                 });
                 toast.success('Work submitted for review!', { id: 'gig-action' });
               } else if (
@@ -406,8 +402,6 @@ export default function MarketplacePage({ filter }: { filter?: 'all' | 'my' }) {
                   abi: MINI_GIGS_ABI,
                   functionName: 'completeGig',
                   args: [BigInt(gig.id)],
-                  // @ts-expect-error - external - feeCurrency is supported on Celo
-                  feeCurrency: CUSD_ADDRESS as `0x${string}`,
                 });
                 toast.success('Funds released to worker!', { id: 'gig-action' });
                 confetti({
