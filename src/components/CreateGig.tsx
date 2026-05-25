@@ -60,6 +60,15 @@ export default function CreateGig({ onClose, onCreated }: CreateGigProps) {
       return;
     }
 
+    if (title.length < 5) {
+      toast.error('Title must be at least 5 characters long');
+      return;
+    }
+    if (title.length > 50) {
+      toast.error('Title cannot exceed 50 characters');
+      return;
+    }
+
     try {
       setIsPosting(true);
       const bountyWei = parseEther(bounty);
