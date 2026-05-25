@@ -22,7 +22,7 @@ export default function AdminPanel() {
   });
 
   // Read contract's cUSD balance
-  const { data: contractBalance, refetch: refetchBalance } = useBalance({
+  const { data: contractBalance, isLoading: isBalanceLoading, refetch: refetchBalance } = useBalance({
     address: MINIGIGS_CONTRACT_ADDRESS as `0x${string}`,
     token: CUSD_ADDRESS as `0x${string}`,
   });
@@ -112,7 +112,13 @@ export default function AdminPanel() {
         <div className={styles.statInfo}>
           <span className={styles.statLabel}>Contract Fees (cUSD)</span>
           <span className={styles.statValue}>
-            {contractBalance ? Number(contractBalance.formatted).toFixed(4) : '0.0000'}
+            {isBalanceLoading ? (
+              <span className="animate-pulse bg-white/10 rounded h-8 w-32 inline-block"></span>
+            ) : contractBalance ? (
+              Number(contractBalance.formatted).toFixed(4)
+            ) : (
+              '0.0000'
+            )}
           </span>
           <span className={styles.statSub}>
             <TrendingUp size={12} /> Fee Rate: {feeBps ? Number(feeBps) / 100 : '2'}%
