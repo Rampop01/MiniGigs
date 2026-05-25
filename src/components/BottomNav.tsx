@@ -28,6 +28,7 @@ export default function BottomNav({ active, onNavigate }: BottomNavProps) {
           className={active === id ? styles.tabActive : styles.tab}
           onClick={() => onNavigate(id)}
           aria-label={label}
+          aria-current={active === id ? 'page' : undefined}
         >
           <Icon
             size={20}
