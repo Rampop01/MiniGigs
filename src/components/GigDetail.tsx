@@ -73,8 +73,12 @@ export default function GigDetail({ gig, onClose, onAccept, onDispute }: GigDeta
   let showAction = true;
 
   if (gig.status === 'open') {
-    actionLabel = isPoster ? 'Waiting for Workers' : `Accept Gig — ${formatCUSD(gig.bounty)}`;
-    if (isPoster) showAction = false;
+    if (isPoster) {
+      actionLabel = 'Waiting for Workers';
+      showAction = false;
+    } else {
+      actionLabel = !isConnected ? 'Connect Wallet to Accept' : `Accept Gig — ${formatCUSD(gig.bounty)}`;
+    }
   } else if (gig.status === 'in_progress') {
     actionLabel = isWorker ? 'Submit Proof of Work' : 'In Progress';
     if (!isWorker) showAction = false;
