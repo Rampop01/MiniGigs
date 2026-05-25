@@ -55,6 +55,14 @@ export default function CreateGig({ onClose, onCreated }: CreateGigProps) {
       toast.error('Connect your wallet to post a gig');
       return;
     }
+    
+    // The chainId from wagmi indicates the currently connected chain. 
+    // Celo Mainnet is 42220.
+    if (publicClient && publicClient.chain.id !== 42220) {
+      toast.error('Please switch to Celo Mainnet to post a gig');
+      return;
+    }
+
     if (!title || !description || !category || !bounty) {
       toast.error('Please fill in all required fields');
       return;
