@@ -184,6 +184,13 @@
   transform: scale(0.97);
 }
 
+.acceptBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
 .viewChainBtn {
   width: 100%;
   padding: 14px;
