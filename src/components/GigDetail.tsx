@@ -34,10 +34,17 @@ export default function GigDetail({ gig, onClose, onAccept, onDispute }: GigDeta
   useEffect(() => {
     setIsMounted(true);
     document.body.style.overflow = 'hidden';
+
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    document.addEventListener('keydown', handleEscape);
+
     return () => {
       document.body.style.overflow = 'auto';
+      document.removeEventListener('keydown', handleEscape);
     };
-  }, []);
+  }, [onClose]);
 
   useEffect(() => {
     if (gig.status === 'completed') {
