@@ -146,10 +146,18 @@ export default function CreateGig({ onClose, onCreated }: CreateGigProps) {
     setIsMounted(true);
     // Prevent background scrolling while modal is open
     document.body.style.overflow = 'hidden';
+
+    // Handle escape key
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    document.addEventListener('keydown', handleEscape);
+
     return () => {
       document.body.style.overflow = 'auto';
+      document.removeEventListener('keydown', handleEscape);
     };
-  }, []);
+  }, [onClose]);
 
   if (!isMounted) return null;
 
