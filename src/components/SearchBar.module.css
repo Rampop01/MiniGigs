@@ -38,7 +38,7 @@
   transition: color 0.3s ease;
 }
 
-.searchInput:focus + .searchIcon {
+.searchContainer:has(.searchInput:focus) .searchIcon {
   color: var(--primary);
 }
 
