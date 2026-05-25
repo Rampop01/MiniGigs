@@ -176,11 +176,17 @@ export default function CreateGig({ onClose, onCreated }: CreateGigProps) {
           </div>
 
           <div className={styles.field}>
-            <label className={styles.label}>Description *</label>
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <label className={styles.label}>Description *</label>
+              <span style={{ fontSize: '0.8rem', color: description.length < 20 ? 'var(--danger)' : 'var(--text-secondary)' }}>
+                {description.length} / 500
+              </span>
+            </div>
             <textarea
               className="input"
               placeholder="Describe the task, deliverables, and acceptance criteria..."
               value={description}
+              maxLength={500}
               onChange={(e) => setDescription(e.target.value)}
               disabled={isPosting}
             />
