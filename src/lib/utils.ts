@@ -64,3 +64,23 @@ export function formatCUSD(amount: number): string {
   });
   return `${formatter.format(amount)} cUSD`;
 }
+
+/** Validate a bounty amount string — returns error message or null if valid */
+export function validateBounty(value: string): string | null {
+  const num = parseFloat(value);
+  if (isNaN(num)) return 'Bounty must be a number';
+  if (num <= 0) return 'Bounty must be greater than 0';
+  if (num < 0.1) return 'Minimum bounty is 0.1 cUSD';
+  if (num > 100_000) return 'Maximum bounty is 100,000 cUSD';
+  return null; // valid
+}
+
+/** Format a Unix timestamp (seconds) as a localized date string */
+export function formatDate(unixSeconds: number): string {
+  return new Date(unixSeconds * 1000).toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+  });
+}
+
