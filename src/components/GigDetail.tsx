@@ -2,7 +2,7 @@
 import { createPortal } from 'react-dom';
 
 import type { Gig } from '@/lib/constants';
-import { getCategoryInfo, formatCUSD, timeAgo, shortenAddress } from '@/lib/utils';
+import { getCategoryInfo, formatCUSD, timeAgo, shortenAddress, formatDate } from '@/lib/utils';
 import { X, Clock, ShieldCheck, Globe, User, ExternalLink, CheckCircle } from 'lucide-react';
 import { useAccount } from 'wagmi';
 import toast from 'react-hot-toast';
@@ -131,7 +131,7 @@ export default function GigDetail({ gig, onClose, onAccept, onDispute }: GigDeta
           >
             <User size={14} /> {shortenAddress(gig.poster)}
           </span>
-          <span className={styles.metaItem}>{timeAgo(gig.createdAt)}</span>
+          <span className={styles.metaItem} title={formatDate(gig.createdAt)}>{timeAgo(gig.createdAt)}</span>
         </div>
 
         <div className={styles.divider} />
