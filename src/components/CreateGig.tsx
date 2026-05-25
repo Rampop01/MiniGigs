@@ -69,6 +69,11 @@ export default function CreateGig({ onClose, onCreated }: CreateGigProps) {
       return;
     }
 
+    if (description.length < 20) {
+      toast.error('Description must be at least 20 characters long to provide enough detail');
+      return;
+    }
+
     try {
       setIsPosting(true);
       const bountyWei = parseEther(bounty);
