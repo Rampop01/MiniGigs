@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { timeAgo } from '@/lib/utils';
 import { useGigsEvents, GigEvent } from '@/hooks/useGigsEvents';
 import { useAccount } from 'wagmi';
 import { Badge } from './ui/Badge';
@@ -37,12 +38,6 @@ export default function ActivityFeed() {
     }
   };
 
-  const getTimeAgo = (timestamp: number) => {
-    const seconds = Math.floor((now - timestamp) / 1000);
-    if (seconds < 60) return 'Just now';
-    return `${Math.floor(seconds / 60)}m ago`;
-  };
-
   return (
     <Card className={styles.container} variant="glass">
       <div className={styles.header}>
@@ -59,7 +54,7 @@ export default function ActivityFeed() {
               </Text>
               <div className={styles.eventMeta}>
                 <Clock size={10} />
-                <span className={styles.time}>{getTimeAgo(event.timestamp)}</span>
+                <span className={styles.time}>{timeAgo(event.timestamp)}</span>
               </div>
             </div>
             <Badge variant={event.type === 'completed' ? 'success' : 'info'}>{event.type}</Badge>
