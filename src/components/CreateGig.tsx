@@ -234,6 +234,11 @@ export default function CreateGig({ onClose, onCreated }: CreateGigProps) {
                 step="0.1"
                 placeholder="e.g. 10"
                 value={bounty}
+                onKeyDown={(e) => {
+                  if (['e', 'E', '+', '-'].includes(e.key)) {
+                    e.preventDefault();
+                  }
+                }}
                 onChange={(e) => setBounty(e.target.value)}
                 disabled={isPosting}
               />
