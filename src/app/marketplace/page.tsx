@@ -314,25 +314,30 @@ export default function MarketplacePage({ filter }: { filter?: 'all' | 'my' }) {
       <div className={styles.statsGrid}>
         <div className={styles.statBox}>
           <span className={styles.statVal}>
-            {
+            {isGigsLoading ? (
+               <span className="animate-pulse bg-white/10 rounded h-6 w-8 inline-block"></span>
+            ) : (
               liveGigs.filter(
                 (g) =>
                   g.worker?.toLowerCase() === address?.toLowerCase() && g.status === 'completed',
               ).length
-            }
+            )}
           </span>
           <span className={styles.statLab}>Finished</span>
         </div>
         <div className={styles.statBox}>
           <span className={styles.statVal}>
-            $
-            {liveGigs
-              .filter(
-                (g) =>
-                  g.worker?.toLowerCase() === address?.toLowerCase() && g.status === 'completed',
-              )
-              .reduce((acc, g) => acc + g.bounty, 0)
-              .toFixed(0)}
+            {isGigsLoading ? (
+              <span className="animate-pulse bg-white/10 rounded h-6 w-12 inline-block"></span>
+            ) : (
+              `$${liveGigs
+                .filter(
+                  (g) =>
+                    g.worker?.toLowerCase() === address?.toLowerCase() && g.status === 'completed',
+                )
+                .reduce((acc, g) => acc + g.bounty, 0)
+                .toFixed(0)}`
+            )}
           </span>
           <span className={styles.statLab}>Earned</span>
         </div>
