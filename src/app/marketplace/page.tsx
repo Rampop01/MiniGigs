@@ -135,7 +135,24 @@ export default function MarketplacePage({ filter }: { filter?: 'all' | 'my' }) {
               <GigCard key={gig.id} gig={gig} now={now} onClick={() => setSelectedGig(gig)} />
             ))
           ) : (
-            <div className={styles.emptyState}>No gigs match your filters.</div>
+            <div className={styles.emptyState}>
+              <div className={styles.emptyIcon}>
+                <Info size={48} color="var(--text-tertiary)" />
+              </div>
+              <h3>No gigs found</h3>
+              <p>Try adjusting your search filters or check back later.</p>
+              <button 
+                className="btn-primary" 
+                style={{ marginTop: 'var(--sp-4)' }} 
+                onClick={() => { 
+                  setSearchQuery(''); 
+                  setStatusFilter('all'); 
+                  setSelectedCategory('all'); 
+                }}
+              >
+                Clear Filters
+              </button>
+            </div>
           )}
         </div>
       </div>
