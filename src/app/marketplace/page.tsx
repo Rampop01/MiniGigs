@@ -185,14 +185,21 @@ export default function MarketplacePage({ filter }: { filter?: 'all' | 'my' }) {
           <div className={styles.emptyIcon}>
             <ClipboardCheck size={48} color="var(--text-tertiary)" />
           </div>
-          <h3>No active tasks</h3>
-          <p>Complete your tasks to unlock new micro-gigs.</p>
+          <h3>{isConnected ? 'No active tasks' : 'Wallet Not Connected'}</h3>
+          <p>{isConnected ? 'Complete your tasks to unlock new micro-gigs.' : 'Connect your wallet to track and manage your tasks.'}</p>
           <button
             className="btn-primary"
             style={{ marginTop: 'var(--sp-4)' }}
-            onClick={() => router.push('/marketplace?tab=explore')}
+            onClick={() => {
+              if (isConnected) {
+                router.push('/marketplace?tab=explore');
+              } else {
+                // If not connected, they can click connect on the top right, but let's just send them to explore anyway
+                router.push('/marketplace?tab=explore');
+              }
+            }}
           >
-            Browse Markets
+            {isConnected ? 'Browse Markets' : 'Explore Markets'}
           </button>
         </div>
       )}
