@@ -67,6 +67,9 @@
   line-height: 1.35;
   margin-bottom: var(--sp-2);
   color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .desc {
