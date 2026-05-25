@@ -10,7 +10,7 @@ import {
   CUSD_ADDRESS,
 } from '@/lib/constants';
 import { X, Plus } from 'lucide-react';
-import { useAccount, useWriteContract, useReadContract, useBalance } from 'wagmi';
+import { useAccount, useWriteContract, useReadContract, useBalance, usePublicClient } from 'wagmi';
 import { MINI_GIGS_ABI, ERC20_ABI } from '@/lib/abi';
 import { parseEther } from 'viem';
 import toast from 'react-hot-toast';
@@ -24,6 +24,7 @@ interface CreateGigProps {
 export default function CreateGig({ onClose, onCreated }: CreateGigProps) {
   const { address, isConnected } = useAccount();
   const { writeContractAsync } = useWriteContract();
+  const publicClient = usePublicClient();
 
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -70,14 +71,23 @@ export default function CreateGig({ onClose, onCreated }: CreateGigProps) {
       }
 
       // Step 1: Approve cUSD if needed
-      if (!allowance || allowance < bountyWei) {
+      if (!allowance || (allowance as bigint) < bountyWei) {
         toast.loading('Approving cUSD...', { id: 'post-gig' });
-        await writeContractAsync({
+        const hash = await writeContractAsync({
           address: CUSD_ADDRESS as `0x${string}`,
           abi: ERC20_ABI,
           functionName: 'approve',
           args: [MINIGIGS_CONTRACT_ADDRESS as `0x${string}`, bountyWei],
         });
+        
+        toast.loading('Waiting for approval confirmation...', { id: 'post-gig' });
+        if (publicClient) {
+          await publicClient.waitForTransactionReceipt({ hash });
+        } else {
+          // Fallback just in case publicClient is not immediately available
+          await new Promise(resolve => setTimeout(resolve, 5000));
+        }
+        
         toast.success('cUSD Approved!', { id: 'post-gig' });
       }
 
