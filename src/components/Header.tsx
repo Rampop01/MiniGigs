@@ -20,6 +20,21 @@ export default function Header() {
   });
   const { isConnected } = useAccount();
   const { openConnectModal } = useConnectModal();
+  const [isOffline, setIsOffline] = useState(false);
+
+  useEffect(() => {
+    setIsOffline(!navigator.onLine);
+    const handleOnline = () => setIsOffline(false);
+    const handleOffline = () => setIsOffline(true);
+    
+    window.addEventListener('online', handleOnline);
+    window.addEventListener('offline', handleOffline);
+    
+    return () => {
+      window.removeEventListener('online', handleOnline);
+      window.removeEventListener('offline', handleOffline);
+    };
+  }, []);
 
   useEffect(() => {
     // Auto-trigger connect modal if in MiniPay and not connected
@@ -30,6 +45,11 @@ export default function Header() {
 
   return (
     <>
+      {isOffline && (
+        <div style={{ background: 'var(--accent-rose)', color: 'white', textAlign: 'center', padding: '4px', fontSize: '12px', fontWeight: 'bold' }}>
+          You are currently offline. Some features may be unavailable.
+        </div>
+      )}
       <header className={styles.header}>
         <div className={styles.brand}>
           <Link href="/" className={styles.crazyLogo}>
