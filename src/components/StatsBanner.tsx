@@ -26,7 +26,7 @@ export default function StatsBanner({ openGigs, totalBounty }: StatsBannerProps)
           <TrendingUp size={16} color="var(--primary)" />
         </div>
         <div>
-          <span className={styles.value}>${totalBounty.toFixed(0)}</span>
+          <span className={styles.value}>${new Intl.NumberFormat('en-US').format(Math.floor(totalBounty))}</span>
           <span className={styles.label}>In Escrow</span>
         </div>
       </div>
