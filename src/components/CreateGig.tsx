@@ -14,6 +14,7 @@ import { useAccount, useWriteContract, useReadContract, useBalance, usePublicCli
 import { MINI_GIGS_ABI, ERC20_ABI } from '@/lib/abi';
 import { parseEther } from 'viem';
 import toast from 'react-hot-toast';
+import { validateBounty } from '@/lib/utils';
 import styles from './CreateGig.module.css';
 
 interface CreateGigProps {
@@ -33,6 +34,7 @@ export default function CreateGig({ onClose, onCreated }: CreateGigProps) {
   const [timeEstimate, setTimeEstimate] = useState('');
   const [verification, setVerification] = useState('none');
   const [isPosting, setIsPosting] = useState(false);
+  const [bountyError, setBountyError] = useState<string | null>(null);
 
   // Check cUSD allowance
   const { data: allowance } = useReadContract({
@@ -239,9 +241,17 @@ export default function CreateGig({ onClose, onCreated }: CreateGigProps) {
                     e.preventDefault();
                   }
                 }}
-                onChange={(e) => setBounty(e.target.value)}
+                onChange={(e) => {
+                  setBounty(e.target.value);
+                  setBountyError(validateBounty(e.target.value));
+                }}
                 disabled={isPosting}
               />
+              {bountyError && (
+                <span style={{ fontSize: '11px', color: 'var(--accent-rose)', marginTop: '4px', display: 'block' }}>
+                  {bountyError}
+                </span>
+              )}
             </div>
           </div>
 
