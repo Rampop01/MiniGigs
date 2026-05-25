@@ -105,6 +105,13 @@
   transform: scale(0.97);
 }
 
+.submitBtn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
 select.input {
   appearance: none;
   cursor: pointer;
