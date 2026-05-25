@@ -116,7 +116,15 @@ export default function GigDetail({ gig, onClose, onAccept, onDispute }: GigDeta
           <span className={styles.metaItem}>
             <Clock size={14} /> {gig.timeEstimate || '3h'}
           </span>
-          <span className={styles.metaItem}>
+          <span 
+            className={styles.metaItem} 
+            style={{ cursor: 'pointer' }}
+            onClick={() => {
+              navigator.clipboard.writeText(gig.poster);
+              toast.success('Address copied!');
+            }}
+            title="Click to copy full address"
+          >
             <User size={14} /> {shortenAddress(gig.poster)}
           </span>
           <span className={styles.metaItem}>{timeAgo(gig.createdAt)}</span>
