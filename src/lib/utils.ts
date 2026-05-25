@@ -58,5 +58,9 @@ export function getCategoryInfo(categoryId: string) {
 /** Format cUSD amount */
 export function formatCUSD(amount: number): string {
   if (typeof amount !== 'number') return '0 cUSD';
-  return `${amount.toFixed(amount % 1 === 0 ? 0 : 2)} cUSD`;
+  const formatter = new Intl.NumberFormat('en-US', {
+    minimumFractionDigits: amount % 1 === 0 ? 0 : 2,
+    maximumFractionDigits: 2,
+  });
+  return `${formatter.format(amount)} cUSD`;
 }
