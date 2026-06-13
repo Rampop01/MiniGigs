@@ -6,6 +6,12 @@
   background: var(--bg-surface);
   border-radius: var(--r-md);
   border: 1px solid rgba(255, 255, 255, 0.04);
+  box-shadow: 0 0 0 1px rgba(0, 162, 255, 0.04), inset 0 1px 0 rgba(255,255,255,0.03);
+  transition: border-color 0.3s ease;
+}
+
+.banner:hover {
+  border-color: rgba(0, 162, 255, 0.12);
 }
 
 .stat {
