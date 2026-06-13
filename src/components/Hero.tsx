@@ -1,3 +1,4 @@
+'use client';
 import React from 'react';
 import { Zap, Shield, Clock, Globe, Coins, CheckCircle } from 'lucide-react';
 import styles from './Hero.module.css';
