@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { X, AlertTriangle } from 'lucide-react';
 import styles from './DisputeModal.module.css';
 
@@ -14,6 +14,14 @@ export default function DisputeModal({ gigId, onClose, onSubmit }: DisputeModalP
   const [reason, setReason] = useState('');
   const [evidence, setEvidence] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && !isSubmitting) onClose();
+    };
+    document.addEventListener('keydown', handleEsc);
+    return () => document.removeEventListener('keydown', handleEsc);
+  }, [isSubmitting, onClose]);
 
   const handleSubmit = async () => {
     setIsSubmitting(true);
