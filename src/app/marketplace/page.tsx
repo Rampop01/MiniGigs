@@ -264,7 +264,7 @@ export default function MarketplacePage({ filter }: { filter?: 'all' | 'my' }) {
                     <strong>{gig.title}</strong>
                     <span>
                       {gig.worker?.toLowerCase() === address?.toLowerCase() ? 'Earned' : 'Paid'} ·{' '}
-                      {new Date(gig.createdAt * 1000).toLocaleDateString()}
+                      {new Date(gig.createdAt * 1000).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
                     </span>
                   </div>
                   <div
