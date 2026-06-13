@@ -148,6 +148,12 @@
   color: var(--primary);
 }
 
+.trustItem:hover {
+  color: var(--primary);
+  transform: translateY(-1px);
+  transition: all 0.2s ease;
+}
+
 .visuals {
   position: absolute;
   top: 0;
