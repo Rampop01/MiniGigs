@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNotifications } from './NotificationProvider';
 import { X, Bell, Info, CheckCircle, Clock, AlertCircle } from 'lucide-react';
 import styles from './NotificationCenter.module.css';
@@ -8,6 +8,14 @@ import { useRelativeTime } from '@/hooks/useRelativeTime';
 
 export default function NotificationCenter() {
   const { notifications, unreadCount, markAllAsRead, isOpen, setIsOpen } = useNotifications();
+
+  useEffect(() => {
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && isOpen) setIsOpen(false);
+    };
+    document.addEventListener('keydown', handleEsc);
+    return () => document.removeEventListener('keydown', handleEsc);
+  }, [isOpen, setIsOpen]);
 
   if (!isOpen) return null;
 
