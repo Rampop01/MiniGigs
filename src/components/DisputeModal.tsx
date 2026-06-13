@@ -62,12 +62,16 @@ export default function DisputeModal({ gigId, onClose, onSubmit }: DisputeModalP
           </div>
 
           <div className={styles.formGroup}>
-            <label>Evidence URL (Optional)</label>
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <label>Evidence URL (Optional)</label>
+              <span style={{ fontSize: '11px', color: 'var(--text-tertiary)' }}>{evidence.length}/200</span>
+            </div>
             <input
               type="text"
               className={styles.input}
               placeholder="https://... (Screenshots, logs)"
               value={evidence}
+              maxLength={200}
               onChange={(e) => setEvidence(e.target.value)}
               disabled={isSubmitting}
             />
