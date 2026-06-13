@@ -76,7 +76,7 @@
 
 .statInfo {
   display: flex;
-  flex-col: column;
+  flex-direction: column;
 }
 
 .statVal {
@@ -122,7 +122,7 @@
 .agentCard:hover {
   border-color: var(--primary);
   transform: translateY(-2px);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2), 0 0 20px rgba(0, 162, 255, 0.08);
 }
 
 .agentHeader {
