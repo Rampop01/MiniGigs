@@ -8,7 +8,11 @@ import { formatEther, decodeFunctionResult, encodeFunctionData } from 'viem';
 // gigs(uint256) => 0x5e3fbdc8
 const GIGS_COUNT_SELECTOR = '0x3689e916';
 const GIGS_SELECTOR = '0x5e3fbdc8';
-const RPC_URLS = ['https://forno.celo.org', 'https://rpc.ankr.com/celo'];
+const RPC_URLS = [
+  'https://forno.celo.org',
+  'https://rpc.ankr.com/celo',
+  'https://celo-mainnet.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161',
+];
 
 const MULTICALL3_ABI = [
   {
