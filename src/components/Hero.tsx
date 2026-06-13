@@ -51,6 +51,15 @@ export default function Hero() {
           <div className={styles.trustItem}>
             <Shield size={14} /> <span>Self Protocol Secured</span>
           </div>
+          <a
+            href="https://celoscan.io"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.trustItem}
+            style={{ textDecoration: 'none', color: 'inherit' }}
+          >
+            <Globe size={14} /> <span>Verified On-Chain</span>
+          </a>
         </div>
       </div>
 
