@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { X, Send } from 'lucide-react';
 import StarRating from './StarRating';
 import styles from './ReviewModal.module.css';
@@ -15,6 +15,14 @@ export default function ReviewModal({ gigTitle, onClose, onSubmit }: ReviewModal
   const [rating, setRating] = useState(0);
   const [reviewText, setReviewText] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && !isSubmitting) onClose();
+    };
+    document.addEventListener('keydown', handleEsc);
+    return () => document.removeEventListener('keydown', handleEsc);
+  }, [isSubmitting, onClose]);
 
   const handleSubmit = async () => {
     if (rating === 0) return; // Basic validation
@@ -60,14 +68,18 @@ export default function ReviewModal({ gigTitle, onClose, onSubmit }: ReviewModal
           <span className={styles.ratingLabel}>{getRatingLabel(rating)}</span>
         </div>
 
-        <label className={styles.label} htmlFor="review">
-          Written Feedback (Optional)
-        </label>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
+          <label className={styles.label} htmlFor="review">
+            Written Feedback (Optional)
+          </label>
+          <span style={{ fontSize: '11px', color: 'var(--text-tertiary)' }}>{reviewText.length}/500</span>
+        </div>
         <textarea
           id="review"
           className={styles.textarea}
           placeholder="What was it like working with them?"
           value={reviewText}
+          maxLength={500}
           onChange={(e) => setReviewText(e.target.value)}
           disabled={isSubmitting}
         />
