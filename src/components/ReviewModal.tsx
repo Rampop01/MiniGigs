@@ -56,7 +56,7 @@ export default function ReviewModal({ gigTitle, onClose, onSubmit }: ReviewModal
       <div className={`${styles.modal} anim-scale-up`} onClick={(e) => e.stopPropagation()}>
         <div className={styles.header}>
           <h3 className={styles.title}>Leave a Review</h3>
-          <button className={styles.closeBtn} onClick={onClose}>
+          <button className={styles.closeBtn} onClick={onClose} aria-label="Close">
             <X size={20} />
           </button>
         </div>
