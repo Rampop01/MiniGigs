@@ -26,6 +26,30 @@ export default function GigDetail({ gig, onClose, onAccept, onDispute }: GigDeta
   const [workProof, setWorkProof] = useState('');
   const cat = getCategoryInfo(gig.category);
 
+  // Helper to safely render text with clickable links
+  const renderTextWithLinks = (text: string) => {
+    if (!text) return null;
+    const urlRegex = /(https?:\/\/[^\s]+)/g;
+    const parts = text.split(urlRegex);
+    return parts.map((part, i) => {
+      if (part.match(urlRegex)) {
+        return (
+          <a
+            key={i}
+            href={part}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ color: 'var(--primary)', textDecoration: 'underline' }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            {part}
+          </a>
+        );
+      }
+      return <span key={i}>{part}</span>;
+    });
+  };
+
   const isPoster = address && gig.poster.toLowerCase() === address.toLowerCase();
   const isWorker = address && gig.worker?.toLowerCase() === address.toLowerCase();
 
@@ -137,14 +161,14 @@ export default function GigDetail({ gig, onClose, onAccept, onDispute }: GigDeta
         <div className={styles.divider} />
 
         <h4 className={styles.sectionLabel}>Description</h4>
-        <p className={styles.description}>{gig.description}</p>
+        <p className={styles.description}>{renderTextWithLinks(gig.description)}</p>
 
         {gig.status === 'submitted' && gig.deliverables && (
           <>
             <div className={styles.divider} />
             <h4 className={styles.sectionLabel}>Deliverables</h4>
             <div className={styles.deliverablesBox}>
-              <p>{gig.deliverables}</p>
+              <p>{renderTextWithLinks(gig.deliverables)}</p>
             </div>
           </>
         )}
