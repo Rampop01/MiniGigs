@@ -135,12 +135,13 @@
   gap: 16px;
   padding: 16px;
   border-radius: 12px;
-  transition: background 0.2s;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   border-bottom: 1px solid rgba(255, 255, 255, 0.03);
 }
 
 .notifItem:hover {
-  background: rgba(255, 255, 255, 0.03);
+  background: rgba(255, 255, 255, 0.05);
+  transform: translateX(4px);
 }
 
 .iconContainer {
