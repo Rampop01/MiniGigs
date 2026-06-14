@@ -64,6 +64,10 @@
   white-space: nowrap;
 }
 
+.marqueeContainer:hover .marqueeContent {
+  animation-play-state: paused;
+}
+
 .marqueeContainer::before,
 .marqueeContainer::after {
   content: '';
