@@ -33,6 +33,15 @@
   position: relative;
 }
 
+.tab:hover {
+  color: var(--text-secondary);
+  transform: translateY(-1px);
+}
+
+.tab:active {
+  transform: scale(0.95);
+}
+
 .tabActive {
   color: #fff;
 }
