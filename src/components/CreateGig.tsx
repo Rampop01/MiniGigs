@@ -183,11 +183,17 @@ export default function CreateGig({ onClose, onCreated }: CreateGigProps) {
 
         <form onSubmit={handleSubmit} className={styles.form}>
           <div className={styles.field}>
-            <label className={styles.label}>Title *</label>
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <label className={styles.label}>Title *</label>
+              <span style={{ fontSize: '0.8rem', color: title.length > 50 ? 'var(--accent-rose)' : 'var(--text-secondary)' }}>
+                {title.length} / 50
+              </span>
+            </div>
             <input
               className="input"
               placeholder="e.g. Translate App UI to Swahili"
               value={title}
+              maxLength={50}
               onChange={(e) => setTitle(e.target.value)}
               disabled={isPosting}
             />
