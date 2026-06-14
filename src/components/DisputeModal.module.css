@@ -106,10 +106,16 @@
   transition: all 0.2s;
 }
 
+.select:hover,
+.input:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
 .select:focus,
 .input:focus {
   border-color: var(--accent-rose);
   box-shadow: 0 0 0 1px var(--accent-rose);
+  background: rgba(255, 59, 59, 0.05);
 }
 
 @keyframes fade-in {
