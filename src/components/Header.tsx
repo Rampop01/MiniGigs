@@ -46,7 +46,7 @@ export default function Header() {
   return (
     <>
       {isOffline && (
-        <div style={{ background: 'var(--accent-rose)', color: 'white', textAlign: 'center', padding: '4px', fontSize: '12px', fontWeight: 'bold' }}>
+        <div role="alert" style={{ background: 'var(--accent-rose)', color: 'white', textAlign: 'center', padding: '4px', fontSize: '12px', fontWeight: 'bold' }}>
           You are currently offline. Some features may be unavailable.
         </div>
       )}
