@@ -159,7 +159,7 @@ export default function CreateGig({ onClose, onCreated }: CreateGigProps) {
 
     // Handle escape key
     const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose();
+      if (e.key === 'Escape' && !isPosting) onClose();
     };
     document.addEventListener('keydown', handleEscape);
 
@@ -167,7 +167,7 @@ export default function CreateGig({ onClose, onCreated }: CreateGigProps) {
       document.body.style.overflow = 'auto';
       document.removeEventListener('keydown', handleEscape);
     };
-  }, [onClose]);
+  }, [onClose, isPosting]);
 
   if (!isMounted) return null;
 
