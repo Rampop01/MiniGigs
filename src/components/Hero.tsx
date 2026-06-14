@@ -15,7 +15,7 @@ export default function Hero() {
           MiniGigs connects you with instant-pay micro-tasks. Simple, fast, and verified on-chain.
         </p>
 
-        <div className={styles.marqueeContainer}>
+        <div className={styles.marqueeContainer} aria-hidden="true">
           <div className={styles.marqueeContent}>
             <span className={styles.marqueeItem}><Zap size={14} /> Micro-Tasks</span>
             <span className={styles.dot}>•</span>
