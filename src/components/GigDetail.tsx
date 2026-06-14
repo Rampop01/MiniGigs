@@ -147,9 +147,18 @@ export default function GigDetail({ gig, onClose, onAccept, onDispute }: GigDeta
           <span 
             className={styles.metaItem} 
             style={{ cursor: 'pointer' }}
+            role="button"
+            tabIndex={0}
             onClick={() => {
               navigator.clipboard.writeText(gig.poster);
               toast.success('Address copied!');
+            }}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                navigator.clipboard.writeText(gig.poster);
+                toast.success('Address copied!');
+              }
             }}
             title="Click to copy full address"
           >
