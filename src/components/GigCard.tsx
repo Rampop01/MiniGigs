@@ -1,7 +1,7 @@
 'use client';
 
 import type { Gig } from '@/lib/constants';
-import { getCategoryInfo, formatCUSD, timeAgo } from '@/lib/utils';
+import { getCategoryInfo, formatCUSD, timeAgo, formatDate } from '@/lib/utils';
 import { Clock, ShieldCheck, Globe } from 'lucide-react';
 import styles from './GigCard.module.css';
 
@@ -21,8 +21,22 @@ export default function GigCard({ gig, now, onClick }: GigCardProps) {
   const cat = getCategoryInfo(gig.category);
   const isLive = now ? now - gig.createdAt < 300000 : false;
 
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (onClick && (e.key === 'Enter' || e.key === ' ')) {
+      e.preventDefault();
+      onClick();
+    }
+  };
+
   return (
-    <article className={`card ${styles.card} anim-fade-up`} onClick={onClick}>
+    <article
+      className={`card ${styles.card} anim-fade-up`}
+      onClick={onClick}
+      onKeyDown={handleKeyDown}
+      tabIndex={onClick ? 0 : undefined}
+      role={onClick ? 'button' : 'article'}
+      aria-label={`View details for ${gig.title}`}
+    >
       {isLive && (
         <div className={styles.liveBadge}>
           <div className={styles.pulse} />
@@ -36,7 +50,7 @@ export default function GigCard({ gig, now, onClick }: GigCardProps) {
         <div className={styles.meta}>
           <span className={styles.catLabel}>{cat.label}</span>
           <span className={styles.dot}>·</span>
-          <span className={styles.time}>{timeAgo(gig.createdAt)}</span>
+          <span className={styles.time} title={formatDate(gig.createdAt)}>{timeAgo(gig.createdAt)}</span>
         </div>
       </div>
       <h3 className={styles.title}>{gig.title}</h3>
