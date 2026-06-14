@@ -196,7 +196,7 @@ export default function CreateGig({ onClose, onCreated }: CreateGigProps) {
           <div className={styles.field}>
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
               <label className={styles.label}>Description *</label>
-              <span style={{ fontSize: '0.8rem', color: description.length < 20 ? 'var(--danger)' : 'var(--text-secondary)' }}>
+              <span style={{ fontSize: '0.8rem', color: description.length < 20 ? 'var(--accent-rose)' : 'var(--text-secondary)' }}>
                 {description.length} / 500
               </span>
             </div>
