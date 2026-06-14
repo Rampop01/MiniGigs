@@ -88,12 +88,18 @@
   font-family: inherit;
   resize: vertical;
   margin-bottom: var(--sp-6);
-  transition: border-color 0.2s;
+  transition: all 0.2s;
+}
+
+.textarea:hover {
+  border-color: rgba(255, 255, 255, 0.2);
 }
 
 .textarea:focus {
   outline: none;
   border-color: var(--primary);
+  box-shadow: 0 0 0 1px var(--primary);
+  background: rgba(0, 162, 255, 0.02);
 }
 
 .submitBtn {
