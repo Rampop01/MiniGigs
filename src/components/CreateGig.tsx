@@ -176,7 +176,7 @@ export default function CreateGig({ onClose, onCreated }: CreateGigProps) {
       <div className={`${styles.modal} glass`} onClick={(e) => e.stopPropagation()}>
         <div className={styles.modalHeader}>
           <h2 className={styles.modalTitle}>Post a Gig</h2>
-          <button className={styles.closeBtn} onClick={onClose}>
+          <button className={styles.closeBtn} onClick={onClose} aria-label="Close">
             <X size={20} />
           </button>
         </div>
