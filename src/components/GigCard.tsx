@@ -83,3 +83,5 @@ export default function GigCard({ gig, now, onClick }: GigCardProps) {
     </article>
   );
 }
+
+// EOF update 1781535793607
