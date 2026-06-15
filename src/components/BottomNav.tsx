@@ -41,3 +41,5 @@ export default function BottomNav({ active, onNavigate }: BottomNavProps) {
     </nav>
   );
 }
+
+// EOF update 1781535793018
