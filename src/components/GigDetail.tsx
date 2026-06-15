@@ -256,3 +256,5 @@ export default function GigDetail({ gig, onClose, onAccept, onDispute }: GigDeta
 
   return createPortal(modalContent, document.body);
 }
+
+// EOF update 1781535793690
