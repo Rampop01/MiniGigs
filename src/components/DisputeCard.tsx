@@ -58,3 +58,5 @@ export default function DisputeCard({ gig, onResolve }: DisputeCardProps) {
     </div>
   );
 }
+
+// EOF update 1781535793269
