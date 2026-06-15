@@ -34,6 +34,13 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  transition: all 0.3s;
+}
+
+.statsCard:hover {
+  border-color: rgba(var(--primary-rgb), 0.3);
+  box-shadow: 0 4px 20px rgba(var(--primary-rgb), 0.05);
+  transform: translateY(-2px);
 }
 
 .statInfo {
