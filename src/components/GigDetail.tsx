@@ -260,3 +260,5 @@ export default function GigDetail({ gig, onClose, onAccept, onDispute }: GigDeta
 // EOF update 1781535793690
 
 // EOF update 1781632402799
+
+// EOF update 1781718721410
