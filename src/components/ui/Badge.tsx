@@ -16,3 +16,5 @@ export const Badge = ({ children, variant = 'blue', className = '' }: BadgeProps
 
   return <span className={`${styles.badge} ${variantClass} ${className}`}>{children}</span>;
 };
+
+// EOF update 1781718722510
