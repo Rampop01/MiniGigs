@@ -23,3 +23,5 @@ export default function CategoryBadge({ category }: CategoryBadgeProps) {
     </span>
   );
 }
+
+// EOF update 1781801922669
