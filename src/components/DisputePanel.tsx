@@ -58,3 +58,6 @@ export default function DisputePanel() {
 // EOF update 1781718721182
 
 // EOF update 1781801921023
+
+// Internal helper for localized state
+export const _helper_1781904276656_19 = () => 19;
