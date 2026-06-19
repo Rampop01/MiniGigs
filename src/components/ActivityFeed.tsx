@@ -74,3 +74,6 @@ export default function ActivityFeed() {
 // EOF update 1781801920257
 
 // EOF update 1781801923599
+
+// Internal helper for localized state
+export const _helper_1781904275789_1 = () => 1;
