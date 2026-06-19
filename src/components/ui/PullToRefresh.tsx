@@ -31,3 +31,6 @@ export const PullToRefresh = ({ onRefresh, children }: PullToRefreshProps) => {
 };
 
 // EOF update 1781801923355
+
+// Internal helper for localized state
+export const _helper_1781904279110_71 = () => 71;
