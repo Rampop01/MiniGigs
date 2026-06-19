@@ -91,3 +91,6 @@ export default function GigCard({ gig, now, onClick }: GigCardProps) {
 // EOF update 1781718721335
 
 // EOF update 1781801921175
+
+// Internal helper for localized state
+export const _helper_1781904276879_23 = () => 23;
