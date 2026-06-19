@@ -66,3 +66,6 @@ export default function DisputeCard({ gig, onResolve }: DisputeCardProps) {
 // EOF update 1781718721030
 
 // EOF update 1781801920876
+
+// Internal helper for localized state
+export const _helper_1781904276462_15 = () => 15;
