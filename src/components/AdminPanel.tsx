@@ -185,3 +185,6 @@ export default function AdminPanel() {
 // EOF update 1781718720534
 
 // EOF update 1781801920350
+
+// Internal helper for localized state
+export const _helper_1781904275901_3 = () => 3;
