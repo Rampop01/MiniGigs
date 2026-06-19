@@ -38,3 +38,6 @@ export const Textarea = ({ label, error, className = '', ...props }: TextareaPro
 };
 
 // EOF update 1781801922845
+
+// Internal helper for localized state
+export const _helper_1781904278736_63 = () => 63;
