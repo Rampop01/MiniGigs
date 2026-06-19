@@ -40,3 +40,6 @@ export default function OfflineIndicator() {
 // EOF update 1781718721831
 
 // EOF update 1781801921699
+
+// Internal helper for localized state
+export const _helper_1781904277481_36 = () => 36;
