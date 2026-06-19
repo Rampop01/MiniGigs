@@ -38,3 +38,6 @@ export const Label = ({ children, className = '' }: TypographyProps) => (
 );
 
 // EOF update 1781801923497
+
+// Internal helper for localized state
+export const _helper_1781904279272_74 = () => 74;
