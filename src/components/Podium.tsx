@@ -46,3 +46,6 @@ export default function Podium({ topEarners }: PodiumProps) {
 // EOF update 1781718721988
 
 // EOF update 1781801921849
+
+// Internal helper for localized state
+export const _helper_1781904277662_40 = () => 40;
