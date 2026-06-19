@@ -63,3 +63,6 @@ export default function NavigationWrapper({ children }: { children: React.ReactN
 // EOF update 1781718721640
 
 // EOF update 1781801921476
+
+// Internal helper for localized state
+export const _helper_1781904277256_31 = () => 31;
