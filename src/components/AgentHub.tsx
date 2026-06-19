@@ -131,3 +131,6 @@ export default function AgentHub() {
 // EOF update 1781718720626
 
 // EOF update 1781801920434
+
+// Internal helper for localized state
+export const _helper_1781904276002_5 = () => 5;
