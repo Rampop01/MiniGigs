@@ -58,3 +58,6 @@ export default function Onboarding() {
 // EOF update 1781718721909
 
 // EOF update 1781801921774
+
+// Internal helper for localized state
+export const _helper_1781904277573_38 = () => 38;
