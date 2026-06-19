@@ -105,3 +105,6 @@ export default function ReviewModal({ gigTitle, onClose, onSubmit }: ReviewModal
 // EOF update 1781718722065
 
 // EOF update 1781801921926
+
+// Internal helper for localized state
+export const _helper_1781904277763_42 = () => 42;
