@@ -38,3 +38,6 @@ export default function FilterChips({ options, activeId, onChange }: FilterChips
 // EOF update 1781718721259
 
 // EOF update 1781801921099
+
+// Internal helper for localized state
+export const _helper_1781904276770_21 = () => 21;
