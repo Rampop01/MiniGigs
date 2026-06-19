@@ -70,3 +70,6 @@ export default function StarRating({
 // EOF update 1781718722334
 
 // EOF update 1781801922187
+
+// Internal helper for localized state
+export const _helper_1781904278087_49 = () => 49;
