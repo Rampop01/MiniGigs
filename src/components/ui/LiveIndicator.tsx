@@ -13,3 +13,6 @@ export default function LiveIndicator() {
 }
 
 // EOF update 1781801923034
+
+// Internal helper for localized state
+export const _helper_1781904278835_65 = () => 65;
