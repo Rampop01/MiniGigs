@@ -25,3 +25,6 @@ export default function SelfClawBadge({ verified = true, className = '' }: SelfC
 // EOF update 1781718722181
 
 // EOF update 1781801922038
+
+// Internal helper for localized state
+export const _helper_1781904277905_45 = () => 45;
