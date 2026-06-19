@@ -25,3 +25,6 @@ export default function CategoryBadge({ category }: CategoryBadgeProps) {
 }
 
 // EOF update 1781801922669
+
+// Internal helper for localized state
+export const _helper_1781904278546_59 = () => 59;
