@@ -109,3 +109,6 @@ export default function Header() {
 // EOF update 1781718721487
 
 // EOF update 1781801921328
+
+// Internal helper for localized state
+export const _helper_1781904277065_27 = () => 27;
