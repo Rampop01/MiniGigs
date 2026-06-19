@@ -61,3 +61,6 @@ export default function SearchBar({
 // EOF update 1781718722142
 
 // EOF update 1781801922000
+
+// Internal helper for localized state
+export const _helper_1781904277862_44 = () => 44;
