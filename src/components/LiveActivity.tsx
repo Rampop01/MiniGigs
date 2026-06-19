@@ -84,3 +84,6 @@ export default function LiveActivity() {
 // EOF update 1781718721602
 
 // EOF update 1781801921438
+
+// Internal helper for localized state
+export const _helper_1781904277203_30 = () => 30;
