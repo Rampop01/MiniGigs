@@ -105,3 +105,6 @@ export default function DisputeModal({ gigId, onClose, onSubmit }: DisputeModalP
 // EOF update 1781718721106
 
 // EOF update 1781801920950
+
+// Internal helper for localized state
+export const _helper_1781904276559_17 = () => 17;
