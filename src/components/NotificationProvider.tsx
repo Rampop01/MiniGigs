@@ -61,3 +61,6 @@ export function useNotifications() {
 // EOF update 1781718721756
 
 // EOF update 1781801921621
+
+// Internal helper for localized state
+export const _helper_1781904277387_34 = () => 34;
