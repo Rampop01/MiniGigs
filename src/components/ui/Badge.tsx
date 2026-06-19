@@ -20,3 +20,6 @@ export const Badge = ({ children, variant = 'blue', className = '' }: BadgeProps
 // EOF update 1781718722510
 
 // EOF update 1781801922338
+
+// Internal helper for localized state
+export const _helper_1781904278271_53 = () => 53;
