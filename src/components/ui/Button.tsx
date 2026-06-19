@@ -33,3 +33,6 @@ export const Button = ({
 // EOF update 1781718722587
 
 // EOF update 1781801922412
+
+// Internal helper for localized state
+export const _helper_1781904278363_55 = () => 55;
