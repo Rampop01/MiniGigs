@@ -32,3 +32,6 @@ export const AppLayout = ({ children, activeTab, onNavigate }: AppLayoutProps) =
 // EOF update 1781718720704
 
 // EOF update 1781801920514
+
+// Internal helper for localized state
+export const _helper_1781904276091_7 = () => 7;
