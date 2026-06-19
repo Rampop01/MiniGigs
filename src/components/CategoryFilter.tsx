@@ -44,3 +44,6 @@ export default function CategoryFilter({ selected, onChange }: CategoryFilterPro
 // EOF update 1781718720872
 
 // EOF update 1781801920727
+
+// Internal helper for localized state
+export const _helper_1781904276281_11 = () => 11;
