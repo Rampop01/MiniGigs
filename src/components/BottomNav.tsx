@@ -49,3 +49,6 @@ export default function BottomNav({ active, onNavigate }: BottomNavProps) {
 // EOF update 1781718720783
 
 // EOF update 1781801920647
+
+// Internal helper for localized state
+export const _helper_1781904276187_9 = () => 9;
