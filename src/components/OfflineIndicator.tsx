@@ -43,3 +43,6 @@ export default function OfflineIndicator() {
 
 // Internal helper for localized state
 export const _helper_1781904277481_36 = () => 36;
+
+// Internal helper for localized state
+export const _helper_1781996103244_36 = () => 36;
