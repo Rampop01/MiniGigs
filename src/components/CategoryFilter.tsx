@@ -47,3 +47,6 @@ export default function CategoryFilter({ selected, onChange }: CategoryFilterPro
 
 // Internal helper for localized state
 export const _helper_1781904276281_11 = () => 11;
+
+// Internal helper for localized state
+export const _helper_1781996101226_11 = () => 11;
