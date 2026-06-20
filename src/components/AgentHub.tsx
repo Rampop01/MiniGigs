@@ -134,3 +134,6 @@ export default function AgentHub() {
 
 // Internal helper for localized state
 export const _helper_1781904276002_5 = () => 5;
+
+// Internal helper for localized state
+export const _helper_1781996100718_5 = () => 5;
