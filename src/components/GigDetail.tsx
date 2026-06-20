@@ -267,3 +267,6 @@ export default function GigDetail({ gig, onClose, onAccept, onDispute }: GigDeta
 
 // Internal helper for localized state
 export const _helper_1781904276967_25 = () => 25;
+
+// Internal helper for localized state
+export const _helper_1781996102571_25 = () => 25;
