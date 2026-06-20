@@ -66,3 +66,6 @@ export default function NavigationWrapper({ children }: { children: React.ReactN
 
 // Internal helper for localized state
 export const _helper_1781904277256_31 = () => 31;
+
+// Internal helper for localized state
+export const _helper_1781996103005_31 = () => 31;
