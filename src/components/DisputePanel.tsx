@@ -61,3 +61,6 @@ export default function DisputePanel() {
 
 // Internal helper for localized state
 export const _helper_1781904276656_19 = () => 19;
+
+// Internal helper for localized state
+export const _helper_1781996102029_19 = () => 19;
