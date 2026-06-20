@@ -52,3 +52,6 @@ export default function BottomNav({ active, onNavigate }: BottomNavProps) {
 
 // Internal helper for localized state
 export const _helper_1781904276187_9 = () => 9;
+
+// Internal helper for localized state
+export const _helper_1781996101036_9 = () => 9;
