@@ -41,3 +41,6 @@ export default function FilterChips({ options, activeId, onChange }: FilterChips
 
 // Internal helper for localized state
 export const _helper_1781904276770_21 = () => 21;
+
+// Internal helper for localized state
+export const _helper_1781996102217_21 = () => 21;
