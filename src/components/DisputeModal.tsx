@@ -108,3 +108,6 @@ export default function DisputeModal({ gigId, onClose, onSubmit }: DisputeModalP
 
 // Internal helper for localized state
 export const _helper_1781904276559_17 = () => 17;
+
+// Internal helper for localized state
+export const _helper_1781996101835_17 = () => 17;
