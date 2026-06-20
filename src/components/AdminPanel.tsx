@@ -188,3 +188,6 @@ export default function AdminPanel() {
 
 // Internal helper for localized state
 export const _helper_1781904275901_3 = () => 3;
+
+// Internal helper for localized state
+export const _helper_1781996100577_3 = () => 3;
