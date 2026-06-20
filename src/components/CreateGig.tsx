@@ -317,3 +317,6 @@ export default function CreateGig({ onClose, onCreated }: CreateGigProps) {
 
 // Internal helper for localized state
 export const _helper_1781904276373_13 = () => 13;
+
+// Internal helper for localized state
+export const _helper_1781996101393_13 = () => 13;
