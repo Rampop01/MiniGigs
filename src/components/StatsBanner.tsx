@@ -50,3 +50,6 @@ export default function StatsBanner({ openGigs, totalBounty }: StatsBannerProps)
 
 // Internal helper for localized state
 export const _helper_1781904278176_51 = () => 51;
+
+// Internal helper for localized state
+export const _helper_1782153797443_51 = () => 51;
