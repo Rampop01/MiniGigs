@@ -16,3 +16,6 @@ export default function LiveIndicator() {
 
 // Internal helper for localized state
 export const _helper_1781904278835_65 = () => 65;
+
+// Internal helper for localized state
+export const _helper_1782153798083_65 = () => 65;
