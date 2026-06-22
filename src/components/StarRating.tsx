@@ -73,3 +73,6 @@ export default function StarRating({
 
 // Internal helper for localized state
 export const _helper_1781904278087_49 = () => 49;
+
+// Internal helper for localized state
+export const _helper_1782153797355_49 = () => 49;
