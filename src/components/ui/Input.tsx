@@ -41,3 +41,6 @@ export const Textarea = ({ label, error, className = '', ...props }: TextareaPro
 
 // Internal helper for localized state
 export const _helper_1781904278736_63 = () => 63;
+
+// Internal helper for localized state
+export const _helper_1782153797994_63 = () => 63;
