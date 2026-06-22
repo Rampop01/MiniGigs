@@ -49,3 +49,6 @@ export default function Podium({ topEarners }: PodiumProps) {
 
 // Internal helper for localized state
 export const _helper_1781904277662_40 = () => 40;
+
+// Internal helper for localized state
+export const _helper_1782153796951_40 = () => 40;
