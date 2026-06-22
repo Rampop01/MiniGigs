@@ -28,3 +28,6 @@ export default function SelfClawBadge({ verified = true, className = '' }: SelfC
 
 // Internal helper for localized state
 export const _helper_1781904277905_45 = () => 45;
+
+// Internal helper for localized state
+export const _helper_1782153797166_45 = () => 45;
