@@ -25,3 +25,6 @@ export const Card = ({ children, className = '', onClick, variant = 'base' }: Ca
 
 // Internal helper for localized state
 export const _helper_1781904278452_57 = () => 57;
+
+// Internal helper for localized state
+export const _helper_1782153797732_57 = () => 57;
