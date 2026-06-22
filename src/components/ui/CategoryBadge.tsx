@@ -28,3 +28,6 @@ export default function CategoryBadge({ category }: CategoryBadgeProps) {
 
 // Internal helper for localized state
 export const _helper_1781904278546_59 = () => 59;
+
+// Internal helper for localized state
+export const _helper_1782153797824_59 = () => 59;
