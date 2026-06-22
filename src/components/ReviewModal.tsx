@@ -108,3 +108,6 @@ export default function ReviewModal({ gigTitle, onClose, onSubmit }: ReviewModal
 
 // Internal helper for localized state
 export const _helper_1781904277763_42 = () => 42;
+
+// Internal helper for localized state
+export const _helper_1782153797037_42 = () => 42;
