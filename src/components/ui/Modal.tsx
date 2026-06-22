@@ -42,3 +42,6 @@ export const Modal = ({ children, isOpen, onClose, title }: ModalProps) => {
 
 // Internal helper for localized state
 export const _helper_1781904279019_69 = () => 69;
+
+// Internal helper for localized state
+export const _helper_1782153798247_69 = () => 69;
