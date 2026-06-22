@@ -34,3 +34,6 @@ export const PullToRefresh = ({ onRefresh, children }: PullToRefreshProps) => {
 
 // Internal helper for localized state
 export const _helper_1781904279110_71 = () => 71;
+
+// Internal helper for localized state
+export const _helper_1782153798332_71 = () => 71;
