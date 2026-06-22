@@ -64,3 +64,6 @@ export default function SearchBar({
 
 // Internal helper for localized state
 export const _helper_1781904277862_44 = () => 44;
+
+// Internal helper for localized state
+export const _helper_1782153797119_44 = () => 44;
