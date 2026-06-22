@@ -36,3 +36,6 @@ export const Button = ({
 
 // Internal helper for localized state
 export const _helper_1781904278363_55 = () => 55;
+
+// Internal helper for localized state
+export const _helper_1782153797640_55 = () => 55;
