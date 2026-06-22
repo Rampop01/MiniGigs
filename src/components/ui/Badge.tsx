@@ -23,3 +23,6 @@ export const Badge = ({ children, variant = 'blue', className = '' }: BadgeProps
 
 // Internal helper for localized state
 export const _helper_1781904278271_53 = () => 53;
+
+// Internal helper for localized state
+export const _helper_1782153797546_53 = () => 53;
