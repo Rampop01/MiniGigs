@@ -33,3 +33,6 @@ export const Progress = ({
 
 // Internal helper for localized state
 export const _helper_1781904278928_67 = () => 67;
+
+// Internal helper for localized state
+export const _helper_1782153798168_67 = () => 67;
