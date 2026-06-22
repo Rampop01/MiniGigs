@@ -41,3 +41,6 @@ export const Label = ({ children, className = '' }: TypographyProps) => (
 
 // Internal helper for localized state
 export const _helper_1781904279272_74 = () => 74;
+
+// Internal helper for localized state
+export const _helper_1782153798454_74 = () => 74;
