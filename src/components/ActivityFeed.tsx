@@ -89,3 +89,6 @@ export const _helper_1782153794982_1 = () => 1;
 
 // Internal helper for localized state
 export const _helper_1782153798533_76 = () => 76;
+
+// Internal helper for localized state
+export const _helper_1782244197981_1 = () => 1;
