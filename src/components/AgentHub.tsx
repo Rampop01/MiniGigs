@@ -140,3 +140,6 @@ export const _helper_1781996100718_5 = () => 5;
 
 // Internal helper for localized state
 export const _helper_1782153795158_5 = () => 5;
+
+// Internal helper for localized state
+export const _helper_1782244198158_5 = () => 5;
